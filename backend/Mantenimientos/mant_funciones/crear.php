@@ -27,14 +27,14 @@ if(!empty($_POST)) {
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($nombre , $descripcion));
         $PDO = null;
-        header("Location: index.php");
+        header("Location: funcion.php");
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Dashboard | Dashboard</title>
+    <title>Mantenimiento | Funciones</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
