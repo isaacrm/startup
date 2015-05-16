@@ -5,7 +5,7 @@
         <ul id="side-menu" class="nav">
 
             <div class="clearfix"></div>
-            <li class="active"><a href="dashboard.php"><i class="fa fa-tachometer fa-fw">
+            <li><a href="dashboard.php"><i class="fa fa-tachometer fa-fw">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Dashboard</span></a></li>
             <li><a href="Layout.php"><i class="fa fa-desktop fa-fw">
