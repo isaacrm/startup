@@ -63,18 +63,16 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <label for='nombres'>Nombre</label>
                             <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print(!empty($nombre)?$nombre:""); ?>'>
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <label for='descripcion'>Descripción</label>
                             <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                             <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
-                            <a class='btn btn btn-default' href='../form_validation.php'>Regresar</a>
+                            <a class='btn btn btn-default' href='funcion.php'>Regresar</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

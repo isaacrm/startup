@@ -22,13 +22,8 @@
                 <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                     <div class="page-header pull-left">
                         <div class="page-title">
-                            Dashboard</div>
+                            Funciones</div>
                     </div>
-                    <ol class="breadcrumb page-breadcrumb pull-right">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="funcion.php">Home</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="hidden"><a href="#">Dashboard</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Dashboard</li>
-                    </ol>
                     <div class="clearfix">
                     </div>
                     <!-- Form validations -->
@@ -37,7 +32,7 @@
                             <section class="panel">
                                 <div class='container'>
                                     <div class='row'>
-                                        <p><a class='btn btn-xs btn-success' href='mant_funciones/create.php'>Crear</a></p>
+                                        <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
                                         <table class='table table-striped table-bordered table-hover'>
                                             <tr class='warning'>
                                                 <th>ID</th>
