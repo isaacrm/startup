@@ -38,7 +38,7 @@ if(!empty($_POST)) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include '../estilos.php';?>
+    <?php include '../estilos2.php';?>
 </head>
 <body>
 <div>
@@ -61,9 +61,6 @@ if(!empty($_POST)) {
 
                 </div>
                 <div class='row'>
-                    <div class='row'>
-                        <h2>Crear funciones de tipos de usuario</h2>
-                    </div>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
                             <label for='nombres'>Nombre</label>
@@ -90,6 +87,6 @@ if(!empty($_POST)) {
         <!--END PAGE WRAPPER-->
     </div>
 </div>
-<?php include '../funciones.php';?>
+<?php include '../funciones2.php';?>
 </body>
 </html>

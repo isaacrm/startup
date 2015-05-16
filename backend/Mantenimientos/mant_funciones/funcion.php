@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include '../estilos.php';?>
+    <?php include '../estilos2.php';?>
 </head>
 <body>
     <div>
@@ -35,13 +35,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <section class="panel">
-                                <header class="panel-heading">
-                                    Mantenimiento de Empleados
-                                </header>
                                 <div class='container'>
-                                    <div class='row'>
-                                        <h2>Mantenimiento de usuarios</h2>
-                                    </div>
                                     <div class='row'>
                                         <p><a class='btn btn-xs btn-success' href='mant_funciones/create.php'>Crear</a></p>
                                         <table class='table table-striped table-bordered table-hover'>
@@ -86,6 +80,6 @@
             <!--END PAGE WRAPPER-->
         </div>
     </div>
-    <?php include '../funciones.php';?>
+    <?php include '../funciones2.php';?>
 </body>
 </html>
