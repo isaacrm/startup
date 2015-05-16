@@ -7,7 +7,6 @@ if(!empty($_POST)) {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
 
-
     // validate input
     $valid = true;
     if(empty($nombre)) {

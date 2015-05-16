@@ -51,9 +51,9 @@
                                                 $data .= "<td>$row[nombre]</td>";
                                                 $data .= "<td>$row[descripcion]</td>";
                                                 $data .= "<td>";
-                                                $data .= "<a class='btn btn-xs btn-info' href='read.php?id=$row[id_funcion]'>Consultar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-primary' href='update.php?id=$row[id_funcion]'>Actualizar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-danger' href='delete.php?id=$row[id_funcion]'>Eliminar</a>";
+                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_funcion=$row[id_funcion]'>Consultar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_funcion=$row[id_funcion]'>Actualizar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_funcion=$row[id_funcion]'>Eliminar</a>";
                                                 $data .= "</td>";
                                                 $data .= "</tr>";
                                             }
