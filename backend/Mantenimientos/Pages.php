@@ -25,19 +25,7 @@
 </head>
 <body>
     <div>
-        <!--BEGIN THEME SETTING-->
-        <div id="theme-setting">
-            <a href="#" data-toggle="dropdown" data-step="1" data-intro="&lt;b&gt;Many styles&lt;/b&gt; and &lt;b&gt;colors&lt;/b&gt; be created for you. Let choose one and enjoy it!"
-                data-position="left" class="btn-theme-setting"><i class="fa fa-cog"></i></a>
-            <div class="content-theme-setting">
-                <select id="list-style" class="form-control">
-                    <option value="style1">Flat Squared style</option>
-                    <option value="style2">Flat Rounded style</option>
-                    <option value="style3" selected="selected">Flat Border style</option>
-                </select>
-            </div>
-        </div>
-        <!--END THEME SETTING-->
+        <!--BEGIN THEME SETTING--><!--END THEME SETTING-->
         <!--BEGIN BACK TO TOP-->
         <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
         <!--END BACK TO TOP-->
@@ -203,111 +191,8 @@
                 </div>
                 <!--END TITLE & BREADCRUMB PAGE-->
                 <!--BEGIN CONTENT-->
-                <div class="page-content">
-                    <div id="tab-general">
-                        <div class="row mbl">
-                            <div class="col-lg-12">
-                                
-                                            <div class="col-md-12">
-                                                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
-                                                </div>
-                                            </div>
-                                
-                            </div>
-
-                            <div class="col-lg-12">
-                              <div class="col-lg-6">
-                                        <iframe src="http://player.vimeo.com/video/22439234" style="width: 100%; height:340px; border:0"></iframe>
-                                    </div>
-                                    <div class="col-lg-6"><p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et
-                                        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.
-                                        Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
-                                        <ol class="pll">
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Consectetur adipiscing elit</li>
-                                            <li>Integer molestie lorem at massa</li>
-                                            <li>Facilisis in pretium nisl aliquet</li>
-                                            <li>Nulla volutpat aliquam velit</li>
-                                            <li>Faucibus porta lacus fringilla vel</li>
-                                            <li>Aenean sit amet erat nunc</li>
-                                            <li>Eget porttitor lorem</li>
-                                        </ol>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12"><h2 class="mbxl">Our Team</h2>
-
-                                        <div class="row">
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/1/" class="img-responsive"/>
-
-                                                    <h3>Michelle Bates
-                                                        <small>CEO</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/7/" class="img-responsive"/>
-
-                                                    <h3>Nathan Murray
-                                                        <small>Project Manager</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/1/" class="img-responsive"/>
-
-                                                    <h3>Rachel Jordan
-                                                        <small>Designer</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <div class="member-team"><img src="http://lorempixel.com/640/480/business/7/" class="img-responsive"/>
-
-                                                    <h3>Margaret Adams
-                                                        <small>Developer</small>
-                                                    </h3>
-                                                    <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae.</p>
-                                                    <ul class="social-icons list-unstyled list-inline mbl mtl">
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="facebook" class="facebook"><i class="fa fa-facebook"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="google Plus" class="googleplus"><i class="fa fa-google-plus"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="skype" class="skype"><i class="fa fa-skype"></i></a></li>
-                                                        <li><a href="#" data-hover="tooltip" data-original-title="twitter" class="twitter"><i class="fa fa-twitter"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                            
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
+                <div class="page-content"></div>
+          </div>
                 <!--END CONTENT-->
                 <!--BEGIN FOOTER-->
                 <div id="footer">

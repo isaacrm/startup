@@ -25,19 +25,7 @@
 </head>
 <body>
     <div>
-        <!--BEGIN THEME SETTING-->
-        <div id="theme-setting">
-            <a href="#" data-toggle="dropdown" data-step="1" data-intro="&lt;b&gt;Many styles&lt;/b&gt; and &lt;b&gt;colors&lt;/b&gt; be created for you. Let choose one and enjoy it!"
-                data-position="left" class="btn-theme-setting"><i class="fa fa-cog"></i></a>
-            <div class="content-theme-setting">
-                <select id="list-style" class="form-control">
-                    <option value="style1">Flat Squared style</option>
-                    <option value="style2">Flat Rounded style</option>
-                    <option value="style3" selected="selected">Flat Border style</option>
-                </select>
-            </div>
-        </div>
-        <!--END THEME SETTING-->
+        <!--BEGIN THEME SETTING--><!--END THEME SETTING-->
         <!--BEGIN BACK TO TOP-->
         <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
         <!--END BACK TO TOP-->
@@ -203,113 +191,7 @@
                 </div>
                 <!--END TITLE & BREADCRUMB PAGE-->
                 <!--BEGIN CONTENT-->
-                <div class="page-content">
-                    <div id="tab-general">
-                        <div class="row mbl">
-                            <div class="col-lg-12">
-                                
-                                            <div class="col-md-12">
-                                                <div id="area-chart-spline" style="width: 100%; height: 300px; display: none;">
-                                                </div>
-                                            </div>
-                                
-                            </div>
-
-                            <div class="col-lg-12">
-                              
-                                    
-                              <div class="row">
-                    <div class="col-lg-6">
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Line Chart</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="line-chart" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Bar Chart</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="bar-chart" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Area Chart</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="area-chart" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Pie Chart</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="pie-chart" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Line Chart - Spline</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="line-chart-spline" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Bar Chart - Stack</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body"><h4 class="block-heading">Bar Chart - Stack</h4>
-
-                                <div id="bar-chart-stack" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Area Chart - Spline</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="Div1" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                        <div class="portlet box">
-                            <div class="portlet-header">
-                                <div class="caption">Percentiles Chart</div>
-                                <div class="tools"><i class="fa fa-chevron-up"></i><i data-toggle="modal" data-target="#modal-config" class="fa fa-cog"></i><i class="fa fa-refresh"></i><i class="fa fa-times"></i></div>
-                            </div>
-                            <div class="portlet-body">
-                                <div id="percentiles-chart" style="width: 100%; height:300px"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 
-                 
-
-
-                              
-                                </div>
-                                
-                            
-                     
-                            
-                        </div>
-                    </div>
-                </div>
+                <div class="page-content"></div>
                 <!--END CONTENT-->
                 <!--BEGIN FOOTER-->
                 <div id="footer">
