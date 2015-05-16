@@ -1,0 +1,48 @@
+/*ESTILO DE FORMULARIO DE REGISTROS*/
+.form-control {
+    margin-bottom: 10px;
+}
+.container
+{
+    background-color: #c0405b;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #ffffff;
+}
+.container2
+{
+    background-color: #5e7bc0;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* === Styles === */
+
+.image-preview-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+
