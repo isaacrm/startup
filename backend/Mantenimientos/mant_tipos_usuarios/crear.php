@@ -6,6 +6,10 @@ if(!empty($_POST)) {
     // post values
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
+    $agregar = $_POST['agregar'];
+    $modificar = $_POST['modificar'];
+    $eliminar = $_POST['eliminar'];
+    $consultar = $_POST['consultar'];
 
     // validate input
     $valid = true;
@@ -22,9 +26,9 @@ if(!empty($_POST)) {
     if($valid) {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO tipos_usuarios(nombre, descripcion) values(?, ?)";
+        $sql = "INSERT INTO tipos_usuarios(nombre, descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre , $descripcion));
+        $stmt->execute(array($nombre , $descripcion, $agregar, $modificar, $eliminar, $consultar));
         $PDO = null;
         header("Location: tipo_usuario.php");
     }
@@ -68,6 +72,12 @@ if(!empty($_POST)) {
                         <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
                             <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                             <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" value="agregar" name="agregar" id="agregar">Agregar</label>
+                            <label><input type="checkbox" value="modificar"  name="modificar" id="modificar">Modificar</label>
+                            <label><input type="checkbox" value="eliminar" name="eliminar" id="eliminar">Eliminar</label>
+                            <label><input type="checkbox" value="consultar" name="consultar" id="consultar">Consultar</label>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
