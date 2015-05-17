@@ -45,11 +45,11 @@
                                             <tbody>
                                             <?php
                                             require("../../bd.php");
-                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_usuario ASC";
+                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios  ORDER BY id_tipo_usuario ASC";
                                             $data = "";
                                             foreach($PDO->query($sql) as $row) {
                                                 $data .= "<tr>";
-                                                $data .= "<td>$row[id_funcion]</td>";
+                                                $data .= "<td>$row[id_tipo_usuario]</td>";
                                                 $data .= "<td>$row[nombre]</td>";
                                                 $data .= "<td>$row[descripcion]</td>";
                                                 $data .= "<td>";
