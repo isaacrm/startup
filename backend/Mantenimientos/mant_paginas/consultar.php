@@ -44,7 +44,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Consultar Noticias</div>
+                        Consultar Paginas</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -52,31 +52,19 @@ else {
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Titulo:</label>
+                            <label class="col-sm-2 control-label">Encabezado:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['titulo']); ?></p>
+                                <p class="form-control-static"><?php print($data['encabezado']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Subtitulo</label>
+                            <label class="col-sm-2 control-label">Frase</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['subtitulo']); ?></p>
+                                <p class="form-control-static"><?php print($data['frase']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Leyenda</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['leyenda']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Imagen</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['imagen']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="noticias.php">Regresar</a>
+                            <a class="btn btn btn-default" href="paginas.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->
