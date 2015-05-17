@@ -76,7 +76,7 @@ else {
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="funcion.php">Regresar</a>
+                            <a class="btn btn btn-default" href="noticias.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->
