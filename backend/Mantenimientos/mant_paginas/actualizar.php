@@ -84,12 +84,12 @@ else {
 s
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($encabezadoError)?"has-error":""); ?>'>
-                        <label for='encabezado'>Titulo</label>
+                        <label for='encabezado'>Encabezado</label>
                         <input type='text' name='encabezado' placeholder='Encabezado' required='required' id='encabezado' class='form-control' value='<?php print($encabezado); ?>'>
                         <?php print(!empty($encabezadoError)?"<span class='help-block'>$encabezadoError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
-                        <label for='frase'>Subtitulo</label>
+                        <label for='frase'>Frase</label>
                         <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print($frase); ?>'>
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                     </div>
