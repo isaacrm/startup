@@ -1,30 +1,44 @@
 <?php
 if(!empty($_POST)) {
     // validation errors
-    $nombresError = null;
-    $descripcionError = null;
+    $tituloError = null;
+    $subtituloError = null;
+    $leyendeError = null;
+    $imagenError = null;
     // post values
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
+    $titulo = $_POST['titulo'];
+    $subtitulo = $_POST['subtitulo'];
+    $leyenda = $_POST['leyenda'];
+    $imagen = $_POST['imagen'];
 
     // validate input
     $valid = true;
-    if(empty($nombre)) {
-        $nombresError = "Por favor ingrese los nombres.";
+    if(empty($titulo)) {
+        $tituloError = "Por favor ingrese un titulo.";
         $valid = false;
     }
 
-    if(empty($descripcion)) {
-        $descripcionError = "Por favor ingrese la descripcion.";
+    if(empty($subtitulo)) {
+        $subtituloError = "Por favor ingrese el subtitulo.";
+        $valid = false;
+    }
+
+    if(empty($leyenda)) {
+        $leyendaError = "Por favor ingrese la leyenda.";
+        $valid = false;
+    }
+
+    if(empty($imagen)) {
+        $imagenError = "Por favor ingrese una imagen.";
         $valid = false;
     }
     // insert data
     if($valid) {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO funciones(nombre, descripcion) values(?, ?)";
+        $sql = "INSERT INTO noticias(titulo, subtitulo, leyenda, imagen) values(?, ?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre , $descripcion));
+        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen ));
         $PDO = null;
         header("Location: funcion.php");
     }
@@ -33,7 +47,7 @@ if(!empty($_POST)) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Mantenimiento | Funciones</title>
+    <title>Mantenimiento | Noticias</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,20 +68,28 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Funciones</div>
+                        Crear Noticias</div>
                 </div>
                 <div class="clearfix">
 
                 </div>
                 <div class='row'>
                     <form method='POST'>
-                        <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
+                        <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                             <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print(!empty($nombre)?$nombre:""); ?>'>
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
-                        <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
-                            <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
+                        <div class='form-group <?php print(!empty($subtituloError)?"has-error":""); ?>'>
+                            <input type='text' name='subtitulo' placeholder='Subtitulo' required='required' id='subtitulo' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
+                            <?php print(!empty($subtituloError)?"<span class='help-block'>$subtituloError</span>":""); ?>
+                        </div>
+                        <div class='form-group <?php print(!empty($leyendaError)?"has-error":""); ?>'>
+                            <input type='text' name='leyenda' placeholder='Leyenda' required='required' id='leyenda' class='form-control' value='<?php print(!empty($leyenda)?$leyenda:""); ?>'>
+                            <?php print(!empty($leyendaError)?"<span class='help-block'>$leyendaError</span>":""); ?>
+                        </div>
+                        <div class='form-group <?php print(!empty($imagenError)?"has-error":""); ?>'>
+                            <input type='text' name='imagen' placeholder='Imagen' required='required' id='imagen' class='form-control' value='<?php print(!empty($imagen)?$imagen:""); ?>'>
+                            <?php print(!empty($imagenError)?"<span class='help-block'>$imagenError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
