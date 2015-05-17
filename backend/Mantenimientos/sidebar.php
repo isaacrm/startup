@@ -5,9 +5,6 @@
         <ul id="side-menu" class="nav">
 
             <div class="clearfix"></div>
-            <li><a href="../mant_funciones/funcion.php"><i class="fa fa-tachometer fa-fw">
-                        <div class="icon-bg bg-orange"></div>
-                    </i><span class="menu-title">Funciones</span></a></li>
 
             <li><a href="../mant_tipos_usuarios/tipo_usuario.php"><i class="fa fa-desktop fa-fw">
                         <div class="icon-bg bg-pink"></div>
@@ -16,7 +13,12 @@
             </li>
             <li><a href="../funciones_tipos/funcion_tipo.php"><i class="fa fa-bar-chart-o fa-fw">
                         <div class="icon-bg bg-orange"></div>
-                    </i><span class="menu-title">Charts</span></a>
+                    </i><span class="menu-title">Asignar funciones</span></a>
+
+            </li>
+            <li><a href="../mant_empleados/empleado.php"><i class="fa fa-database fa-fw">
+                        <div class="icon-bg bg-red"></div>
+                    </i><span class="menu-title">Empleados</span></a>
 
             </li>
             <li><a href="UIElements.php"><i class="fa fa-send-o fa-fw">
@@ -34,11 +36,7 @@
                     </i><span class="menu-title">Tables</span></a>
 
             </li>
-            <li><a href="mant_empleados/DataGrid.php"><i class="fa fa-database fa-fw">
-                        <div class="icon-bg bg-red"></div>
-                    </i><span class="menu-title">Data Grids</span></a>
 
-            </li>
             <li><a href="Pages.php"><i class="fa fa-file-o fa-fw">
                         <div class="icon-bg bg-yellow"></div>
                     </i><span class="menu-title">Pages</span></a>
