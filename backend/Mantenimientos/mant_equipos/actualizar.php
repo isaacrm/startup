@@ -26,12 +26,12 @@ if(!empty($_POST)) {
     // validate input
     $valid = true;
     if(empty($nombre)) {
-        $nombreError = "Por favor ingrese el nombre.";
+        $nombreError = "Por favor ingrese un nombre.";
         $valid = false;
     }
 
     if(empty($apellido)) {
-        $apellidoError = "Por favor ingrese un nombre.";
+        $apellidoError = "Por favor ingrese un apellido.";
         $valid = false;
     }
 

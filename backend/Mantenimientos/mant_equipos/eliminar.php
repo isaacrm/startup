@@ -1,20 +1,20 @@
 <?php
 $id = null;
-if(!empty($_GET['id_tipo_usuario'])) {
-    $id = $_GET['id_tipo_usuario'];
+if(!empty($_GET['id_equipo'])) {
+    $id = $_GET['id_equipo'];
 }
 if($id == null) {
-    header("Location: tipo_usuario.php");
+    header("Location: equipos.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_tipo_usuario'];
+    $id = $_POST['id_equipo'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM tipos_usuarios WHERE id_tipo_usuario = ?";
+    $sql = "DELETE FROM equipos WHERE id_equipo = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id));
+    $stmt->execute(array($id_equipo));
     $PDO = null;
     header("Location: tipo_usuario.php");
 }
@@ -22,7 +22,7 @@ if(!empty($_POST)) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Tipos de Usuario</title>
+    <title>Winefun | Equipo</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Eliminar Tipo de Usuario</div>
+                        Eliminar Equipo</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -54,7 +54,7 @@ if(!empty($_POST)) {
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='tipo_usuario.php'>No</a>
+                            <a class='btn btn btn-default' href='equipos.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->
