@@ -6,10 +6,10 @@ if(!empty($_POST)) {
     // post values
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
-    $agregar = $_POST['agregar'];
-    $modificar = $_POST['modificar'];
-    $eliminar = $_POST['eliminar'];
-    $consultar = $_POST['consultar'];
+    $agregar = $_POST['agregar'] == "agregar";
+    $modificar = $_POST['modificar']== "modificar";
+    $eliminar = $_POST['eliminar']=="eliminar";
+    $consultar = $_POST['consultar']=="consultar";
 
     // validate input
     $valid = true;

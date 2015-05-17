@@ -10,7 +10,7 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombre, descripcion FROM tipos_usuarios where id_tipo_usuario = ?";
+    $sql = "SELECT nombre, descripcion, agregar, modificar, eliminar, consultar FROM tipos_usuarios where id_tipo_usuario = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -61,6 +61,30 @@ else {
                             <label class="col-sm-2 control-label">Descripción</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Agregar</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['agregar']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Modificar</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['modificar']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Eliminar</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['eliminar']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Consultar</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['consultar']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
