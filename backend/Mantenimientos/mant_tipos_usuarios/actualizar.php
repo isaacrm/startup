@@ -101,10 +101,10 @@ else {
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
                     <div class="form-group">
-                        <label><input type="checkbox" value="agregar" name="agregar" id="agregar">Agregar</label>
-                        <label><input type="checkbox" value="modificar"  name="modificar" id="modificar">Modificar</label>
-                        <label><input type="checkbox" value="eliminar" name="eliminar" id="eliminar">Eliminar</label>
-                        <label><input type="checkbox" value="consultar" name="consultar" id="consultar">Consultar</label>
+                        <label><input type="checkbox" value="agregar" <?php if($agregar) echo 'checked="checked"' ?> name="agregar" id="agregar">Agregar</label>
+                        <label><input type="checkbox" value="modificar" <?php if($modificar) echo 'checked="checked"' ?>  name="modificar" id="modificar">Modificar</label>
+                        <label><input type="checkbox" value="eliminar" <?php if($eliminar) echo 'checked="checked"' ?>  name="eliminar" id="eliminar">Eliminar</label>
+                        <label><input type="checkbox" value="consultar" <?php if($consultar) echo 'checked="checked"' ?>  name="consultar" id="consultar">Consultar</label>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
