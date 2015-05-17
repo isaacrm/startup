@@ -5,11 +5,11 @@
         <ul id="side-menu" class="nav">
 
             <div class="clearfix"></div>
-            <li><a href="mant_funciones/funcion.php"><i class="fa fa-tachometer fa-fw">
+            <li><a href="../mant_funciones/funcion.php"><i class="fa fa-tachometer fa-fw">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Funciones</span></a></li>
 
-            <li><a href="mant_tipos_usuarios/tipo_usuario.php"><i class="fa fa-desktop fa-fw">
+            <li><a href="../mant_tipos_usuarios/tipo_usuario.php"><i class="fa fa-desktop fa-fw">
                         <div class="icon-bg bg-pink"></div>
                     </i><span class="menu-title">Tipos de usuario</span></a>
 

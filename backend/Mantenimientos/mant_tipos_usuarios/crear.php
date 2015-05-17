@@ -26,7 +26,7 @@ if(!empty($_POST)) {
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($nombre , $descripcion));
         $PDO = null;
-        header("Location: funcion.php");
+        header("Location: tipo_usuario.php");
     }
 }
 ?>
