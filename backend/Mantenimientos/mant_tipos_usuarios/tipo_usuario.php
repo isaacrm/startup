@@ -45,7 +45,7 @@
                                             <tbody>
                                             <?php
                                             require("../../bd.php");
-                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios  ORDER BY id_tipo_usuario ASC";
+                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_tipo_usuario ASC";
                                             $data = "";
                                             foreach($PDO->query($sql) as $row) {
                                                 $data .= "<tr>";

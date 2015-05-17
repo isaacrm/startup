@@ -80,7 +80,7 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
+
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
                         <label for='nombres'>Nombre</label>
