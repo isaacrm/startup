@@ -27,6 +27,7 @@
                     <div class="clearfix">
                     </div>
                     <!-- Form validations -->
+
                     <div class="row">
                         <div class="col-lg-12">
                             <section class="panel">
