@@ -1,10 +1,10 @@
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_noticia'])) {
+    $id = $_GET['id_noticia'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: noticias.php");
 }
 else {
     // read data
