@@ -2,7 +2,7 @@
 $(document).ready(function() {
     $('#dateRangePicker')
         .datepicker({
-            format: 'dd/mm/yyyy',
+            format: 'yyyy-mm-dd',
             startDate: '-64y',
             endDate: '-18y'
         })
@@ -11,7 +11,7 @@ $(document).ready(function() {
             $('dateRangeForm').formValidation('revalidateField', 'date');
         });
 
-    $('#dateRangeForm').formValidation({
+    /*$('#dateRangeForm').formValidation({
         framework: 'bootstrap',
         icon: {
             valid: 'glyphicon glyphicon-ok',
@@ -25,7 +25,7 @@ $(document).ready(function() {
                         message: 'La fecha es requerida'
                     },
                     date: {
-                        format: 'DD/MM/YYYY',
+                        format: 'YYYY/MM/DD',
                         min: '-64y',
                         max: '-18y',
                         message: 'Fecha no válida'
@@ -33,5 +33,5 @@ $(document).ready(function() {
                 }
             }
         }
-    });
+    });*/
 });

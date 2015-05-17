@@ -19,7 +19,6 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $alias = $_POST['alias'];
     $fecha_nacimiento= date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-
     $contraseña = $_POST['contraseña'];
     // validate input
     $valid = true;
@@ -65,14 +64,60 @@ if(!empty($_POST)) {
 
     // insert data
     if($valid) {
-        require("bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento) values(?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo,$fecha_nacimiento ));
-        $PDO = null;
-        header("Location: bienvenida.php");
+        //SUBIR IMAGEN URL
+        if( !isset($_FILES['archivo']) ){
+            echo 'Ha habido un error, tienes que elegir una imagen<br/>';
+            echo '<a href="bienvenida.php">Subir archivo</a>';
+        }else{
+
+            $nombre = $_FILES['archivo']['name'];
+            $nombre_tmp = $_FILES['archivo']['tmp_name'];
+            $tipo = $_FILES['archivo']['type'];
+            $tamano = $_FILES['archivo']['size'];
+
+            $ext_permitidas = array('jpg','jpeg','gif','png');
+            $partes_nombre = explode('.', $nombre);
+            $extension = end( $partes_nombre );
+            $ext_correcta = in_array($extension, $ext_permitidas);
+            $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+            $limite = 4000 * 1024;
+
+            if( $ext_correcta && $tipo_correcto && $tamano <= $limite ){
+                if( $_FILES['archivo']['error'] > 0 ){
+                    echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                }else{
+                    echo 'Nombre: ' . $nombre . '<br/>';
+                    echo 'Tipo: ' . $tipo . '<br/>';
+                    echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                    echo 'Guardado en: ' . $nombre_tmp;
+
+                    if( file_exists( 'Mantenimients/img_empleados/'.$nombre) ){
+                        echo '<br/>El archivo ya existe: ' . $nombre;
+                    }else{
+                        move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $nombre);
+                        $url= "img_empleados/" . $nombre;
+                        echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
+                        require("bd.php");
+                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo,$fecha_nacimiento, $url ));
+                        $sql1 = "SELECT MAX(id_empleado) FROM empleados";
+                        $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios WHERE nombre='Administrador'";
+                        $sql3 = "INSERT INTO usuarios(alias, contraseña, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
+                        $stmt2 = $PDO->prepare($sql3);
+                        $stmt2->execute(array($alias, SHA($contraseña), 1, $sql1, $sql2 ));
+                        $PDO = null;
+                        header("Location: bienvenida.php");
+                    }
+                }
+            }else{
+                echo 'Archivo inválido';
+            }
+        }
     }
+
+
 }
 ?>
 <!DOCTYPE html>
@@ -109,7 +154,7 @@ if(!empty($_POST)) {
     <div class="row">
         <div class=" col-md-offset-3 col-md-6 col-sm-6">
             <legend><i class="glyphicon glypshicon-list-alt"></i></a> PRIMER USUARIO</legend>
-            <form action="#" method="post" class="form" role="form">
+            <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
                 <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
                 <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                     <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
@@ -145,21 +190,7 @@ if(!empty($_POST)) {
                     <?php print(!empty($generoError)?"<span class='help-block'>$generoError</span>":""); ?>
                 </div>
                 <div class='form-group'>
-                    <div class="input-group image-preview">
-                        <input type="text" class="form-control image-preview-filename" disabled="disabled" id='foto' value='<?php print(!empty($foto)?$foto:""); ?>'> <!-- don't give a name === doesn't send on POST/GET -->
-                    <span class="input-group-btn">
-                    <!-- image-preview-clear button -->
-                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-                        <span class="glyphicon glyphicon-remove"></span> Limpiar
-                    </button>
-                    <!-- image-preview-input -->
-                    <div class="btn btn-default image-preview-input">
-                        <span class="glyphicon glyphicon-folder-open"></span>
-                        <span class="image-preview-input-title">Buscar</span>
-                        <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
-                    </div>
-                </span>
-                    </div>
+                        <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                 </div>
                 <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
                 <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='nombres'  value='<?php print(!empty($nombres)?$nombres:""); ?>'/>
@@ -173,7 +204,7 @@ if(!empty($_POST)) {
                 <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>' />
                     <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Enviar">
                     Registrarse</button>
             </form>
         </div>
