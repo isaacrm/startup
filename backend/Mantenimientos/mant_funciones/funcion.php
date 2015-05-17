@@ -35,7 +35,7 @@
                                         <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
                                         <div class="table-responsive">
                                         <table class='table table-striped table-bordered table-hover'>
-                                            <tr class='warning'>
+                                            <tr class='warning '>
                                                 <th>ID</th>
                                                 <th>NOMBRE</th>
                                                 <th>DESCRIPCION</th>
