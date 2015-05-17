@@ -8,7 +8,7 @@
             <li><a href="mant_funciones/funcion.php"><i class="fa fa-tachometer fa-fw">
                         <div class="icon-bg bg-orange"></div>
                     </i><span class="menu-title">Funciones</span></a></li>
-            <li><a href="Layout.php"><i class="fa fa-desktop fa-fw">
+            <li><a href="mant_tipos_usuarios/tipo_usuario.php"><i class="fa fa-desktop fa-fw">
                         <div class="icon-bg bg-pink"></div>
                     </i><span class="menu-title">Layouts</span></a>
 

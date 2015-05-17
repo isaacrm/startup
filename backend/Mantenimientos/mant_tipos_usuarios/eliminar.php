@@ -51,8 +51,7 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <input type='hidden' name='id_funcion' value='<?php print($id); ?>'>
-                        <p class='alert bg-danger'>¿Borrar datos?</p>
-                        <div class='form-actions'>
+                        <p class='alert bg-danger'>¿Borrar datos?</p>                        <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
                             <a class='btn btn btn-default' href='tipo_usuario.php'>No</a>
                         </div>
