@@ -30,8 +30,8 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <section class="panel">
-                                <div class='container'>
+
+                                <div class='container col-lg-12'>
                                     <div class='row'>
                                         <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
                                         <div class="table-responsive">
@@ -66,7 +66,7 @@
                                         </table>
                                         </div>
                                     </div> <!-- /row -->
-                            </section>
+
                         </div>
                     </div>
                 </div>

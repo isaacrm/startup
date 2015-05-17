@@ -14,6 +14,11 @@
                     </i><span class="menu-title">Tipos de usuario</span></a>
 
             </li>
+            <li><a href="../funciones_tipos/funcion_tipo.php"><i class="fa fa-bar-chart-o fa-fw">
+                        <div class="icon-bg bg-orange"></div>
+                    </i><span class="menu-title">Charts</span></a>
+
+            </li>
             <li><a href="UIElements.php"><i class="fa fa-send-o fa-fw">
                         <div class="icon-bg bg-green"></div>
                     </i><span class="menu-title">UI Elements</span></a>
@@ -54,11 +59,7 @@
                     </i><span class="menu-title">Email</span></a>
 
             </li>
-            <li><a href="Charts.php"><i class="fa fa-bar-chart-o fa-fw">
-                        <div class="icon-bg bg-orange"></div>
-                    </i><span class="menu-title">Charts</span></a>
 
-            </li>
             <li><a href="Animation.php"><i class="fa fa-slack fa-fw">
                         <div class="icon-bg bg-green"></div>
                     </i><span class="menu-title">Animations</span></a></li>
