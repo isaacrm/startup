@@ -10,7 +10,7 @@
                     </i><span class="menu-title">Funciones</span></a></li>
             <li><a href="mant_tipos_usuarios/tipo_usuario.php"><i class="fa fa-desktop fa-fw">
                         <div class="icon-bg bg-pink"></div>
-                    </i><span class="menu-title">Layouts</span></a>
+                    </i><span class="menu-title">Tipos de usuario</span></a>
 
             </li>
             <li><a href="UIElements.php"><i class="fa fa-send-o fa-fw">
