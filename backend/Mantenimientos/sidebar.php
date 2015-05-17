@@ -29,7 +29,7 @@
                     </i><span class="menu-title">Tables</span></a>
 
             </li>
-            <li><a href="DataGrid.php"><i class="fa fa-database fa-fw">
+            <li><a href="mant_empleados/DataGrid.php"><i class="fa fa-database fa-fw">
                         <div class="icon-bg bg-red"></div>
                     </i><span class="menu-title">Data Grids</span></a>
 
