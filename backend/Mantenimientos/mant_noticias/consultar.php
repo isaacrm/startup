@@ -52,27 +52,27 @@ else {
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Nombre:</label>
+                            <label class="col-sm-2 control-label">Titulo:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['nombre']); ?></p>
+                                <p class="form-control-static"><?php print($data['titulo']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">Subtitulo</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                                <p class="form-control-static"><?php print($data['subtitulo']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">Leyenda</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                                <p class="form-control-static"><?php print($data['leyenda']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">Imagen</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                                <p class="form-control-static"><?php print($data['imagen']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
