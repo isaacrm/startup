@@ -1,28 +1,28 @@
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_pagina'])) {
+    $id = $_GET['id_pagina'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: paginas.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_funcion'];
+    $id = $_POST['id_pagina'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM funciones WHERE id_funcion = ?";
+    $sql = "DELETE FROM paginas WHERE id_pagina = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id));
+    $stmt->execute(array($id_pagina));
     $PDO = null;
-    header("Location: funcion.php");
+    header("Location: paginas.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Paginas</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,18 +43,18 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Eliminar Usuarios</div>
+                        Eliminar Paginas</div>
                 </div>
                 <div class="clearfix">
                 </div>
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_funcion' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_pagina' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='funcion.php'>No</a>
+                            <a class='btn btn btn-default' href='paginas.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

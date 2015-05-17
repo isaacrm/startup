@@ -76,11 +76,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
-                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print(!empty($nombre)?$nombre:""); ?>'>
-                            <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
+                            <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print(!empty($titulo)?$titulo:""); ?>'>
+                            <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($subtituloError)?"has-error":""); ?>'>
-                            <input type='text' name='subtitulo' placeholder='Subtitulo' required='required' id='subtitulo' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
+                            <input type='text' name='subtitulo' placeholder='Subtitulo' required='required' id='subtitulo' class='form-control' value='<?php print(!empty($subtitulo)?$titulo:""); ?>'>
                             <?php print(!empty($subtituloError)?"<span class='help-block'>$subtituloError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($leyendaError)?"has-error":""); ?>'>
@@ -93,7 +93,7 @@ if(!empty($_POST)) {
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
-                            <a class='btn btn btn-default' href='funcion.php'>Regresar</a>
+                            <a class='btn btn btn-default' href='noticias.php'>Regresar</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

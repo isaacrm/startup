@@ -1,28 +1,28 @@
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_noticia'])) {
+    $id = $_GET['id_noticia'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: noticias.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_funcion'];
+    $id = $_POST['id_noticia'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM funciones WHERE id_funcion = ?";
+    $sql = "DELETE FROM noticias WHERE id_noticia = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id));
+    $stmt->execute(array($id_noticia));
     $PDO = null;
-    header("Location: funcion.php");
+    header("Location: noticias.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Noticias</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,7 +43,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Eliminar Usuarios</div>
+                        Eliminar Noticias</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -54,7 +54,7 @@ if(!empty($_POST)) {
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='funcion.php'>No</a>
+                            <a class='btn btn btn-default' href='noticias.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->
