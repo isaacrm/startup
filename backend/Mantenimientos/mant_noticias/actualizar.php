@@ -7,7 +7,7 @@ if($id == null) {
     header("Location: noticia.php");
 }
 require("../../bd.php");
-if(!empty($_POST)) {
+if(!empty($_POST)){
     // validation errors
     $tituloError = null;
     $subtituloError = null;
