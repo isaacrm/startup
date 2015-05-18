@@ -12,112 +12,145 @@ if(!empty($_POST)) {
     $confirmarError = null;
     // post values
     $nombres = $_POST['nombres'];
+    $alias= $_POST['alias'];
     $apellidos = $_POST['apellidos'];
     $identificador = $_POST['identificador'];
     $telefono = $_POST['telefono'];
     $correo = $_POST['correo'];
     $sexo = $_POST['sexo'];
     $alias = $_POST['alias'];
-    $fecha_nacimiento= date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $contraseña = $_POST['contraseña'];
+    $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
+    $contra = sha1($_POST['contra']);
     // validate input
     $valid = true;
-    if(empty($nombres)) {
+
+       // $regex = '/(^\d{8})-(\d$)/';
+    //if (!preg_match($regex, $identificador)) {
+       // echo 'El DUI NO es válido';
+    //}
+
+    if (empty($nombres)) {
         $nombresError = "Por favor ingrese los nombres.";
         $valid = false;
     }
 
-    if(empty($apellidos)) {
+    if (empty($apellidos)) {
         $apellidosError = "Por favor ingrese los apellidos.";
         $valid = false;
     }
 
-    if(empty($identificador)) {
+    if (empty($identificador)) {
         $identificadorError = "Por favor ingrese la DUI.";
         $valid = false;
     }
 
-    if(empty($telefono)) {
+    if (empty($telefono)) {
         $telefonosError = "Por favor ingrese el telefono.";
         $valid = false;
     }
 
-    if(empty($correo)) {
+    if (empty($correo)) {
         $correoError = "Por favor ingrese el correo.";
         $valid = false;
     }
 
-    if(empty($sexo)) {
+    if (empty($sexo)) {
         $sexoError = "Por favor seleccione el sexo.";
         $valid = false;
     }
 
-    if(empty($alias)) {
+    if (empty($alias)) {
         $aliasError = "Por favor ingrese el alias.";
         $valid = false;
     }
 
-    if(empty($contraseña)) {
+    if (empty($contra)) {
         $contraseñaError = "Por favor ingrese la contraseña.";
         $valid = false;
     }
 
     // insert data
-    if($valid) {
-        //SUBIR IMAGEN URL
-        if( !isset($_FILES['archivo']) ){
-            echo 'Ha habido un error, tienes que elegir una imagen<br/>';
-            echo '<a href="bienvenida.php">Subir archivo</a>';
-        }else{
+    if ($_POST['contra'] != $_POST['confirmar']) {
+        $_POST['contra']="";
+        $_POST['confirmar']="";
+    } else {
+        if ($valid) {
+            //SUBIR IMAGEN URL
+            if (!isset($_FILES['archivo'])) {
+                echo 'Ha habido un error, tienes que elegir una imagen<br/>';
+                echo '<a href="bienvenida.php">Subir archivo</a>';
+            } else {
 
-            $nombre = $_FILES['archivo']['name'];
-            $nombre_tmp = $_FILES['archivo']['tmp_name'];
-            $tipo = $_FILES['archivo']['type'];
-            $tamano = $_FILES['archivo']['size'];
+                $nombre = $_FILES['archivo']['name'];
+                $nombre_tmp = $_FILES['archivo']['tmp_name'];
+                $tipo = $_FILES['archivo']['type'];
+                $tamano = $_FILES['archivo']['size'];
 
-            $ext_permitidas = array('jpg','jpeg','gif','png');
-            $partes_nombre = explode('.', $nombre);
-            $extension = end( $partes_nombre );
-            $ext_correcta = in_array($extension, $ext_permitidas);
-            $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-            $limite = 4000 * 1024;
+                $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+                $partes_nombre = explode('.', $nombre);
+                $extension = end($partes_nombre);
+                $ext_correcta = in_array($extension, $ext_permitidas);
+                $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+                $limite = 500 * 1024;
 
-            if( $ext_correcta && $tipo_correcto && $tamano <= $limite ){
-                if( $_FILES['archivo']['error'] > 0 ){
-                    echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
-                }else{
-                    echo 'Nombre: ' . $nombre . '<br/>';
-                    echo 'Tipo: ' . $tipo . '<br/>';
-                    echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
-                    echo 'Guardado en: ' . $nombre_tmp;
+                if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
+                    if ($_FILES['archivo']['error'] > 0) {
+                        echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                    } else {
+                        echo 'Nombre: ' . $nombre . '<br/>';
+                        echo 'Tipo: ' . $tipo . '<br/>';
+                        echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                        echo 'Guardado en: ' . $nombre_tmp;
 
-                    if( file_exists( 'Mantenimients/img_empleados/'.$nombre) ){
-                        echo '<br/>El archivo ya existe: ' . $nombre;
-                    }else{
-                        move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $nombre);
-                        $url= "img_empleados/" . $nombre;
-                        echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
-                        require("bd.php");
-                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
-                        $stmt = $PDO->prepare($sql);
-                        $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo,$fecha_nacimiento, $url ));
-                        $sql1 = "SELECT MAX(id_empleado) FROM empleados";
-                        $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios WHERE nombre='Administrador'";
-                        $sql3 = "INSERT INTO usuarios(alias, contraseña, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
-                        $stmt2 = $PDO->prepare($sql3);
-                        $stmt2->execute(array($alias, SHA($contraseña), 1, $sql1, $sql2 ));
-                        $PDO = null;
-                        header("Location: bienvenida.php");
+                        if (file_exists('Mantenimients/img_empleados/' . $nombre)) {
+                            echo '<br/>El archivo ya existe: ' . $nombre;
+                        } else {
+                            move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $nombre);
+                            $url = "img_empleados/" . $nombre;
+                            echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
+                            require("bd.php");
+                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
+                            $stmt = $PDO->prepare($sql);
+                            $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+                            $PDO = null;
+                        }
                     }
+                } else {
+                    echo 'Archivo inválido';
                 }
-            }else{
-                echo 'Archivo inválido';
+                require("bd2.php");
+                $sql = "INSERT INTO tipos_usuarios(nombre,descripcion, agregar, modificar, eliminar, consultar) VALUES ('Administrador', 'El que controla todo',1 ,1 ,1 ,1)";
+                $result = mysql_query($sql);
+
+                require("bd2.php");
+                $resultado = mysql_query("SELECT MAX(id_empleado) FROM empleados");
+                if (!$resultado) {
+                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                    exit;
+                }
+                $fila = mysql_fetch_row($resultado);
+                $idemp = $fila[0];
+
+                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='Administrador'");
+                if (!$resultado2) {
+                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                    exit;
+                }
+                $fila2 = mysql_fetch_row($resultado2);
+                $idtip = $fila2[0];
+
+                require("bd.php");
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
+                $PDO = null;
+                header("Location: bienvenida.php");
             }
         }
+
     }
-
-
 }
 ?>
 <!DOCTYPE html>
@@ -193,18 +226,17 @@ if(!empty($_POST)) {
                         <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                 </div>
                 <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
-                <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='nombres'  value='<?php print(!empty($nombres)?$nombres:""); ?>'/>
+                <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias'  value='<?php print(!empty($alias)?$alias:""); ?>'/>
                     <?php print(!empty($aliasError)?"<span class='help-block'>$nombresError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($contraseñaError)?"has-error":""); ?>'>
-                <input class="form-control" name="contraseña" placeholder="Contraseña" type="password" required='required' id='nombres' autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'/>
-                    <?php print(!empty($contraseñaError)?"<span class='help-block'>$contraseñaError</span>":""); ?>
+                <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autofocus />
                 </div>
                 <div class='form-group <?php print(!empty($confirmarError)?"has-error":""); ?>'>
-                <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>' />
+                <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus />
                     <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Enviar">
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="Enviar"">
                     Registrarse</button>
             </form>
         </div>
