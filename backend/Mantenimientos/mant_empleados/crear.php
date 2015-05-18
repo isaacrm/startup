@@ -255,7 +255,7 @@ if(!empty($_POST)) {
                             <button type='submit' class='btn btn-success'>Crear</button>
                             <a class='btn btn btn-default' href='empleados.php'>Regresar</a>
                         </div>
-                        Registrarse</button>
+
                     </form>
                 </div> <!-- /row -->
             </div>
