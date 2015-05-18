@@ -1,26 +1,32 @@
 <?php
 $id = null;
-if(!empty($_GET['id_servicio'])) {
-    $id = $_GET['id_servicio'];
+if(!empty($_GET['id_imagen_servicio'])) {
+    $id = $_GET['id_imagen_servicio'];
 }
 if($id == null) {
-    header("Location: servicios.php");
+    header("Location: imagenes_servicios.php");
 }
 require("bd.php");
 if(!empty($_POST)) {
     // validation errors
-    $tipoError = null;
+    $urlError = null;
+    $tituloError = null;
     $descripcionError = null;
-    $precioError = null;
     // post values
-    $tipo = $_POST['tipo'];
+    $url = $_POST['url'];
+    $titulo = $_POST['titulo'];
     $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
 
     // validate input
     $valid = true;
-    if(empty($tipo)) {
-        $tipoError = "Por favor ingrese el tipo de servicio.";
+    if(empty($url)) {
+        $urlError = "Por favor ingrese la url de la imagen.";
+        $valid = false;
+    }
+
+
+    if(empty($titulo)) {
+        $tituloError = "Por favor ingrese el titulo.";
         $valid = false;
     }
 
@@ -29,42 +35,36 @@ if(!empty($_POST)) {
         $valid = false;
     }
 
-
-    if(empty($precio)) {
-        $precioError = "Por favor ingrese el precio del servicio.";
-        $valid = false;
-    }
-
     // update data
     if($valid) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE servicios SET tipo = ?, descripcion = ?, precio = ? WHERE id_servicio = ?";
+        $sql = "UPDATE imagenes_servicios SET url = ?, titulo = ?, descripcion = ? WHERE id_imagen_servicio = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($tipo, $descripcion, $precio, $id));
+        $stmt->execute(array($url, $titulo, $descripcion, $id));
         $PDO = null;
-        header("Location: servicios.php");
+        header("Location: imagenes_servicios.php");
     }
 }
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT tipo, descripcion, precio FROM servicios WHERE id_servicio = ?";
+    $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios WHERE id_imagen_servicio = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_servicio));
+    $stmt->execute(array($id_imagen_servicio));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: servicios.php");
+        header("Location: imagenes_servicios.php");
     }
-    $tipo = $data['tipo'];
+    $url = $data['url'];
+    $titulo = $data['titulo'];
     $descripcion= $data['descripcion'];
-    $precio = $data['precio'];
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Servicios</title>
+    <title>Winefun | Imagenes</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,30 +85,30 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Modificar Servicio</div>
+                        Modificar Imagen</div>
                 </div>
                 <div class="clearfix">
                 </div>
 
                 <form method='POST'>
-                    <div class='form-group <?php print(!empty($tipoError)?"has-error":""); ?>'>
-                        <label for='tipo'>Tipo</label>
-                        <input type='text' name='tipo' placeholder='Tipo' required='required' id='tipo' class='form-control' value='<?php print($tipo); ?>'>
-                        <?php print(!empty($tipoError)?"<span class='help-block'>$tipoError</span>":""); ?>
+                    <div class='form-group <?php print(!empty($urlError)?"has-error":""); ?>'>
+                        <label for='url'>Url</label>
+                        <input type='text' name='url' placeholder='Url' required='required' id='url' class='form-control' value='<?php print($url); ?>'>
+                        <?php print(!empty($urlError)?"<span class='help-block'>$urlError</span>":""); ?>
+                    </div>
+                    <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
+                        <label for='titulo'>Titulo</label>
+                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print($titulo); ?>'>
+                        <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
                         <label for='descripcion'>Descripción</label>
                         <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print($descripcion); ?>'>
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
-                    <div class='form-group <?php print(!empty($precioError)?"has-error":""); ?>'>
-                        <label for='precio'>Precio</label>
-                        <input type='text' name='precio' placeholder='Precio' required='required' id='precio' class='form-control' value='<?php print($precio); ?>'>
-                        <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
-                    </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
-                        <a class='btn btn btn-default' href='servicios.php'>Regresar</a>
+                        <a class='btn btn btn-default' href='imagenes_servicios.php'>Regresar</a>
                     </div>
                 </form>
 
