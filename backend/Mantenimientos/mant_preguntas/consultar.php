@@ -1,29 +1,29 @@
 <?php
 $id = null;
-if(!empty($_GET['id_noticia'])) {
-    $id = $_GET['id_noticia'];
+if(!empty($_GET['id_pregunta'])) {
+    $id = $_GET['id_pregunta'];
 }
 if($id == null) {
-    header("Location: noticias.php");
+    header("Location:preguntas.php");
 }
 else {
     // read data
-    require("../../bd.php");
+    require("bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM noticias where id_noticia = ?";
+    $sql = "SELECT pregunta, respuesta FROM preguntas where id_pregunta = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id_pregunta));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: noticias.php");
+        header("Location: preguntas.php");
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Noticias</title>
+    <title>Winefun | Preguntas</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +44,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Consultar Noticias</div>
+                        Consultar Pregunta</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -52,31 +52,19 @@ else {
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Titulo:</label>
+                            <label class="col-sm-2 control-label">Pregunta:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['titulo']); ?></p>
+                                <p class="form-control-static"><?php print($data['pregunta']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Subtitulo</label>
+                            <label class="col-sm-2 control-label">Respuesta</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['subtitulo']); ?></p>
+                                <p class="form-control-static"><?php print($data['respuesta']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Leyenda</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['leyenda']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Imagen</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['imagen']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="noticias.php">Regresar</a>
+                            <a class="btn btn btn-default" href="preguntas.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->

@@ -52,7 +52,7 @@ if(!empty($_POST)) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO equipos(nombre, apellido, cargo, frase, twitter, facebook) values(?, ?, ?, ?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre , $apellido, $cargo, $frase, $twitter, $facebook));
+        $stmt->execute(array($nombre, $apellido, $cargo, $frase, $twitter, $facebook));
         $PDO = null;
         header("Location: equipos.php");
     }

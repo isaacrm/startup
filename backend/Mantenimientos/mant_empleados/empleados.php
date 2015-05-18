@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Empleados</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +22,7 @@
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Funciones</div>
+                        Empleados</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -63,9 +63,9 @@
                                             $data .= "<td>$row[fecha_nacimiento]</td>";
                                             $data .= "<td>$row[foto]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_tipo_usuario=$row[id_empleado]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_tipo_usuario=$row[id_empleado]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_tipo_usuario=$row[id_tipo_empleado]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_empleado=$row[id_empleado]'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_empleado=$row[id_empleado]'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_empleado=$row[id_tipo_empleado]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

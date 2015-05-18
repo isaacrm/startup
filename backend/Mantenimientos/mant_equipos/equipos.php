@@ -34,7 +34,7 @@
 
                         <div class='container col-lg-12'>
                             <div class='row'>
-                                <p><a class='btn btn-xs btn-success' href='equipos.php'>Crear</a></p>
+                                <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
 
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
@@ -52,7 +52,7 @@
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_equipo, nombre, apellido, cargo, frase, twitter, facebook FROM equipos ORDER BY id_equipo ASC";
+                                        $sql = "SELECT id_equipo, nombre, apellido, cargo, frase, twitter, facebook, id_pagina FROM equipos ORDER BY id_equipo ASC";
                                         $data = "";
                                         foreach ($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
