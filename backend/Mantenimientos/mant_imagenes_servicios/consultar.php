@@ -8,7 +8,7 @@ if($id == null) {
 }
 else {
     // read data
-    require("bd.php");
+    require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios where id_imagen_servicio = ?";
     $stmt = $PDO->prepare($sql);

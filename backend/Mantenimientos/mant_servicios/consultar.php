@@ -8,7 +8,7 @@ if($id == null) {
 }
 else {
     // read data
-    require("bd.php");
+    require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT tipo, descripcion, precio FROM servicios where id_servicio = ?";
     $stmt = $PDO->prepare($sql);

@@ -8,7 +8,7 @@ if($id == null) {
 }
 else {
     // read data
-    require("bd.php");
+    require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT pregunta, respuesta FROM preguntas where id_pregunta = ?";
     $stmt = $PDO->prepare($sql);

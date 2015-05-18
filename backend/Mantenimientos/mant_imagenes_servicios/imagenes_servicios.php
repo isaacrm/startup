@@ -45,7 +45,7 @@
                                         </tr>
                                         <tbody>
                                         <?php
-                                        require("bd.php");
+                                        require("../../bd.php");
                                         $sql = "SELECT id_imagen_servicio, url, titulo, descripcion, id_servicio FROM imagenes_servicios ORDER BY id_imagen_servicio ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {

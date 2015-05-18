@@ -43,7 +43,7 @@
                                         </tr>
                                         <tbody>
                                         <?php
-                                        require("bd.php");
+                                        require("../../bd.php");
                                         $sql = "SELECT id_pagina, encabezado, frase FROM paginas ORDER BY id_pagina ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {

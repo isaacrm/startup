@@ -21,7 +21,7 @@ if(!empty($_POST)) {
 
     // insert data
     if($valid) {
-        require("bd.php");
+        require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO preguntas(pregunta, respuesta) values(?, ?)";
         $stmt = $PDO->prepare($sql);

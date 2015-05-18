@@ -45,7 +45,7 @@
                                         </tr>
                                         <tbody>
                                         <?php
-                                        require("bd.php");
+                                        require("../../bd.php");
                                         $sql = "SELECT id_servicio, tipo, descripcion, precio, id_pagina FROM servicios ORDER BY id_servicio ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {

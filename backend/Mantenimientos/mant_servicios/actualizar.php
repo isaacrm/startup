@@ -6,7 +6,7 @@ if(!empty($_GET['id_servicio'])) {
 if($id == null) {
     header("Location: servicios.php");
 }
-require("bd.php");
+require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
     $tipoError = null;

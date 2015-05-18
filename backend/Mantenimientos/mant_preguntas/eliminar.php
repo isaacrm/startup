@@ -9,7 +9,7 @@ if($id == null) {
 
 // Delete Data
 if(!empty($_POST)) {
-    require("bd.php");
+    require("../../bd.php");
     $id = $_POST['id_pregunta'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM preguntas WHERE id_pregunta = ?";

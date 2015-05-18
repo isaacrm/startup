@@ -6,7 +6,7 @@ if(!empty($_GET['id_imagen_servicio'])) {
 if($id == null) {
     header("Location: imagenes_servicios.php");
 }
-require("bd.php");
+require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
     $urlError = null;
