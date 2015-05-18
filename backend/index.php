@@ -5,7 +5,7 @@ session_start();
 //si no se ha hecho la sesion nos regresará a login.php
 if(!isset($_SESSION['alias']))
 {
-    header('Location: login.php');
+    header('Location: Login.php');
     exit();
 }
 ?>

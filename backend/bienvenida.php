@@ -1,3 +1,4 @@
+<?php include "controlador.php"?>
 <?php
 if(!empty($_POST)) {
     // validation errors
@@ -146,7 +147,7 @@ if(!empty($_POST)) {
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
                 $PDO = null;
-                header("Location: bienvenida.php");
+                header("Location: Login.php");
             }
         }
 
