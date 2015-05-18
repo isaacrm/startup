@@ -41,12 +41,12 @@ html {
   height: 100%;
 }
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
-  line-height: 1.42857143;
-  color: #999999;
-  background-color: #f0f2f5;
-  height: 100%;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #0099CC;
+	background-color: #f0f2f5;
+	height: 100%;
 }
 input,
 button,
@@ -609,7 +609,7 @@ hr {
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
-  -webkit-border-radius: 8 !important;
+
   -moz-border-radius: 8px !important;
   border-radius: 8px !important;
 }
@@ -1870,7 +1870,7 @@ canvas {
   width: 60px;
   height: 60px;
   -webkit-background-clip: padding-box;
-  -moz-background-clip: padding-box;
+
   background-clip: padding-box;
   border-radius: 50%;
   text-align: center;
@@ -2288,9 +2288,7 @@ ul.nav.nav-tabs li.active a {
     border-right: 15px solid #d9534f;
   }
   ul.timeline > li > .timeline-panel {
-    width: calc(80%);
-    width: -moz-calc(80%);
-    width: -webkit-calc(80%);
+
   }
   ul.timeline > li > .timeline-badge {
     left: 15px;
@@ -6206,7 +6204,7 @@ li [class*=" icon-"].icon-large {
   margin-right: 0px;
   border-left: 0;
   border-right: 0;
-  background-color: none !important;
+
   border-top-color: transparent !important;
   color: #999999;
   cursor: default;
@@ -6233,7 +6231,7 @@ li [class*=" icon-"].icon-large {
   margin-right: 0;
   border-left: 0;
   border-right: 0;
-  background-color: none !important;
+
   border-top-color: transparent;
 }
 .portlet-tabs > .tab-content {

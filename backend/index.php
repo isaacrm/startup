@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'estilos.php';?>
+    <?php include 'Mantenimientos/estilos.php';?>
 </head>
 <body>
     <div>
@@ -13,9 +14,9 @@
         <!--BEGIN BACK TO TOP-->
         <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
         <!--END BACK TO TOP-->
-        <?php include 'topbar.php';?>
+        <?php include 'Mantenimientos/topbar.php';?>
         <div id="wrapper">
-            <?php include 'sidebar.php';?>
+            <?php include 'Mantenimientos/sidebar.php';?>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -41,6 +42,6 @@
             <!--END PAGE WRAPPER-->
         </div>
 </div>
-    <?php include 'funciones.php';?>
+    <?php include 'Mantenimientos/funciones.php';?>
 </body>
 </html>
