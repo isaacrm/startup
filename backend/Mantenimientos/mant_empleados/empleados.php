@@ -56,7 +56,7 @@
                                             $data .= "<td>$row[id_empleado]</td>";
                                             $data .= "<td>$row[nombres]</td>";
                                             $data .= "<td>$row[apellidos]</td>";
-                                            $data .= "<td>$row[identifiaor]</td>";
+                                            $data .= "<td>$row[identificador]</td>";
                                             $data .= "<td>$row[telefono]</td>";
                                             $data .= "<td>$row[correo]</td>";
                                             $data .= "<td>$row[sexo]</td>";
@@ -65,7 +65,7 @@
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_empleado=$row[id_empleado]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_empleado=$row[id_empleado]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_empleado=$row[id_tipo_empleado]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_empleado=$row[id_empleado]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

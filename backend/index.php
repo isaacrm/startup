@@ -1,3 +1,14 @@
+<?php
+//creamos la sesion
+session_start();
+//validamos si se ha hecho o no el inicio de sesion correctamente
+//si no se ha hecho la sesion nos regresará a login.php
+if(!isset($_SESSION['alias']))
+{
+    header('Location: login.php');
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -14,9 +25,9 @@
         <!--BEGIN BACK TO TOP-->
         <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
         <!--END BACK TO TOP-->
-        <?php include 'Mantenimientos/topbar.php';?>
+        <?php include 'Mantenimientos/topbar2.php';?>
         <div id="wrapper">
-            <?php include 'Mantenimientos/sidebar.php';?>
+            <?php include 'Mantenimientos/sidebar2.php';?>
             <!--BEGIN PAGE WRAPPER-->
             <div id="page-wrapper">
                 <!--BEGIN TITLE & BREADCRUMB PAGE-->
@@ -25,11 +36,6 @@
                         <div class="page-title">
                             Inicio</div>
                     </div>
-                    <ol class="breadcrumb page-breadcrumb pull-right">
-                        <li><i class="fa fa-home"></i>&nbsp;<a href="mant_funciones/funcion.php">Inicio</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="hidden"><a href="#">Inicio</a>&nbsp;&nbsp;<i class="fa fa-angle-right"></i>&nbsp;&nbsp;</li>
-                        <li class="active">Inicio</li>
-                    </ol>
                     <div class="clearfix">
                     </div>
                     <!-- Form validations -->
