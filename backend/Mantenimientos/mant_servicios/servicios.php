@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Preguntas</title>
+    <title>Winefun | Servicios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,25 +38,27 @@
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>PREGUNTA</th>
-                                            <th>RESPUESTA</th>
+                                            <th>TIPO</th>
+                                            <th>DESCRIPCION</th>
+                                            <th>PRECIO</th>
                                             <th>ID</th>
                                         </tr>
                                         <tbody>
                                         <?php
-                                        require("../../bd.php");
-                                        $sql = "SELECT id_pregunta, pregunta, respuesta, id_pagina FROM preguntas ORDER BY id_pregunta ASC";
+                                        require("bd.php");
+                                        $sql = "SELECT id_servicio, tipo, descripcion, precio, id_pagina FROM servicios ORDER BY id_servicio ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
-                                            $data .= "<td>$row[id_pregunta]</td>";
-                                            $data .= "<td>$row[pregunta]</td>";
-                                            $data .= "<td>$row[respuesta]</td>";
+                                            $data .= "<td>$row[id_servicio]</td>";
+                                            $data .= "<td>$row[tipo]</td>";
+                                            $data .= "<td>$row[descripcion]</td>";
+                                            $data .= "<td>$row[precio]</td>";
                                             $data .= "<td>$row[id_pagina]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_preguntas/consultar.php?id_pregunta=$row[id_pregunta]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_preguntas/actualizar.php?id_pregunta=$row[id_pregunta]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_preguntas/eliminar.php?id_pregunta=$row[id_pregunta]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_servicios/consultar.php?id_servicio=$row[id_servicio]'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_servicios/actualizar.php?id_servicio=$row[id_servicio]'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_servicios/eliminar.php?id_servicio=$row[id_servicio]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }
@@ -87,5 +89,5 @@
  * Created by PhpStorm.
  * User: Karen
  * Date: 17/05/2015
- * Time: 01:19 AM
+ * Time: 08:12 PM
  */
