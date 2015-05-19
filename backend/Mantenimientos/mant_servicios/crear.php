@@ -28,11 +28,19 @@ if(!empty($_POST)) {
     }
     // insert data
     if($valid) {
+        require("../../bd2.php");
+        $resultado2 = mysql_query("SELECT id_pagina FROM paginas WHERE encabezado ='".$_POST['tipo']."'");
+        if (!$resultado2) {
+            echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+            exit;
+        }
+        $fila2 = mysql_fetch_row($resultado2);
+        $idtip = $fila2[0];
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO servicios(tipo, descripcion, precio) values(?, ?, ?)";
+        $sql = "INSERT INTO servicios(tipo, descripcion, precio, id_pagina) values(?, ?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($tipo , $descripcion, $precio));
+        $stmt->execute(array($tipo , $descripcion, $precio, $idtip));
         $PDO = null;
         header("Location: servicios.php");
     }
@@ -80,6 +88,19 @@ if(!empty($_POST)) {
                         <div class='form-group <?php print(!empty($precioError)?"has-error":""); ?>'>
                             <input type='text' name='precio' placeholder='Precio' required='required' id='precio' class='form-control' value='<?php print(!empty($precio)?$precio:""); ?>'>
                             <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
+                        </div>
+                        <div class='form-group'>
+                            <label for='genero'>Nombre de página</label>
+                            <select name='tipo' required='required' id='tipo' class='form-control'>
+                                <option></option>
+                                <?php
+                                require("../../bd2.php");
+                                $result = mysql_query("SELECT encabezado FROM paginas");
+                                while ( $resultado = mysql_fetch_array($result)){
+                                    echo "<option value='".$resultado['encabezado']."'> ".$resultado['encabezado']."</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>

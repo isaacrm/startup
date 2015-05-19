@@ -41,12 +41,13 @@
                                             <th>TIPO</th>
                                             <th>DESCRIPCION</th>
                                             <th>PRECIO</th>
-                                            <th>ID</th>
+                                            <th>NOMBRE PÁGINA</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_servicio, tipo, descripcion, precio, id_pagina FROM servicios ORDER BY id_servicio ASC";
+                                        $sql = "SELECT id_servicio, tipo, descripcion, precio, encabezado FROM servicios, paginas WHERE servicios.id_pagina=paginas.id_pagina ORDER BY id_servicio ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -54,7 +55,7 @@
                                             $data .= "<td>$row[tipo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td>$row[precio]</td>";
-                                            $data .= "<td>$row[id_pagina]</td>";
+                                            $data .= "<td>$row[encabezado]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_servicios/consultar.php?id_servicio=$row[id_servicio]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_servicios/actualizar.php?id_servicio=$row[id_servicio]'>Actualizar</a>&nbsp;";
