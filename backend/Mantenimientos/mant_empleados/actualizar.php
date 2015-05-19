@@ -95,7 +95,7 @@ if(!empty($_POST)) {
             $partes_nombre = explode('.', $nombre);
             $extension = end($partes_nombre);
             $ext_correcta = in_array($extension, $ext_permitidas);
-            $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+            $tipo_correcto = preg_match('/^image\/(jpg|jpeg|gif|png)$/', $tipo);
             $limite = 500 * 1024;
 
             if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
@@ -121,7 +121,7 @@ if(!empty($_POST)) {
                         $fila2 = mysql_fetch_row($resultado2);
                         $idtip = $fila2[0];
                         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' )";
+                        $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
                         $stmt = $PDO->prepare($sql);
                         $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
                         $PDO = null;
@@ -247,7 +247,7 @@ if(!empty($_POST)) {
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
                             <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias'  readonly value='<?php print(!empty($alias)?$alias:""); ?>'/>
-                            <?php print(!empty($aliasError)?"<span class='help-block'>$nombresError</span>":""); ?>
+                            <?php print(!empty($aliasError)?"<span class='help-block'>$aliasError</span>":""); ?>
                         </div>
                         <div class='form-group'>
                             <label for='genero'>Tipo de usuario</label>

@@ -1,39 +1,45 @@
 <?php
 if(!empty($_POST)) {
     // validation errors
-    $nombresError = null;
-    $descripcionError = null;
+    $aliasError = null;
+    $contrasenaError = null;
+    $estadoError = null;
     // post values
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
+    $alias = $_POST['alias'];
+    $contrasena = $_POST['contrasena'];
+    $estado = $_POST['estado'];
 
     // validate input
     $valid = true;
-    if(empty($nombre)) {
-        $nombresError = "Por favor ingrese los nombres.";
+    if(empty($alias)) {
+        $aliasError = "Por favor ingrese un alias.";
         $valid = false;
     }
 
-    if(empty($descripcion)) {
-        $descripcionError = "Por favor ingrese la descripcion.";
+    if(empty($contrasena)) {
+        $contrasenaError = "Por favor ingrese su contraseña.";
         $valid = false;
     }
+
+    if(empty($estado)) {
+        $estadoError = "Por favor ingrese su estado.";
+        $valid = false;
     // insert data
     if($valid) {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO funciones(nombre, descripcion) values(?, ?)";
+        $sql = "INSERT INTO usuarios(alias, contrasena, estado) values(?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre , $descripcion));
+        $stmt->execute(array($alias, $contrasena, $estado));
         $PDO = null;
-        header("Location: funcion.php");
+        header("Location: usuarios.php");
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Mantenimiento | Funciones</title>
+    <title>Mantenimiento | Usuarios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,24 +60,28 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Funciones</div>
+                        Crear Usuario</div>
                 </div>
                 <div class="clearfix">
 
                 </div>
                 <div class='row'>
                     <form method='POST'>
-                        <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print(!empty($nombre)?$nombre:""); ?>'>
-                            <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
+                        <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
+                            <input type='text' name='alias' placeholder='Alias' required='required' id='alias' class='form-control' value='<?php print(!empty($alias)?$alias:""); ?>'>
+                            <?php print(!empty($aliasError)?"<span class='help-block'>$aliasError</span>":""); ?>
                         </div>
-                        <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
-                            <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
+                        <div class='form-group <?php print(!empty($contrasenaError)?"has-error":""); ?>'>
+                            <input type='text' name='contrasena' placeholder='Contraseña' required='required' id='contrasena' class='form-control' value='<?php print(!empty($contrasena)?$contrasena:""); ?>'>
+                            <?php print(!empty($contrasenaError)?"<span class='help-block'>$contrasenaError</span>":""); ?>
+                        </div>
+                        <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
+                            <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print(!empty($estado)?$estado:""); ?>'>
+                            <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
-                            <a class='btn btn btn-default' href='funcion.php'>Regresar</a>
+                            <a class='btn btn btn-default' href='usuarios.php'>Regresar</a>
                         </div>
                     </form>
                 </div> <!-- /row -->
