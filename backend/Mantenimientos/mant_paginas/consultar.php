@@ -1,22 +1,22 @@
 <?php
 $id = null;
-if(!empty($_GET['id_noticia'])) {
-    $id = $_GET['id_noticia'];
+if(!empty($_GET['id_pagina'])) {
+    $id = $_GET['id_pagina'];
 }
 if($id == null) {
-    header("Location: noticias.php");
+    header("Location: paginas.php");
 }
 else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM noticias where id_noticia = ?";
+    $sql = "SELECT encabezado, frase, estado FROM paginas where id_pagina = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id_pagina));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: noticias.php");
+        header("Location: paginas.php");
     }
 }
 ?>
@@ -61,6 +61,12 @@ else {
                             <label class="col-sm-2 control-label">Frase</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['frase']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Estado</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['estado']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
