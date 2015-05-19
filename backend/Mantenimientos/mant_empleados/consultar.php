@@ -1,22 +1,22 @@
 <?php
 $id = null;
-if(!empty($_GET['id_tipo_usuario'])) {
-    $id = $_GET['id_tipo_usuario'];
+if(!empty($_GET['id_empleado'])) {
+    $id = $_GET['id_empleado'];
 }
 if($id == null) {
-    header("Location: tipo_usuario.php");
+    header("Location: empleados.php");
 }
 else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombre, descripcion FROM tipos_usuarios where id_tipo_usuario = ?";
+    $sql = "SELECT nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto FROM empleados where id_empleado = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: tipo_usuario.php");
+        header("Location: empleados.php");
     }
 }
 ?>
@@ -44,7 +44,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Consultar Tipos de Usuario</div>
+                        Consultar Empleados</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -54,17 +54,53 @@ else {
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Nombre:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['nombre']); ?></p>
+                                <p class="form-control-static"><?php print($data['nombres']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">Apellidos</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                                <p class="form-control-static"><?php print($data['apellidos']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="tipo_usuario.php">Regresar</a>
+                            <label class="col-sm-2 control-label">Identificador</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['identificador']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Teléfono</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['telefono']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Correo</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['correo']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Sexo</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['sexo']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Fecha de Nacimiento</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['fecha_nacimiento']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Foto</label>
+                            <div class="col-sm-10">
+                                <?php print "<img src='../".$data['foto']."'border='0' width='150' height='200'>";?>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <a class="btn btn btn-default" href="empleados.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->

@@ -12,7 +12,7 @@ if(!isset($_SESSION['alias']))
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Tipos de Usuario</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +33,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Funciones</div>
+                        Tipos de Usuario</div>
                 </div>
                 <div class="clearfix">
                 </div>

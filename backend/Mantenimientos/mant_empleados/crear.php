@@ -130,21 +130,20 @@ if(!empty($_POST)) {
                 $fila = mysql_fetch_row($resultado);
                 $idemp = $fila[0];
 
-                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre=?");
+                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'");
                 if (!$resultado2) {
                     echo 'No se pudo ejecutar la consulta: ' . mysql_error();
                     exit;
                 }
                 $fila2 = mysql_fetch_row($resultado2);
                 $idtip = $fila2[0];
-
                 require("../../bd.php");
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
                 $PDO = null;
-                header("Location: Login.php");
+                header("Location: empleados.php");
             }
         }
 
@@ -154,19 +153,31 @@ if(!empty($_POST)) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Mantenimiento | Tipos de Usuario</title>
+    <title>Mantenimiento | Empleados-Usuarios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--SCRIPT DE DATETIMEPICKER -->
+
+    <!--Loading bootstrap css-->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--SCRIPT DE VALIDACIONES-->
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link type="text/css" rel="stylesheet" href="../styles/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../styles/main.css">
+    <link type="text/css" rel="stylesheet" href="../styles/style-responsive.css">
+    <link type="text/css" rel="stylesheet" href="../styles/pace.css">
+    <link type="text/css" rel="stylesheet" href="../../css/estilos.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="../../css/estilos.css">
     <script type="text/javascript"  src="../../js/validaciones.js"></script>
-    <script type="text/javascript"  src="../../js/funciones.js"></script>
-    <?php include '../estilos2.php';?>
-
 </head>
 <body>
 <div>
@@ -183,7 +194,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Tipos de Usuario</div>
+                        Crear Empleados-Usuarios</div>
                 </div>
                 <div class="clearfix">
 
@@ -267,6 +278,5 @@ if(!empty($_POST)) {
         <!--END PAGE WRAPPER-->
     </div>
 </div>
-<?php include '../funciones2.php';?>
 </body>
 </html>

@@ -33,6 +33,8 @@
 <script src="../script/highcharts-more.js"></script>
 <script src="../script/charts-highchart-pie.js"></script>
 <script src="../script/charts-highchart-more.js"></script>
+
+
 <!--CORE JAVASCRIPT-->
 <script src="../script/main.js"></script>
 <script>        (function (i, s, o, g, r, a, m) {
