@@ -12,12 +12,12 @@ if(!empty($_POST)){
     $tituloError = null;
     $subtituloError = null;
     $leyendeError = null;
-    $imagenError = null;
+
     // post values
     $titulo = $_POST['titulo'];
     $subtitulo = $_POST['subtitulo'];
     $leyenda = $_POST['leyenda'];
-    $imagen = $_POST['imagen'];
+
 
     // validate input
     $valid = true;
@@ -35,28 +35,65 @@ if(!empty($_POST)){
         $leyendaError = "Por favor ingrese la leyenda.";
         $valid = false;
     }
-
-    if(empty($imagen)) {
-        $imagenError = "Por favor ingrese una imagen.";
-        $valid = false;
-    }
-
+    require("../../bd.php");
     // update data
     if($valid) {
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ?, imagen = ? WHERE id_noticia = ?";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen , $id_noticia));
-        $PDO = null;
-        header("Location: noticias.php");
+        if (!isset($_FILES['archivo'])) {
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ? WHERE id_noticia = ?";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($titulo, $subtitulo, $leyenda, $id));
+            $PDO = null;
+            header("Location: noticias.php");
+        } else {
+
+            $nombre = $_FILES['archivo']['name'];
+            $nombre_tmp = $_FILES['archivo']['tmp_name'];
+            $tipo = $_FILES['archivo']['type'];
+            $tamano = $_FILES['archivo']['size'];
+            $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+            $partes_nombre = explode('.', $nombre);
+            $extension = end($partes_nombre);
+            $ext_correcta = in_array($extension, $ext_permitidas);
+            $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+            $limite = 500 * 1024;
+
+            if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
+                if ($_FILES['archivo']['error'] > 0) {
+                    echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                } else {
+                    echo 'Nombre: ' . $nombre . '<br/>';
+                    echo 'Tipo: ' . $tipo . '<br/>';
+                    echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                    echo 'Guardado en: ' . $nombre_tmp;
+
+                    if (file_exists('../img_empleados/' . $nombre)) {
+                        echo '<br/>El archivo ya existe: ' . $nombre;
+                    } else {
+                        move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
+                        $url = "img_empleados/" . $nombre;
+                        echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
+
+                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ?, foto = ? WHERE id_noticia = ?";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute(array($titulo, $subtitulo, $leyenda, $url , $id));
+                        $PDO = null;
+                        header("Location: noticias.php");
+                    }
+                }
+            } else {
+                echo 'Archivo inválido';
+            }
+        }
     }
 }
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM noticias WHERE id_noticia = ?";
+    $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias WHERE id_noticia = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -65,7 +102,7 @@ else {
     $titulo = $data['titulo'];
     $subtitulo= $data['subtitulo'];
     $leyenda = $data['leyenda'];
-    $imagen = $data['imagen'];
+    $imagen = $data['foto'];
 }
 ?>
 <!DOCTYPE html>
@@ -96,8 +133,8 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
-                <form method='POST'>
+
+                <form method='POST' action="#" >
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
                         <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print($titulo); ?>'>
@@ -113,10 +150,8 @@ s
                         <input type='text' name='leyenda' placeholder='Leyenda' required='required' id='leyenda' class='form-control' value='<?php print($leyenda); ?>'>
                         <?php print(!empty($leyendaError)?"<span class='help-block'>$leyendaError</span>":""); ?>
                     </div>
-                    <div class='form-group <?php print(!empty($imagenError)?"has-error":""); ?>'>
-                        <label for='imagen'>Imagen</label>
-                        <input type='text' name='imagen' placeholder='Imagen' required='required' id='imagen' class='form-control' value='<?php print($imagen); ?>'>
-                        <?php print(!empty($imagenError)?"<span class='help-block'>$imagenError</span>":""); ?>
+                    <div class='form-group'>
+                        <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>

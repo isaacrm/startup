@@ -11,28 +11,29 @@ if(!empty($_POST)) {
 
     // validate input
     $valid = true;
-    if(empty($alias)) {
+    if (empty($alias)) {
         $aliasError = "Por favor ingrese un alias.";
         $valid = false;
     }
 
-    if(empty($contrasena)) {
+    if (empty($contrasena)) {
         $contrasenaError = "Por favor ingrese su contraseña.";
         $valid = false;
     }
 
-    if(empty($estado)) {
+    if (empty($estado)) {
         $estadoError = "Por favor ingrese su estado.";
         $valid = false;
-    // insert data
-    if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO usuarios(alias, contrasena, estado) values(?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($alias, $contrasena, $estado));
-        $PDO = null;
-        header("Location: usuarios.php");
+        // insert data
+        if ($valid) {
+            require("../../bd.php");
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO usuarios(alias, contrasena, estado) values(?, ?, ?)";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($alias, $contrasena, $estado));
+            $PDO = null;
+            header("Location: usuarios.php");
+        }
     }
 }
 ?>
