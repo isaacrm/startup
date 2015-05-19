@@ -29,7 +29,6 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $alias = $_POST['alias'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $contra = sha1($_POST['contra']);
 // validate input
     $valid = true;
 
@@ -109,13 +108,7 @@ if(!empty($_POST)) {
                     echo 'Guardado en: ' . $nombre_tmp;
 
                     if (file_exists('../img_empleados/' . $nombre)) {
-                        ?>
-                        <script language="JavaScript">
-                            alert("La imagen ya existe");
-                            location.href = "actualizar.php";
-                        </script>
-
-                    <?php
+                        echo '<br/>El archivo ya existe: ' . $nombre;
                     } else {
                         move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
                         $url = "img_empleados/" . $nombre;
@@ -142,7 +135,7 @@ if(!empty($_POST)) {
     } else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,nombre FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado AND usuarios.id_tipo_usuario=tipos_usuarios.id_tipo_usuario ";
+        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,tipos_usuarios.nombre FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado  ";
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($id));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -158,7 +151,7 @@ if(!empty($_POST)) {
         $fecha_nacimiento = $data['fecha_nacimiento'];
         $sexo = $data['sexo'];
         $alias = $data['alias'];
-        $tipo = $data['nombre'];
+        $tipo = $data['tipos_usuarios.nombre'];
 
 }
 ?>
