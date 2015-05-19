@@ -16,6 +16,11 @@
                     </i><span class="menu-title">Empleados - Usuarios</span></a>
 
             </li>
+            <li><a href="../mant_empleados/usuarios.php"><i class="fa fa-database fa-fw">
+                        <div class="icon-bg bg-red"></div>
+                    </i><span class="menu-title">Ver Usuarios</span></a>
+
+            </li>
             <li><a href="../mant_paginas/paginas.php"><i class="fa fa-send-o fa-fw">
                         <div class="icon-bg bg-green"></div>
                     </i><span class="menu-title">Paginas</span></a>
