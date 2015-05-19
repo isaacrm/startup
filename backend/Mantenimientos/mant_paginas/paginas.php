@@ -41,6 +41,7 @@
                                             <th>ENCABEZADO</th>
                                             <th>FRASE</th>
                                             <th>ESTADO</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                         <tbody>
                                         <?php

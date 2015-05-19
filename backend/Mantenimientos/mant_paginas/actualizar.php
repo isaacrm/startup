@@ -15,7 +15,6 @@ if(!empty($_POST)){
     // post values
     $encabezado = $_POST['encabezado'];
     $frase = $_POST['frase'];
-    $estado = $_POST['estado'];
 
     // validate input
     $valid = true;
@@ -28,19 +27,12 @@ if(!empty($_POST)){
         $fraseError = "Por favor ingrese una frase.";
         $valid = false;
     }
-
-    if(empty($estado)) {
-        $estadoError = "Por favor ingrese un estado.";
-        $valid = false;
-    }
-
-
     // update data
     if($valid) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "UPDATE paginas SET encabezado = ?, frase = ?, estado =? WHERE id_pagina = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($encabezado, $frase, $estado));
+        $stmt->execute(array($encabezado, $frase, 1, $id));
         $PDO = null;
         header("Location: paginas.php");
     }
@@ -48,9 +40,9 @@ if(!empty($_POST)){
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT encabezado, frase, estado FROM paginas WHERE id_pagina = ?";
+    $sql = "SELECT encabezado, frase FROM paginas WHERE id_pagina = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_pagina));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -58,7 +50,6 @@ else {
     }
     $encabezado = $data['encabezado'];
     $frase= $data['frase'];
-    $estado= $data['estado'];
 }
 ?>
 <!DOCTYPE html>
@@ -89,7 +80,7 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
+
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($encabezadoError)?"has-error":""); ?>'>
                         <label for='encabezado'>Encabezado</label>
@@ -100,11 +91,6 @@ s
                         <label for='frase'>Frase</label>
                         <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print($frase); ?>'>
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
-                    </div>
-                    <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
-                        <label for='estado'>Estado</label>
-                        <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print($estado); ?>'>
-                        <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>

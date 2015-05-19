@@ -3,11 +3,9 @@ if(!empty($_POST)) {
     // validation errors
     $encabezadoError = null;
     $fraseError = null;
-    $estadoError = null;
     // post values
     $encabezado = $_POST['encabezado'];
     $frase = $_POST['frase'];
-    $estado = $_POST['estado'];
 
     // validate input
     $valid = true;
@@ -20,19 +18,13 @@ if(!empty($_POST)) {
         $fraseError = "Por favor ingrese una frase.";
         $valid = false;
     }
-
-    if(empty($estado)) {
-        $estadoError = "Por favor ingrese un estado.";
-        $valid = false;
-    }
-
     // insert data
     if($valid) {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO paginas(encabezado, frase, estado) values(?, ?, ?)";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($encabezado, $frase, $estado ));
+        $stmt->execute(array($encabezado, $frase,1));
         $PDO = null;
         header("Location: paginas.php");
     }
@@ -76,10 +68,6 @@ if(!empty($_POST)) {
                         <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
                             <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print(!empty($frase)?$frase:""); ?>'>
                             <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
-                        </div>
-                        <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
-                            <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print(!empty($estado)?$estado:""); ?>'>
-                            <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>

@@ -14,7 +14,7 @@ if(!empty($_POST)) {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM paginas WHERE id_pagina = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_pagina));
+    $stmt->execute(array($id));
     $PDO = null;
     header("Location: paginas.php");
 }

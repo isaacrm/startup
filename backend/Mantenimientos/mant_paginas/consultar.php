@@ -12,7 +12,7 @@ else {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT encabezado, frase, estado FROM paginas where id_pagina = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_pagina));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
