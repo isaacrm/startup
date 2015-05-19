@@ -174,46 +174,43 @@ if(!empty($_POST)) {
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-
+    <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/style-responsive.css">
 </head>
-<body>
-<div class="container2">
-    <div class="row">
-        <div class=" col-md-offset-3 col-md-6 ">
-<img src="img_page/WineFun.png" alt="logo" height="140" width="160" />
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class=" col-md-offset-3 col-md-6 col-sm-6">
-            <legend><i class="glyphicon glypshicon-list-alt"></i></a> PRIMER USUARIO</legend>
+
+<body style="background: url('Mantenimientos/images/bg/bg.jpg') center center fixed;">
+<div class="page-form">
+    <div class="panel panel-blue">
+        <div class="panel-body pan">
             <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
                 <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
+                    <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                     <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($apellidosError)?"has-error":""); ?>'>
-                <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos'  value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
+                    <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos'  value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
                     <?php print(!empty($apellidosError)?"<span class='help-block'>$apellidosError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($identificadorError)?"has-error":""); ?>'>
-                <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador'  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
+                    <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador'  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
                     <?php print(!empty($identificadorError)?"<span class='help-block'>$identificadorError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($telefonosError)?"has-error":""); ?>'>
-                <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono'   value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
+                    <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono'   value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
                     <?php print(!empty($telefonosError)?"<span class='help-block'>$telefonosError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($correoError)?"has-error":""); ?>'>
-                <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo'  value='<?php print(!empty($correo)?$correo:""); ?>' />
+                    <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo'  value='<?php print(!empty($correo)?$correo:""); ?>' />
                     <?php print(!empty($correoError)?"<span class='help-block'>$correoError</span>":""); ?>
                 </div>
                 <div class="form-group">
-                        <div class="input-group input-append date" id="dateRangePicker">
-                            <input type="text" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" readonly  value='<?php print(!empty($fecha_nacimiento)?$fecha_nacimiento:""); ?>'/>
-                            <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
+                    <div class="input-group input-append date" id="dateRangePicker">
+                        <input type="text" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" readonly  value='<?php print(!empty($fecha_nacimiento)?$fecha_nacimiento:""); ?>'/>
+                        <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
                 </div>
                 <div class='form-group <?php print(!empty($generoError)?"has-error":""); ?>'>
                     <select name='sexo' required='required' id='sexo' class='form-control'>
@@ -224,26 +221,27 @@ if(!empty($_POST)) {
                     <?php print(!empty($generoError)?"<span class='help-block'>$generoError</span>":""); ?>
                 </div>
                 <div class='form-group'>
-                        <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
+                    <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                 </div>
                 <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
-                <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias'  value='<?php print(!empty($alias)?$alias:""); ?>'/>
+                    <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias'  value='<?php print(!empty($alias)?$alias:""); ?>'/>
                     <?php print(!empty($aliasError)?"<span class='help-block'>$nombresError</span>":""); ?>
                 </div>
                 <div class='form-group <?php print(!empty($contraseñaError)?"has-error":""); ?>'>
-                <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autofocus />
+                    <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autofocus />
                 </div>
                 <div class='form-group <?php print(!empty($confirmarError)?"has-error":""); ?>'>
-                <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus />
+                    <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus />
                     <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" value="Enviar"">
-                    Registrarse</button>
+                Registrarse</button>
             </form>
         </div>
-
+    </div>
+    <div class="col-lg-12 text-center">
+        <p>&nbsp;</p>
     </div>
 </div>
-
 </body>
 </html>
