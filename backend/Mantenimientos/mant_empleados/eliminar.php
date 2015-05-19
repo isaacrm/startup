@@ -1,22 +1,25 @@
 <?php
 $id = null;
-if(!empty($_GET['id_tipo_usuario'])) {
-    $id = $_GET['id_tipo_usuario'];
+if(!empty($_GET['id_empleado'])) {
+    $id = $_GET['id_empleado'];
 }
 if($id == null) {
-    header("Location: tipo_usuario.php");
+    header("Location: empleados.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_tipo_usuario'];
+    $id = $_POST['id_empleado'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM tipos_usuarios WHERE id_tipo_usuario = ?";
+    $sql = "DELETE FROM usuarios WHERE id_empleado = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
+    $sql2 = "DELETE FROM empleados WHERE id_empleado = ?";
+    $stmt2 = $PDO->prepare($sql2);
+    $stmt2->execute(array($id));
     $PDO = null;
-    header("Location: tipo_usuario.php");
+    header("Location: empleados.php");
 }
 ?>
 <!DOCTYPE html>
@@ -50,11 +53,11 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_tipo_usuario' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_empleado' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='tipo_usuario.php'>No</a>
+                            <a class='btn btn btn-default' href='empleados.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->
