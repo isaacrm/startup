@@ -14,7 +14,7 @@ if(!empty($_POST)) {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM noticias WHERE id_noticia = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id));
     $PDO = null;
     header("Location: noticias.php");
 }
@@ -50,7 +50,7 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_funcion' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_noticia' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>

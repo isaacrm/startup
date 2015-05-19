@@ -26,6 +26,11 @@
                     </i><span class="menu-title">Paginas</span></a>
 
             </li>
+            <li><a href="../mant_noticias/noticias.php"><i class="fa fa-edit fa-fw">
+                        <div class="icon-bg bg-violet"></div>
+                    </i><span class="menu-title">Noticias</span></a>
+
+            </li>
             <li><a href="../mant_caracteristicas/caracteristicas.php"><i class="fa fa-edit fa-fw">
                         <div class="icon-bg bg-violet"></div>
                     </i><span class="menu-title">Caracteristicas</span></a>

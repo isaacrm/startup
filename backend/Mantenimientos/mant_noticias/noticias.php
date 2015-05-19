@@ -41,12 +41,13 @@
                                             <th>TITULO</th>
                                             <th>SUBTITULO</th>
                                             <th>LEYENDA</th>
-                                            <th>iMAGEN</th>
+                                            <th>FOTO</th>
+                                            <th>ACCIONES</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_noticia, titulo, subtitulo, leyenda, imagen FROM noticias ORDER BY id_noticia ASC";
+                                        $sql = "SELECT id_noticia, titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -54,7 +55,7 @@
                                             $data .= "<td>$row[titulo]</td>";
                                             $data .= "<td>$row[subtitulo]</td>";
                                             $data .= "<td>$row[leyenda]</td>";
-                                            $data .= "<td>$row[imagen]</td>";
+                                            $data .= "<td>$row[foto]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_noticia=$row[id_noticia]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_noticia=$row[id_noticia]'>Actualizar</a>&nbsp;";

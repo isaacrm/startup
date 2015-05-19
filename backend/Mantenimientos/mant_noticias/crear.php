@@ -4,12 +4,11 @@ if(!empty($_POST)) {
     $tituloError = null;
     $subtituloError = null;
     $leyendeError = null;
-    $imagenError = null;
+
     // post values
     $titulo = $_POST['titulo'];
     $subtitulo = $_POST['subtitulo'];
     $leyenda = $_POST['leyenda'];
-    $imagen = $_POST['imagen'];
 
     // validate input
     $valid = true;
@@ -28,19 +27,54 @@ if(!empty($_POST)) {
         $valid = false;
     }
 
-    if(empty($imagen)) {
-        $imagenError = "Por favor ingrese una imagen.";
-        $valid = false;
-    }
     // insert data
     if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO noticias(titulo, subtitulo, leyenda, imagen) values(?, ?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen ));
-        $PDO = null;
-        header("Location: noticias.php");
+        //SUBIR IMAGEN URL
+        if (!isset($_FILES['archivo'])) {
+            echo 'Ha habido un error, tienes que elegir una imagen<br/>';
+            echo '<a href="noticias.php">Subir archivo</a>';
+        } else {
+
+            $nombre = $_FILES['archivo']['name'];
+            $nombre_tmp = $_FILES['archivo']['tmp_name'];
+            $tipo = $_FILES['archivo']['type'];
+            $tamano = $_FILES['archivo']['size'];
+
+            $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+            $partes_nombre = explode('.', $nombre);
+            $extension = end($partes_nombre);
+            $ext_correcta = in_array($extension, $ext_permitidas);
+            $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+            $limite = 500 * 1024;
+
+            if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
+                if ($_FILES['archivo']['error'] > 0) {
+                    echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                } else {
+                    echo 'Nombre: ' . $nombre . '<br/>';
+                    echo 'Tipo: ' . $tipo . '<br/>';
+                    echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                    echo 'Guardado en: ' . $nombre_tmp;
+
+                    if (file_exists('../img_empleados/' . $nombre)) {
+                        echo '<br/>El archivo ya existe: ' . $nombre;
+                    } else {
+                        move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
+                        $url = "img_empleados/" . $nombre;
+                        echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
+                        require("../../bd.php");
+                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $sql = "INSERT INTO noticias(titulo, subtitulo, leyenda, foto) values(?, ?, ?, ?)";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute(array($titulo, $subtitulo, $leyenda, $url));
+                        $PDO = null;
+                        header("Location: noticias.php");
+                    }
+                }
+            } else {
+                echo 'Archivo inválido';
+            }
+        }
     }
 }
 ?>
@@ -74,7 +108,7 @@ if(!empty($_POST)) {
 
                 </div>
                 <div class='row'>
-                    <form method='POST'>
+                    <form action="#" method="post"  enctype="multipart/form-data" >
                         <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                             <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print(!empty($titulo)?$titulo:""); ?>'>
                             <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
@@ -87,9 +121,8 @@ if(!empty($_POST)) {
                             <input type='text' name='leyenda' placeholder='Leyenda' required='required' id='leyenda' class='form-control' value='<?php print(!empty($leyenda)?$leyenda:""); ?>'>
                             <?php print(!empty($leyendaError)?"<span class='help-block'>$leyendaError</span>":""); ?>
                         </div>
-                        <div class='form-group <?php print(!empty($imagenError)?"has-error":""); ?>'>
-                            <input type='text' name='imagen' placeholder='Imagen' required='required' id='imagen' class='form-control' value='<?php print(!empty($imagen)?$imagen:""); ?>'>
-                            <?php print(!empty($imagenError)?"<span class='help-block'>$imagenError</span>":""); ?>
+                        <div class='form-group'>
+                            <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>

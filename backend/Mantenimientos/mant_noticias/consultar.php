@@ -10,9 +10,9 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM noticias where id_noticia = ?";
+    $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias where id_noticia = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -70,9 +70,9 @@ else {
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Imagen</label>
+                            <label class="col-sm-2 control-label">Foto</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['imagen']); ?></p>
+                                <?php print "<img src='../".$data['foto']."'border='0' width='300' height='200'>";?>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
