@@ -17,12 +17,12 @@ if(!empty($_POST)) {
     }
 
     if(empty($frase)) {
-        $fraseError = "Por favor ingrese el frase.";
+        $fraseError = "Por favor ingrese una frase.";
         $valid = false;
     }
 
     if(empty($estado)) {
-        $estadoError = "Por favor ingrese el estado.";
+        $estadoError = "Por favor ingrese un estado.";
         $valid = false;
     }
 
@@ -62,7 +62,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Paginas</div>
+                        Crear Pagina</div>
                 </div>
                 <div class="clearfix">
 

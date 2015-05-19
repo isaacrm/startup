@@ -43,7 +43,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Eliminar Paginas</div>
+                        Eliminar Pagina</div>
                 </div>
                 <div class="clearfix">
                 </div>

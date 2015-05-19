@@ -11,9 +11,11 @@ if(!empty($_POST)){
     // validation errors
     $encabezadoError = null;
     $fraseError = null;
+    $estadoError = null;
     // post values
     $encabezado = $_POST['encabezado'];
     $frase = $_POST['frase'];
+    $estado = $_POST['estado'];
 
     // validate input
     $valid = true;
@@ -23,7 +25,12 @@ if(!empty($_POST)){
     }
 
     if(empty($frase)) {
-        $fraseError = "Por favor ingrese el frase.";
+        $fraseError = "Por favor ingrese una frase.";
+        $valid = false;
+    }
+
+    if(empty($estado)) {
+        $estadoError = "Por favor ingrese un estado.";
         $valid = false;
     }
 
@@ -31,9 +38,9 @@ if(!empty($_POST)){
     // update data
     if($valid) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE paginas SET encabezado = ?, frase = ? WHERE id_pagina = ?";
+        $sql = "UPDATE paginas SET encabezado = ?, frase = ?, estado =? WHERE id_pagina = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($encabezado, $frase));
+        $stmt->execute(array($encabezado, $frase, $estado));
         $PDO = null;
         header("Location: paginas.php");
     }
@@ -41,7 +48,7 @@ if(!empty($_POST)){
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT encabezado, frase FROM paginas WHERE id_pagina = ?";
+    $sql = "SELECT encabezado, frase, estado FROM paginas WHERE id_pagina = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id_pagina));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -49,8 +56,9 @@ else {
     if(empty($data)) {
         header("Location: paginas.php");
     }
-    $titulo = $data['encabezado'];
-    $subtitulo= $data['frase'];
+    $encabezado = $data['encabezado'];
+    $frase= $data['frase'];
+    $estado= $data['estado'];
 }
 ?>
 <!DOCTYPE html>
@@ -77,7 +85,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Modificar Paginas</div>
+                        Modificar Pagina</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -94,7 +102,7 @@ s
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
-                        <label for='estado'>Frase</label>
+                        <label for='estado'>Estado</label>
                         <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print($estado); ?>'>
                         <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
                     </div>
