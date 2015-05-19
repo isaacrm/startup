@@ -93,6 +93,11 @@ s
                         <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print($frase); ?>'>
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                     </div>
+                    <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
+                        <label for='estado'>Frase</label>
+                        <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print($estado); ?>'>
+                        <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
+                    </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
                         <a class='btn btn btn-default' href='paginas.php'>Regresar</a>

@@ -40,21 +40,23 @@
                                             <th>ID</th>
                                             <th>ENCABEZADO</th>
                                             <th>FRASE</th>
+                                            <th>ESTADO</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_pagina, encabezado, frase FROM paginas ORDER BY id_pagina ASC";
+                                        $sql = "SELECT id_pagina, encabezado, frase, estado FROM paginas ORDER BY id_pagina ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_pagina]</td>";
                                             $data .= "<td>$row[encabezado]</td>";
                                             $data .= "<td>$row[frase]</td>";
+                                            $data .= "<td>$row[estado]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_noticias/consultar.php?id_pagina=$row[id_pagina]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_noticias/actualizar.php?id_pagina=$row[id_pagina]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_noticias/eliminar.php?id_pagina=$row[id_pagina]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_paginas/consultar.php?id_pagina=$row[id_pagina]'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_paginas/actualizar.php?id_pagina=$row[id_pagina]'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_paginas/eliminar.php?id_pagina=$row[id_pagina]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }
