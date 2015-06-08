@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-05-2015 a las 00:45:35
+-- Tiempo de generación: 08-06-2015 a las 17:51:27
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -60,7 +60,14 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `sexo` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `foto` varchar(150) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `empleados`
+--
+
+INSERT INTO `empleados` (`id_empleado`, `nombres`, `apellidos`, `identificador`, `telefono`, `correo`, `sexo`, `fecha_nacimiento`, `foto`) VALUES
+(6, 'Jorge Isaac ', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-05', 'img_empleados/Penguins.jpg');
 
 -- --------------------------------------------------------
 
@@ -90,13 +97,6 @@ CREATE TABLE IF NOT EXISTS `funciones` (
   `nombre` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `funciones`
---
-
-INSERT INTO `funciones` (`id_funcion`, `nombre`, `descripcion`) VALUES
-(1, 'Mantenimiento de Funciones', 'Consiste en crear, modificar y ');
 
 -- --------------------------------------------------------
 
@@ -198,8 +198,19 @@ CREATE TABLE IF NOT EXISTS `servicios` (
 CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
 `id_tipo_usuario` int(11) NOT NULL,
   `nombre` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `agregar` tinyint(1) NOT NULL,
+  `modificar` tinyint(1) NOT NULL,
+  `eliminar` tinyint(1) NOT NULL,
+  `consultar` tinyint(1) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tipos_usuarios`
+--
+
+INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `nombre`, `descripcion`, `agregar`, `modificar`, `eliminar`, `consultar`) VALUES
+(1, 'Administrador', 'El que controla todo', 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -210,11 +221,18 @@ CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
 CREATE TABLE IF NOT EXISTS `usuarios` (
 `id_usuario` int(11) NOT NULL,
   `alias` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
-  `contraseña` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `contrasena` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `estado` tinyint(1) NOT NULL,
   `id_empleado` int(11) NOT NULL,
   `id_tipo_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_empleado`, `id_tipo_usuario`) VALUES
+(1, 'isaac', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 6, 1);
 
 --
 -- Índices para tablas volcadas
@@ -322,7 +340,7 @@ MODIFY `id_detalle_caracteristica` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
@@ -372,12 +390,12 @@ MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
-MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --
