@@ -78,7 +78,14 @@ if(!empty($_POST)) {
         if ($valid) {
             //SUBIR IMAGEN URL
             if (!isset($_FILES['archivo'])) {
-                echo 'Ha habido un error, tienes que elegir una imagen<br/>';
+                ?>
+
+                <script language="JavaScript">
+                    alert("Ha habido un error, tienes que elegir una imagen");
+                    location.href = "bienvenida.php";
+                </script>
+
+                <?php
                 echo '<a href="bienvenida.php">Subir archivo</a>';
             } else {
 
@@ -86,7 +93,6 @@ if(!empty($_POST)) {
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
                 $tipo = $_FILES['archivo']['type'];
                 $tamano = $_FILES['archivo']['size'];
-
                 $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
                 $partes_nombre = explode('.', $nombre);
                 $extension = end($partes_nombre);
