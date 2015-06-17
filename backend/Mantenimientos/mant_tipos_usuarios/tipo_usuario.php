@@ -1,3 +1,4 @@
+
 <?php
 //creamos la sesion
 session_start();

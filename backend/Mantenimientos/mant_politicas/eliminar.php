@@ -1,4 +1,16 @@
 <?php
+//creamos la sesion
+session_start();
+//validamos si se ha hecho o no el inicio de sesion correctamente
+//si no se ha hecho la sesion nos regresará a login.php
+if(!isset($_SESSION['alias']))
+{
+    header('Location: ../../Login.php');
+    exit();
+}
+?>
+
+<?php
 $id = null;
 if(!empty($_GET['id_funcion'])) {
     $id = $_GET['id_funcion'];
