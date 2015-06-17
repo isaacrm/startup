@@ -9,7 +9,6 @@ if(!isset($_SESSION['alias']))
     exit();
 }
 ?>
-
 <?php
 if(!empty($_POST)) {
     // validation errors
