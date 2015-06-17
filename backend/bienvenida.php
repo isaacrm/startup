@@ -86,13 +86,12 @@ if(!empty($_POST)) {
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
                 $tipo = $_FILES['archivo']['type'];
                 $tamano = $_FILES['archivo']['size'];
-
                 $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
                 $partes_nombre = explode('.', $nombre);
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                $limite = 500 * 1024;
+                $limite = 5000 * 1024;
 
                 if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
                     if ($_FILES['archivo']['error'] > 0) {
