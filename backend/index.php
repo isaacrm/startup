@@ -9,7 +9,6 @@ if(!isset($_SESSION['alias']))
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
