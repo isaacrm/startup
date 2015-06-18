@@ -119,9 +119,7 @@ if(!empty($_POST)) {
                     echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
                     echo 'Guardado en: ' . $nombre_tmp;
 
-                    if (file_exists('../img_empleados/' . $nombre)) {
-                        echo '<br/>El archivo ya existe: ' . $nombre;
-                    } else {
+
                         move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
                         $url = "img_empleados/" . $nombre;
                         echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
@@ -137,7 +135,7 @@ if(!empty($_POST)) {
                         $stmt = $PDO->prepare($sql);
                         $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
                         $PDO = null;
-                    }
+
                 }
             } else {
                 echo 'Archivo inválido';

@@ -1,5 +1,6 @@
 <?php include "controlador.php"?>
 <?php
+require("bd.php");
 if(!empty($_POST)) {
     // validation errors
     $nombresError = null;
@@ -108,39 +109,36 @@ if(!empty($_POST)) {
                             move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $nombre);
                             $url = "img_empleados/" . $nombre;
                             echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
-                            require("bd.php");
+                            /*INGRESA DATOS DE EMPLEADOS*/
                             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
                             $stmt = $PDO->prepare($sql);
                             $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
-                            $PDO = null;
+
                         }
                     }
                 } else {
                     echo 'Archivo inválido';
                 }
-                require("bd2.php");
-                $sql = "INSERT INTO tipos_usuarios(nombre,descripcion, agregar, modificar, eliminar, consultar) VALUES ('Administrador', 'El que controla todo',1 ,1 ,1 ,1)";
-                $result = mysql_query($sql);
+                /*GUARDAR TIPOS DE USUARIOS*/
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "INSERT INTO tipos_usuarios(nombre,descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array('Administrador', 'El que controla todo',1 ,1 ,1 ,1));
 
-                require("bd2.php");
-                $resultado = mysql_query("SELECT MAX(id_empleado) FROM empleados");
-                if (!$resultado) {
-                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                    exit;
+
+                /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
+                $sql= "SELECT MAX(id_empleado) as id_emp FROM empleados";
+                foreach($PDO->query($sql) as $row) {
+                    $idemp = "$row[id_emp]";
                 }
-                $fila = mysql_fetch_row($resultado);
-                $idemp = $fila[0];
 
-                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='Administrador'");
-                if (!$resultado2) {
-                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                    exit;
+                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA ADMINISTRADOR*/
+                $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='Administrador'";
+                foreach($PDO->query($sql2) as $row2) {
+                    $idtip = "$row2[id_tipo_usuario]";
                 }
-                $fila2 = mysql_fetch_row($resultado2);
-                $idtip = $fila2[0];
-
-                require("bd.php");
+                /*INGRESAR USUARIOS*/
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
                 $stmt = $PDO->prepare($sql);
