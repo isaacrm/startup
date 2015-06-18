@@ -57,14 +57,27 @@ if(!isset($_SESSION['alias']))
                                             <tbody>
                                             <?php
                                             require("../../bd.php");
-                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion, agregar, modificar, eliminar, consultar FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_tipo_usuario ASC";
+                                            require_once("../../libs/Zebra_Pagination.php");
+                                            /*Aqui obtenemos el total de registros*/
+                                            $sql0= "SELECT COUNT(*) as total_datos FROM empleados";
+                                            foreach($PDO->query($sql0) as $row0) {
+                                                $totaldatos = "$row0[total_datos]";
+                                            }
+                                            /*Numero de registros que se quiere por tabla*/
+                                            $filas=10;
+                                            /*Aqui instanciamos la clase*/
+                                            $paginacion= new Zebra_Pagination();
+                                            /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                            $paginacion->records($totaldatos);
+                                            $paginacion->records_per_page($filas);
+                                            $paginacion->padding(false);
+                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion, agregar, modificar, eliminar, consultar FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_tipo_usuario ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas. +"" ;
                                             $data = "";
                                             foreach($PDO->query($sql) as $row) {
                                                 $data .= "<tr>";
                                                 $data .= "<td>$row[id_tipo_usuario]</td>";
                                                 $data .= "<td>$row[nombre]</td>";
                                                 $data .= "<td>$row[descripcion]</td>";
-                                                $data .= "<td>$row[agregar]</td>";
                                                 $data .= "<td>";
                                                 $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Consultar</a>&nbsp;";
                                                 $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Actualizar</a>&nbsp;";
@@ -73,6 +86,7 @@ if(!isset($_SESSION['alias']))
                                                 $data .= "</tr>";
                                             }
                                             print($data);
+                                            $paginacion->render();
                                             $PDO = null;
                                             ?>
                                             </tbody>

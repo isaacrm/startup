@@ -17,6 +17,7 @@ if(!isset($_SESSION['alias']))
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/zebra_pagination.css" type="text/css">
     <?php include '../estilos2.php';?>
 </head>
 <body>
@@ -56,7 +57,22 @@ if(!isset($_SESSION['alias']))
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_empleado, nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto FROM empleados  ORDER BY id_empleado ASC";
+                                        /*Se llama la libreria*/
+                                        require_once("../../libs/Zebra_Pagination.php");
+                                        /*Aqui obtenemos el total de registros*/
+                                        $sql0= "SELECT COUNT(*) as total_datos FROM empleados";
+                                        foreach($PDO->query($sql0) as $row0) {
+                                            $totaldatos = "$row0[total_datos]";
+                                        }
+                                        /*Numero de registros que se quiere por tabla*/
+                                        $filas=10;
+                                        /*Aqui instanciamos la clase*/
+                                        $paginacion= new Zebra_Pagination();
+                                        /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                        $paginacion->records($totaldatos);
+                                        $paginacion->records_per_page($filas);
+                                        $paginacion->padding(false);
+                                        $sql = "SELECT id_empleado, nombres, apellidos, identificador FROM empleados  ORDER BY id_empleado ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas. +"" ;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -72,6 +88,7 @@ if(!isset($_SESSION['alias']))
                                             $data .= "</tr>";
                                         }
                                         print($data);
+                                        $paginacion->render();
                                         $PDO = null;
                                         ?>
                                         </tbody>
