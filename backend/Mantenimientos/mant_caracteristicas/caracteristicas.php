@@ -52,6 +52,7 @@ if(!isset($_SESSION['alias']))
                                             <th>ID</th>
                                             <th>TITULO</th>
                                             <th>ID</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
