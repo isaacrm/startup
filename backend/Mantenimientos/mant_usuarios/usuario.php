@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Asignar Funciones</title>
+    <title>Winefun | Usuarios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +34,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Asignar Funciones a Tipos de Usuario</div>
+                       Usuarios</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -48,24 +48,25 @@ if(!isset($_SESSION['alias']))
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
-                                            <th>ID</th>
+                                            <th>ID USUARIO</th>
+                                            <th>ID EMPLEADO</th>
                                             <th>ID TIPO USUARIO</th>
-                                            <th>ID FUNCIÓN</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_usuario, nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto FROM  empleados ORDER BY id_relacion ASC";
+                                        $sql = "SELECT id_usuario, alias, contrasea, estado, id_empleado, id_tipo_usuario FROM  usuarios ORDER BY id_usuario ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
-                                            $data .= "<td>$row[id_relacion]</td>";
+                                            $data .= "<td>$row[id_usuario]</td>";
+                                            $data .= "<td>$row[id_empleado]</td>";
                                             $data .= "<td>$row[id_tipo_usuario]</td>";
-                                            $data .= "<td>$row[id_funcion]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_funcion=$row[id_relacion]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_funcion=$row[id_relacion]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_funcion=$row[id_relacion]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_usuario=$row[id_usuario]'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_usuario=$row[id_usuario]'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_usuario=$row[id_usuario]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

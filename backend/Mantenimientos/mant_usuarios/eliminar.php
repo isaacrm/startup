@@ -12,29 +12,29 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_usuario'])) {
+    $id = $_GET['id_usuario'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: usuario.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_funcion'];
+    $id = $_POST['id_usuario'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM funciones WHERE id_funcion = ?";
+    $sql = "DELETE FROM usuarios WHERE id_usuario = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $PDO = null;
-    header("Location: funcion.php");
+    header("Location: usuario.php");
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Usuarios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@ if(!empty($_POST)) {
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='funcion.php'>No</a>
+                            <a class='btn btn btn-default' href='usuario.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

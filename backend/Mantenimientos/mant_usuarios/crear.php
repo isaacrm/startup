@@ -22,19 +22,19 @@ if(!empty($_POST)) {
 
     // validate input
     $valid = true;
-    if (empty($alias)) {
-        $aliasError = "Por favor ingrese un alias.";
+    if(empty($alias)) {
+        $aliasError = "Por favor ingrese su alias.";
         $valid = false;
     }
 
-    if (empty($contrasena)) {
+    if(empty($contrasena)) {
         $contrasenaError = "Por favor ingrese su contraseña.";
         $valid = false;
     }
-
-    if (empty($estado)) {
+    if(empty($estado)) {
         $estadoError = "Por favor ingrese su estado.";
         $valid = false;
+    }
         // insert data
         if ($valid) {
             require("../../bd.php");
@@ -43,7 +43,7 @@ if(!empty($_POST)) {
             $stmt = $PDO->prepare($sql);
             $stmt->execute(array($alias, $contrasena, $estado));
             $PDO = null;
-            header("Location: usuarios.php");
+            header("Location: usuario.php");
         }
     }
 }
@@ -93,7 +93,7 @@ if(!empty($_POST)) {
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
-                            <a class='btn btn btn-default' href='usuarios.php'>Regresar</a>
+                            <a class='btn btn btn-default' href='usuario.php'>Regresar</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

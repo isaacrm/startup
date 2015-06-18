@@ -12,62 +12,69 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_usuario'])) {
+    $id = $_GET['id_usuario'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: usuario.php");
 }
 require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
-    $nombresError = null;
-    $descripcionError = null;
+    $aliasError = null;
+    $contrasenaError = null;
+    $estadoError = null;
     // post values
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
+    $alias = $_POST['alias'];
+    $contrasena = $_POST['contrasena'];
+    $estado = $_POST['estado'];
 
     // validate input
     $valid = true;
-    if(empty($nombre)) {
-        $nombresError = "Por favor ingrese los nombres.";
+    if(empty($alias)) {
+        $aliasError = "Por favor ingrese su alias.";
         $valid = false;
     }
 
-    if(empty($descripcion)) {
-        $descripcionError = "Por favor ingrese la descripcion.";
+    if(empty($contrasena)) {
+        $contrasenaError = "Por favor ingrese su contraseña.";
+        $valid = false;
+    }
+    if(empty($estado)) {
+        $estadoError = "Por favor ingrese su estado.";
         $valid = false;
     }
 
     // update data
     if($valid) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE funciones SET nombre = ?, descripcion = ? WHERE id_funcion = ?";
+        $sql = "UPDATE usuarios SET alias = ?, contrasena = ?, estado =? WHERE id_usuario = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre, $descripcion, $id));
+        $stmt->execute(array($alias, $contrasena, $estado, $id));
         $PDO = null;
-        header("Location: funcion.php");
+        header("Location: usuario.php");
     }
 }
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombre, descripcion FROM funciones WHERE id_funcion = ?";
+    $sql = "SELECT alias, contrasena, estado FROM usuarios WHERE id_usuario = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: funcion.php");
+        header("Location: usuarios.php");
     }
-    $nombre = $data['nombre'];
-    $descripcion= $data['descripcion'];
+    $alias = $data['alias'];
+    $contrasena = $data['contrasena'];
+    $estado = $data['estado'];
 }
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Usuarios</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,25 +95,30 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Modificar Funciones</div>
+                        Modificar Usuarios</div>
                 </div>
                 <div class="clearfix">
                 </div>
 s
                 <form method='POST'>
-                    <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                        <label for='nombres'>Nombre</label>
-                        <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print($nombre); ?>'>
-                        <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
+                    <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
+                        <label for='alias'>Alias</label>
+                        <input type='text' name='alias' placeholder='Alias' required='required' id='alias' class='form-control' value='<?php print($alias); ?>'>
+                        <?php print(!empty($aliasError)?"<span class='help-block'>$aliasError</span>":""); ?>
                     </div>
-                    <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                        <label for='nombres'>Descripción</label>
-                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print($descripcion); ?>'>
-                        <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
+                    <div class='form-group <?php print(!empty($contrasenaError)?"has-error":""); ?>'>
+                        <label for='alias'>Contraseña</label>
+                        <input type='text' name='contrasena' placeholder='Contraseña' required='required' id='contrasena' class='form-control' value='<?php print($contrasena); ?>'>
+                        <?php print(!empty($contrasenaError)?"<span class='help-block'>$contrasenaError</span>":""); ?>
+                    </div>
+                    <div class='form-group <?php print(!empty($estadoError)?"has-error":""); ?>'>
+                        <label for='alias'>Estado</label>
+                        <input type='text' name='estado' placeholder='Estado' required='required' id='estado' class='form-control' value='<?php print($estado); ?>'>
+                        <?php print(!empty($estadoError)?"<span class='help-block'>$estadoError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
-                        <a class='btn btn btn-default' href='funcion.php'>Regresar</a>
+                        <a class='btn btn btn-default' href='usuario.php'>Regresar</a>
                     </div>
                 </form>
 

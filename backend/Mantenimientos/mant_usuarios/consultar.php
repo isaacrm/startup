@@ -12,23 +12,23 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_usuario'])) {
+    $id = $_GET['id_usuario'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: usuario.php");
 }
 else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombre, descripcion FROM funciones where id_funcion = ?";
+    $sql = "SELECT alias, contrasena, estado FROM funciones where id_funcion = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: funcion.php");
+        header("Location: usuario.php");
     }
 }
 ?>
@@ -56,7 +56,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Consultar Funciones</div>
+                        Consultar Usuarios</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -64,19 +64,25 @@ else {
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Nombre:</label>
+                            <label class="col-sm-2 control-label">Alias:</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['nombre']); ?></p>
+                                <p class="form-control-static"><?php print($data['alias']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Descripción</label>
+                            <label class="col-sm-2 control-label">Contraseña</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                                <p class="form-control-static"><?php print($data['contrasena']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="funcion.php">Regresar</a>
+                            <label class="col-sm-2 control-label">Estado</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['estado']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <a class="btn btn btn-default" href="usuario.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->

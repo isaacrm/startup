@@ -53,12 +53,12 @@ if(!isset($_SESSION['alias']))
                                             <th>URL</th>
                                             <th>TITULO</th>
                                             <th>DESCRIPCION</th>
-                                            <th>ID</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_imagen_servicio, url, titulo, descripcion, id_servicio FROM imagenes_servicios ORDER BY id_imagen_servicio ASC";
+                                        $sql = "SELECT id_imagen_servicio, url, titulo, descripcion FROM imagenes_servicios ORDER BY id_imagen_servicio ASC";
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -66,7 +66,6 @@ if(!isset($_SESSION['alias']))
                                             $data .= "<td>$row[url]</td>";
                                             $data .= "<td>$row[titulo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
-                                            $data .= "<td>$row[id_servicio]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_imagenes_servicios/consultar.php?id_imagen_servicio=$row[id_imagen_servicio]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_imagenes_servicios/actualizar.php?id_imagen_servicio=$row[id_imagen_servicio]'>Actualizar</a>&nbsp;";

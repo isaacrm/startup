@@ -51,12 +51,7 @@ if(!isset($_SESSION['alias']))
                                             <th>NOMBRES</th>
                                             <th>APELLIDOS</th>
                                             <th>IDENTIFICADOR</th>
-                                            <th>TELÉFONO</th>
-                                            <th>CORREO</th>
-                                            <th>SEXO</th>
-                                            <th>FECHA_NACIMIENTO</th>
-                                            <th>FOTO</th>
-                                            <th>ACCIÓN</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
@@ -69,11 +64,6 @@ if(!isset($_SESSION['alias']))
                                             $data .= "<td>$row[nombres]</td>";
                                             $data .= "<td>$row[apellidos]</td>";
                                             $data .= "<td>$row[identificador]</td>";
-                                            $data .= "<td>$row[telefono]</td>";
-                                            $data .= "<td>$row[correo]</td>";
-                                            $data .= "<td>$row[sexo]</td>";
-                                            $data .= "<td>$row[fecha_nacimiento]</td>";
-                                            $data .= "<td>$row[foto]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_empleado=$row[id_empleado]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_empleado=$row[id_empleado]'>Actualizar</a>&nbsp;";

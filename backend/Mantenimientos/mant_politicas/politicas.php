@@ -53,6 +53,7 @@ if(!isset($_SESSION['alias']))
                                             <th>TITULO</th>
                                             <th>DESCRIPCION</th>
                                             <th>ID</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php

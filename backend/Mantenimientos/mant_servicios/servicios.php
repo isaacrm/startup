@@ -53,8 +53,7 @@ if(!isset($_SESSION['alias']))
                                             <th>TIPO</th>
                                             <th>DESCRIPCION</th>
                                             <th>PRECIO</th>
-                                            <th>NOMBRE PÁGINA</th>
-                                            <th>ACCIONES</th>
+                                            <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
@@ -67,7 +66,6 @@ if(!isset($_SESSION['alias']))
                                             $data .= "<td>$row[tipo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td>$row[precio]</td>";
-                                            $data .= "<td>$row[encabezado]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_servicios/consultar.php?id_servicio=$row[id_servicio]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_servicios/actualizar.php?id_servicio=$row[id_servicio]'>Actualizar</a>&nbsp;";

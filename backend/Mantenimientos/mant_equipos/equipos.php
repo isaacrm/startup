@@ -54,10 +54,7 @@ if(!isset($_SESSION['alias']))
                                             <th>NOMBRE</th>
                                             <th>APELLIDO</th>
                                             <th>CARGO</th>
-                                            <th>FRASE</th>
-                                            <th>TWITTER</th>
-                                            <th>FACEBOOK</th>
-                                            <th>ID</th>
+                                            <th>ACCION</th>
 
                                         </tr>
                                         <tbody>
@@ -71,10 +68,6 @@ if(!isset($_SESSION['alias']))
                                             $data .= "<td>$row[nombre]</td>";
                                             $data .= "<td>$row[apellido]</td>";
                                             $data .= "<td>$row[cargo]</td>";
-                                            $data .= "<td>$row[frase]</td>";
-                                            $data .= "<td>$row[twitter]</td>";
-                                            $data .= "<td>$row[facebook]</td>";
-                                            $data .= "<td>$row[id_pagina]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_noticias/consultar.php?id_equipo=$row[id_equipo]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_noticias/actualizar.php?id_equipo=$row[id_equipo]'>Actualizar</a>&nbsp;";
