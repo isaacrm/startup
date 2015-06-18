@@ -6,7 +6,7 @@
             <a id="logo" href="index.php" class="navbar-brand"><span class="fa fa-rocket"></span><span class="logo-text">WineFun</span><span style="display: none" class="logo-text-icon">µ</span></a></div>
         <div class="topbar-main">
             <ul class="nav navbar navbar-top-links navbar-right mbn">
-                <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle"><img src="images/avatar/48.jpg" alt="" class="img-responsive img-circle"/>&nbsp;<span class="hidden-xs">Robert John</span>&nbsp;<span class="caret"></span></a>
+                <li class="dropdown topbar-user"><a data-hover="dropdown" href="#" class="dropdown-toggle">  &nbsp;<span class="hidden-xs"><?php echo 'Usuario: '.strtoupper($_SESSION['alias'])?></span>&nbsp;<span class="caret"></span></a>
                     <ul class="dropdown-menu dropdown-user pull-right">
                         <li><a href="#"><i class="fa fa-user"></i>My Profile</a></li>
                         <li><a href="logout.php"><i class="fa fa-key"></i>Log Out</a></li>

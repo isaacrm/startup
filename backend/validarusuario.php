@@ -5,7 +5,6 @@
 if(!empty($_POST)) {
     $usuario = $_POST["usuario"];
     $contraseña = sha1($_POST["contraseña"]);
-
     /*Consulta de mysql con la que indicamos que necesitamos que seleccione
     **solo los campos que tenga como nombre_administrador el que el formulario
     **le ha enviado*/
