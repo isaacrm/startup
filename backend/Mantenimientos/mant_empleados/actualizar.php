@@ -145,7 +145,7 @@ if(!empty($_POST)) {
     } else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,tipos_usuarios.nombre FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado  ";
+        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,tipos_usuarios.nombre as tipo FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado  ";
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($id));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -161,7 +161,7 @@ if(!empty($_POST)) {
         $fecha_nacimiento = $data['fecha_nacimiento'];
         $sexo = $data['sexo'];
         $alias = $data['alias'];
-        $tipo = $data['tipos_usuarios.nombre'];
+        $tipo = $data['tipo'];
 
 }
 ?>
