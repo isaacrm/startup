@@ -72,7 +72,7 @@ if(!isset($_SESSION['alias']))
                                         $paginacion->records($totaldatos);
                                         $paginacion->records_per_page($filas);
                                         $paginacion->padding(false);
-                                        $sql = "SELECT id_empleado, nombres, apellidos, identificador FROM empleados  ORDER BY id_empleado ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas. +"" ;
+                                        $sql = "SELECT id_empleado, nombres, apellidos, identificador FROM empleados  ORDER BY id_empleado ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -88,11 +88,14 @@ if(!isset($_SESSION['alias']))
                                             $data .= "</tr>";
                                         }
                                         print($data);
-                                        $paginacion->render();
                                         $PDO = null;
                                         ?>
                                         </tbody>
                                     </table>
+                                    <!-- Aqui se imprime la paginacion-->
+                                    <div class="table-responsive">
+                                        <?php $paginacion->render();?>
+                                    </div>
                                 </div>
                             </div> <!-- /row -->
                         </div>

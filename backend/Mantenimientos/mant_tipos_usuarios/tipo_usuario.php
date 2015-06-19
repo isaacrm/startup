@@ -17,6 +17,7 @@ if(!isset($_SESSION['alias']))
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/zebra_pagination.css" type="text/css">
     <?php include '../estilos2.php';?>
 </head>
 <body>
@@ -51,7 +52,6 @@ if(!isset($_SESSION['alias']))
                                                 <th>ID</th>
                                                 <th>NOMBRE</th>
                                                 <th>DESCRIPCION</th>
-                                                <th>AGREGAR</th>
                                                 <th>ACCION</th>
                                             </tr>
                                             <tbody>
@@ -59,7 +59,7 @@ if(!isset($_SESSION['alias']))
                                             require("../../bd.php");
                                             require_once("../../libs/Zebra_Pagination.php");
                                             /*Aqui obtenemos el total de registros*/
-                                            $sql0= "SELECT COUNT(*) as total_datos FROM empleados";
+                                            $sql0= "SELECT COUNT(*) as total_datos FROM tipos_usuarios";
                                             foreach($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
                                             }
@@ -71,7 +71,7 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion, agregar, modificar, eliminar, consultar FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_tipo_usuario ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas. +"" ;
+                                            $sql = "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre!='Administrador' ORDER BY id_tipo_usuario ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas;
                                             $data = "";
                                             foreach($PDO->query($sql) as $row) {
                                                 $data .= "<tr>";
@@ -86,11 +86,14 @@ if(!isset($_SESSION['alias']))
                                                 $data .= "</tr>";
                                             }
                                             print($data);
-                                            $paginacion->render();
                                             $PDO = null;
                                             ?>
                                             </tbody>
                                         </table>
+                                        <!-- Aqui se imprime la paginacion-->
+                                            <div>
+                                                <?php $paginacion->render();?>
+                                            </div>
                                     </div>
                                 </div> <!-- /row -->
                     </div>

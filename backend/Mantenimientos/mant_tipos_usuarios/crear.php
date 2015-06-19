@@ -11,6 +11,10 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+/*Esta pequeña  linea quita errores molestos que muestra php*/
+error_reporting(E_ALL ^ E_NOTICE);
+/*Comienzan las operaciones*/
+require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
     $nombresError = null;
@@ -34,15 +38,43 @@ if(!empty($_POST)) {
         $descripcionError = "Por favor ingrese la descripcion.";
         $valid = false;
     }
+
     // insert data
     if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO tipos_usuarios(nombre, descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre , $descripcion, $agregar, $modificar, $eliminar, $consultar));
-        $PDO = null;
-        header("Location: tipo_usuario.php");
+        try {
+            /*Comprueba si hay espacios en blanco*/
+            if (ctype_space($nombre)||ctype_space($descripcion)){
+                ?>
+                <script language="JavaScript">
+                    alert("No se puede dejar datos en blanco");
+                </script>
+            <?php
+            }
+            /*Comprueba que hay al menos un CRUD seleccionado*/
+            else if(!isset($_POST['agregar']) && !isset($_POST['modificar']) && !isset($_POST['eliminar']) && !isset($_POST['consultar'])) {
+                ?>
+                <script language="JavaScript">
+                    alert("Seleccione al menos una operacion");
+                </script>
+            <?php
+            }
+            else {
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "INSERT INTO tipos_usuarios(nombre, descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($nombre, $descripcion, $agregar, $modificar, $eliminar, $consultar));
+                $PDO = null;
+                header("Location: tipo_usuario.php");
+            }
+        } catch (Exception $e) {
+            ?>
+            <script language="JavaScript">
+                alert("Este tipo de usuario ya existe");
+                location.href = "crear.php";
+            </script>
+        <?php
+        }
+
     }
 }
 ?>
@@ -78,11 +110,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print(!empty($nombre)?$nombre:""); ?>'>
+                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' autocomplete="off" value='<?php print(!empty($nombre)?$nombre:""); ?>'>
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
+                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                             <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                         </div>
                         <div class="form-group">

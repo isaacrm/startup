@@ -78,25 +78,25 @@ else {
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Agregar</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['agregar']); ?></p>
+                               <p> <input type="checkbox" value="agregar" <?php if($data['agregar']==1) echo 'checked="checked"' ?> name="agregar" id="agregar" disabled></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Modificar</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['modificar']); ?></p>
+                                <p> <input type="checkbox" value="agregar" <?php if($data['modificar']==1) echo 'checked="checked"' ?> name="agregar" id="agregar" disabled></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Eliminar</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['eliminar']); ?></p>
+                                <p> <input type="checkbox" value="agregar" <?php if($data['eliminar']==1) echo 'checked="checked"' ?> name="agregar" id="agregar" disabled></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Consultar</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['consultar']); ?></p>
+                                <p> <input type="checkbox" value="agregar" <?php if($data['consultar']==1) echo 'checked="checked"' ?> name="agregar" id="agregar" disabled></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
