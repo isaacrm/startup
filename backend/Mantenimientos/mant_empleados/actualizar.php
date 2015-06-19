@@ -11,6 +11,7 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+require("../../bd.php");
 $id = null;
 if(!empty($_GET['id_empleado'])) {
     $id = $_GET['id_empleado'];
@@ -18,7 +19,6 @@ if(!empty($_GET['id_empleado'])) {
 if($id == null) {
     header("Location: empleados.php");
 }
-require("../../bd.php");
 if(!empty($_POST)) {
 
 // validation errors
@@ -39,8 +39,8 @@ if(!empty($_POST)) {
     $telefono = $_POST['telefono'];
     $correo = $_POST['correo'];
     $sexo = $_POST['sexo'];
-    $alias = $_POST['alias'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
+    $tipo=$_POST['tipo'];
 // validate input
     $valid = true;
 
@@ -94,8 +94,18 @@ if(!empty($_POST)) {
     if ($valid) {
         //SUBIR IMAGEN URL
         if (!isset($_FILES['archivo'])) {
-            echo 'Ha habido un error, tienes que elegir una imagen<br/>';
-            echo '<a href="empleados.php">Subir archivo</a>';
+            $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'");
+            if (!$resultado2) {
+                echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                exit;
+            }
+            $fila2 = mysql_fetch_row($resultado2);
+            $idtip = $fila2[0];
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+            $PDO = null;
         } else {
 
             $nombre = $_FILES['archivo']['name'];
@@ -118,8 +128,6 @@ if(!empty($_POST)) {
                     echo 'Tipo: ' . $tipo . '<br/>';
                     echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
                     echo 'Guardado en: ' . $nombre_tmp;
-
-
                         move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
                         $url = "img_empleados/" . $nombre;
                         echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
@@ -145,7 +153,7 @@ if(!empty($_POST)) {
     } else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,tipos_usuarios.nombre as tipo FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado  ";
+        $sql = "SELECT nombres, apellidos, identificador, telefono, correo,sexo,fecha_nacimiento,foto,alias,tipos_usuarios.nombre as tipo FROM empleados,usuarios,tipos_usuarios WHERE empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado AND usuarios.id_tipo_usuario=tipos_usuarios.id_tipo_usuario ";
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($id));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -264,11 +272,14 @@ if(!empty($_POST)) {
                             <select name='tipo' required='required' id='tipo' class='form-control'>
                                 <option></option>
                                 <?php
-                                require("../../bd2.php");
-                                $result = mysql_query("SELECT nombre FROM tipos_usuarios");
-                                while ( $resultado = mysql_fetch_array($result)){
-                                    echo "<option value='".$resultado['nombre']."'> ".$resultado['nombre']."</option>";
+                                require("../../bd.php");
+                                $sql = "SELECT nombre FROM tipos_usuarios ORDER BY id_tipo_usuario ASC ";
+                                $data = "";
+                                foreach($PDO->query($sql) as $row) {
+                                    $data .= "<option value= '$row[nombre]'>$row[nombre]</option>";
                                 }
+                                print($data);
+                                $PDO = null;
                                 ?>
                             </select>
                         </div>
