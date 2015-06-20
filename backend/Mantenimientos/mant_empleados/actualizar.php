@@ -11,7 +11,6 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
-
 $id = null;
 if(!empty($_GET['id_empleado'])) {
     $id = $_GET['id_empleado'];
@@ -85,41 +84,23 @@ if(!empty($_POST)) {
         $valid = false;
     }
 
-    if (empty($contra)) {
-        $contraseñaError = "Por favor ingrese la contraseña.";
-        $valid = false;
-    }
-
 // insert data
 
     if ($valid) {
         if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
-            ?>
-            <script language="JavaScript">
-                alert("No se puede dejar datos en blanco");
-            </script>
-        <?php
+            echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
         } else if (!isset($_POST['fecha_nacimiento'])) {
-            ?>
-            <script language="JavaScript">
-                alert("Debe seleccionar una fecha");
-            </script>
-        <?php
+            echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
         } else {
             //SUBIR IMAGEN URL
-            if (!isset($_FILES['archivo'])) {
-                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'");
-                if (!$resultado2) {
-                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                    exit;
-                }
+            if (isset($_FILES['archivo'])) {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
+                $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=? WHERE id_empleado='" . $id . "' ";
                 $stmt = $PDO->prepare($sql);
-                $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+                $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento));
                 $PDO = null;
                 header("Location: empleados.php");
-            } else {
+            } else if (!isset($_FILES['archivo'])){
 
                 $nombre = $_FILES['archivo']['name'];
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
@@ -131,7 +112,7 @@ if(!empty($_POST)) {
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(jpg|jpeg|gif|png)$/', $tipo);
-                $limite = 5000 * 1024;
+                $limite = 2000 * 1024;
 
                 if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
                     if ($_FILES['archivo']['error'] > 0) {
@@ -144,11 +125,7 @@ if(!empty($_POST)) {
                         move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
                         $url = "img_empleados/" . $nombre;
                         echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
-                        $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'");
-                        if (!$resultado2) {
-                            echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                            exit;
-                        }
+
                         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
                         $stmt = $PDO->prepare($sql);
@@ -156,8 +133,9 @@ if(!empty($_POST)) {
                         $PDO = null;
                         header("Location: empleados.php");
                     }
-                } else {
-                    echo 'Archivo inválido';
+                }
+                else {
+                    echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                 }
             }
         }
@@ -237,7 +215,7 @@ if(!empty($_POST)) {
 
                 </div>
                 <div class='row'>
-                    <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
+                    <form  method="post" class="form" role="form" enctype="multipart/form-data">
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
                             <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" maxlength="45" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
@@ -273,7 +251,7 @@ if(!empty($_POST)) {
                             <?php print(!empty($generoError)?"<span class='help-block'>$generoError</span>":""); ?>
                         </div>
                         <div class='form-group'>
-                            <?php print "<img src='../".$data['foto']."'border='0' width='150' height='200'>";?>
+                            <img src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
                             <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>

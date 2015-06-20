@@ -11,8 +11,9 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
-if(!empty($_POST)) {
 
+if(!empty($_POST)) {
+    require("../../bd.php");
     // validation errors
     $nombresError = null;
     $apellidosError = null;
@@ -31,7 +32,6 @@ if(!empty($_POST)) {
     $telefono = $_POST['telefono'];
     $correo = $_POST['correo'];
     $sexo = $_POST['sexo'];
-    $alias = $_POST['alias'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
     $contra = sha1($_POST['contra']);
     // validate input
@@ -84,33 +84,20 @@ if(!empty($_POST)) {
 
     // insert data
     if ($_POST['contra'] != $_POST['confirmar']) {
-        ?>
-        <script language="JavaScript">
-            alert("Las contraseñas no coinciden");
-        </script>
-        <?php
+        echo"<script type=\"text/javascript\">alert('Las contraseñas no coinciden');</script>";
         $_POST['contra']="";
         $_POST['confirmar']="";
     }
     else if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
-        ?>
-        <script language="JavaScript">
-            alert("No se puede dejar datos en blanco");
-        </script>
-    <?php
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     } else if (!isset($fecha_nacimiento)) {
-        ?>
-        <script language="JavaScript">
-            alert("Debe seleccionar una fecha");
-        </script>
-    <?php
+        echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
     }
     else {
         if ($valid) {
             //SUBIR IMAGEN URL
             if (!isset($_FILES['archivo'])) {
-                echo 'Ha habido un error, tienes que elegir una imagen<br/>';
-                echo '<a href="empleados.php">Subir archivo</a>';
+                echo"<script type=\"text/javascript\">alert('Tienes que subir una imagen'); window.location='crear.php';</script>";
             } else {
 
                 $nombre = $_FILES['archivo']['name'];
@@ -123,7 +110,7 @@ if(!empty($_POST)) {
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                $limite = 500 * 1024;
+                $limite = 2000 * 1024;
 
                 if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
                     if ($_FILES['archivo']['error'] > 0) {
@@ -137,10 +124,10 @@ if(!empty($_POST)) {
                         if (file_exists('../img_empleados/' . $nombre)) {
                             echo '<br/>El archivo ya existe: ' . $nombre;
                         } else {
-                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
-                            $url = "img_empleados/" . $nombre;
-                            echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
-                            require("../../bd.php");
+                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador);
+                            $url = "img_empleados/" . $identificador;
+                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador;
+
                             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
                             $stmt = $PDO->prepare($sql);
@@ -149,26 +136,20 @@ if(!empty($_POST)) {
                         }
                     }
                 } else {
-                    echo 'Archivo inválido';
+                    echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                 }
-
-                require("../../bd2.php");
-                $resultado = mysql_query("SELECT MAX(id_empleado) FROM empleados");
-                if (!$resultado) {
-                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                    exit;
-                }
-                $fila = mysql_fetch_row($resultado);
-                $idemp = $fila[0];
-
-                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'");
-                if (!$resultado2) {
-                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                    exit;
-                }
-                $fila2 = mysql_fetch_row($resultado2);
-                $idtip = $fila2[0];
                 require("../../bd.php");
+                /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
+                $sql= "SELECT MAX(id_empleado) as id_emp FROM empleados";
+                foreach($PDO->query($sql) as $row) {
+                    $idemp = "$row[id_emp]";
+                }
+                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
+                foreach($PDO->query($sql2) as $row2) {
+                    $idtip = "$row2[id_tipo_usuario]";
+                }
+
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
                 $stmt = $PDO->prepare($sql);

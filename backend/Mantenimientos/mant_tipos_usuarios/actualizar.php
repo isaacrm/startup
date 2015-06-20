@@ -11,6 +11,7 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
 if(!empty($_GET['id_tipo_usuario'])) {
     $id = $_GET['id_tipo_usuario'];
@@ -27,33 +28,56 @@ if(!empty($_POST)) {
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $agregar = $_POST['agregar'] == "agregar";
-    $modificar = $_POST['modificar']== "modificar";
-    $eliminar = $_POST['eliminar']=="eliminar";
-    $consultar = $_POST['consultar']=="consultar";
+    $modificar = $_POST['modificar'] == "modificar";
+    $eliminar = $_POST['eliminar'] == "eliminar";
+    $consultar = $_POST['consultar'] == "consultar";
 
     // validate input
     $valid = true;
-    if(empty($nombre)) {
+    if (empty($nombre)) {
         $nombresError = "Por favor ingrese el nombre.";
         $valid = false;
     }
 
-    if(empty($descripcion)) {
+    if (empty($descripcion)) {
         $descripcionError = "Por favor ingrese la descripcion.";
         $valid = false;
     }
 
     // update data
-    if($valid) {
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE tipos_usuarios SET nombre = ?, descripcion = ?, agregar=?, modificar=?, eliminar=?, consultar=? WHERE id_tipo_usuario = ?";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre, $descripcion, $agregar, $modificar, $eliminar, $consultar, $id));
-        $PDO = null;
-        header("Location: tipo_usuario.php");
+    if ($valid) {
+        try {
+            /*Comprueba si hay espacios en blanco*/
+            if (ctype_space($nombre) || ctype_space($descripcion)) {
+                ?>
+                <script language="JavaScript">
+                    alert("No se puede dejar datos en blanco");
+                </script>
+            <?php
+            } /*Comprueba que hay al menos un CRUD seleccionado*/
+            else if (!isset($_POST['agregar']) && !isset($_POST['modificar']) && !isset($_POST['eliminar']) && !isset($_POST['consultar'])) {
+                ?>
+                <script language="JavaScript">
+                    alert("Seleccione al menos una operacion");
+                </script>
+            <?php
+            } else {
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "UPDATE tipos_usuarios SET nombre = ?, descripcion = ?, agregar=?, modificar=?, eliminar=?, consultar=? WHERE id_tipo_usuario = ?";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($nombre, $descripcion, $agregar, $modificar, $eliminar, $consultar, $id));
+                $PDO = null;
+                header("Location: tipo_usuario.php");
+            }
+        } catch (Exception $e) {
+            ?>
+            <script language="JavaScript">
+                alert("Este tipo de usuario ya existe");
+            </script>
+        <?php
+        }
     }
-}
-else {
+    }else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT nombre, descripcion, agregar, modificar, eliminar, consultar FROM tipos_usuarios WHERE id_tipo_usuario = ?";
@@ -104,12 +128,12 @@ else {
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
                         <label for='nombres'>Nombre</label>
-                        <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print($nombre); ?>'>
+                        <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' autocomplete="off"  value='<?php print($nombre); ?>'>
                         <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
                         <label for='nombres'>Descripción</label>
-                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print($descripcion); ?>'>
+                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" value='<?php print($descripcion); ?>'>
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
                     <div class="form-group">
