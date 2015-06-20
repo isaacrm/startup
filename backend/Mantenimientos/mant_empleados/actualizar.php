@@ -40,7 +40,7 @@ if(!empty($_POST)) {
     $correo = $_POST['correo'];
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $tipo=$_POST['tipo'];
+    $tipo = $_POST['tipo'];
 // validate input
     $valid = true;
 
@@ -92,42 +92,55 @@ if(!empty($_POST)) {
 // insert data
 
     if ($valid) {
-        //SUBIR IMAGEN URL
-        if (!isset($_FILES['archivo'])) {
-            $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'");
-            if (!$resultado2) {
-                echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-                exit;
-            }
-            $fila2 = mysql_fetch_row($resultado2);
-            $idtip = $fila2[0];
-            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
-            $stmt = $PDO->prepare($sql);
-            $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
-            $PDO = null;
+        if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
+            ?>
+            <script language="JavaScript">
+                alert("No se puede dejar datos en blanco");
+            </script>
+        <?php
+        } else if (!isset($_POST['fecha_nacimiento'])) {
+            ?>
+            <script language="JavaScript">
+                alert("Debe seleccionar una fecha");
+            </script>
+        <?php
         } else {
+            //SUBIR IMAGEN URL
+            if (!isset($_FILES['archivo'])) {
+                $resultado2 = mysql_query("SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'");
+                if (!$resultado2) {
+                    echo 'No se pudo ejecutar la consulta: ' . mysql_error();
+                    exit;
+                }
+                $fila2 = mysql_fetch_row($resultado2);
+                $idtip = $fila2[0];
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+                $PDO = null;
+            } else {
 
-            $nombre = $_FILES['archivo']['name'];
-            $nombre_tmp = $_FILES['archivo']['tmp_name'];
-            $tipo = $_FILES['archivo']['type'];
-            $tamano = $_FILES['archivo']['size'];
+                $nombre = $_FILES['archivo']['name'];
+                $nombre_tmp = $_FILES['archivo']['tmp_name'];
+                $tipo = $_FILES['archivo']['type'];
+                $tamano = $_FILES['archivo']['size'];
 
-            $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
-            $partes_nombre = explode('.', $nombre);
-            $extension = end($partes_nombre);
-            $ext_correcta = in_array($extension, $ext_permitidas);
-            $tipo_correcto = preg_match('/^image\/(jpg|jpeg|gif|png)$/', $tipo);
-            $limite = 5000 * 1024;
+                $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+                $partes_nombre = explode('.', $nombre);
+                $extension = end($partes_nombre);
+                $ext_correcta = in_array($extension, $ext_permitidas);
+                $tipo_correcto = preg_match('/^image\/(jpg|jpeg|gif|png)$/', $tipo);
+                $limite = 5000 * 1024;
 
-            if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
-                if ($_FILES['archivo']['error'] > 0) {
-                    echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
-                } else {
-                    echo 'Nombre: ' . $nombre . '<br/>';
-                    echo 'Tipo: ' . $tipo . '<br/>';
-                    echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
-                    echo 'Guardado en: ' . $nombre_tmp;
+                if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
+                    if ($_FILES['archivo']['error'] > 0) {
+                        echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                    } else {
+                        echo 'Nombre: ' . $nombre . '<br/>';
+                        echo 'Tipo: ' . $tipo . '<br/>';
+                        echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                        echo 'Guardado en: ' . $nombre_tmp;
                         move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
                         $url = "img_empleados/" . $nombre;
                         echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
@@ -144,12 +157,12 @@ if(!empty($_POST)) {
                         $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
                         $PDO = null;
 
+                    }
+                } else {
+                    echo 'Archivo inválido';
                 }
-            } else {
-                echo 'Archivo inválido';
             }
         }
-    }
     } else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -171,6 +184,7 @@ if(!empty($_POST)) {
         $alias = $data['alias'];
         $tipo = $data['tipo'];
 
+    }
 }
 ?>
 
@@ -226,23 +240,23 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
+                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($apellidosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos'  value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
+                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos' autocomplete="off"  value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
                             <?php print(!empty($apellidosError)?"<span class='help-block'>$apellidosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($identificadorError)?"has-error":""); ?>'>
-                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador'  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
+                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador' autocomplete="off"  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
                             <?php print(!empty($identificadorError)?"<span class='help-block'>$identificadorError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($telefonosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono'   value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
+                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono' autocomplete="off"   value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
                             <?php print(!empty($telefonosError)?"<span class='help-block'>$telefonosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($correoError)?"has-error":""); ?>'>
-                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo'  value='<?php print(!empty($correo)?$correo:""); ?>' />
+                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo' autocomplete="off"  value='<?php print(!empty($correo)?$correo:""); ?>' />
                             <?php print(!empty($correoError)?"<span class='help-block'>$correoError</span>":""); ?>
                         </div>
                         <div class="form-group">

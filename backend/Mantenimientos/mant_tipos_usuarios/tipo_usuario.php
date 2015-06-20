@@ -57,6 +57,7 @@ if(!isset($_SESSION['alias']))
                                             <tbody>
                                             <?php
                                             require("../../bd.php");
+                                            /*Se llama la libreria de paginacion*/
                                             require_once("../../libs/Zebra_Pagination.php");
                                             /*Aqui obtenemos el total de registros*/
                                             $sql0= "SELECT COUNT(*) as total_datos FROM tipos_usuarios";

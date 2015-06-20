@@ -54,7 +54,22 @@ if(!isset($_SESSION['alias']))
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_usuario, alias,nombres, apellidos FROM usuarios, empleados WHERE usuarios.id_empleado=empleados.id_empleado ORDER BY id_usuario ASC";
+                                        /*Se llama la libreria de paginacion*/
+                                        require_once("../../libs/Zebra_Pagination.php");
+                                        /*Aqui obtenemos el total de registros*/
+                                        $sql0= "SELECT COUNT(*) as total_datos FROM usuarios";
+                                        foreach($PDO->query($sql0) as $row0) {
+                                            $totaldatos = "$row0[total_datos]";
+                                        }
+                                        /*Numero de registros que se quiere por tabla*/
+                                        $filas=10;
+                                        /*Aqui instanciamos la clase*/
+                                        $paginacion= new Zebra_Pagination();
+                                        /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                        $paginacion->records($totaldatos);
+                                        $paginacion->records_per_page($filas);
+                                        $paginacion->padding(false);
+                                        $sql = "SELECT id_usuario, alias,nombres, apellidos FROM usuarios, empleados WHERE usuarios.id_empleado=empleados.id_empleado ORDER BY id_usuario ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -68,6 +83,10 @@ if(!isset($_SESSION['alias']))
                                         ?>
                                         </tbody>
                                     </table>
+                                    <!-- Aqui se imprime la paginacion-->
+                                    <div class="table-responsive">
+                                        <?php $paginacion->render();?>
+                                    </div>
                                 </div>
                             </div> <!-- /row -->
                         </div>

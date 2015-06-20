@@ -84,9 +84,28 @@ if(!empty($_POST)) {
 
     // insert data
     if ($_POST['contra'] != $_POST['confirmar']) {
+        ?>
+        <script language="JavaScript">
+            alert("Las contraseñas no coinciden");
+        </script>
+        <?php
         $_POST['contra']="";
         $_POST['confirmar']="";
-    } else {
+    }
+    else if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
+        ?>
+        <script language="JavaScript">
+            alert("No se puede dejar datos en blanco");
+        </script>
+    <?php
+    } else if (!isset($_POST['fecha_nacimiento'])) {
+        ?>
+        <script language="JavaScript">
+            alert("Debe seleccionar una fecha");
+        </script>
+    <?php
+    }
+    else {
         if ($valid) {
             //SUBIR IMAGEN URL
             if (!isset($_FILES['archivo'])) {
@@ -214,23 +233,23 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
+                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($apellidosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos'  value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
+                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos' autocomplete="off" value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
                             <?php print(!empty($apellidosError)?"<span class='help-block'>$apellidosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($identificadorError)?"has-error":""); ?>'>
-                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador'  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
+                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador' autocomplete="off"  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
                             <?php print(!empty($identificadorError)?"<span class='help-block'>$identificadorError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($telefonosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono'   value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
+                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono' autocomplete="off"  value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
                             <?php print(!empty($telefonosError)?"<span class='help-block'>$telefonosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($correoError)?"has-error":""); ?>'>
-                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo'  value='<?php print(!empty($correo)?$correo:""); ?>' />
+                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo' autocomplete="off" value='<?php print(!empty($correo)?$correo:""); ?>' />
                             <?php print(!empty($correoError)?"<span class='help-block'>$correoError</span>":""); ?>
                         </div>
                         <div class="form-group">
@@ -251,14 +270,14 @@ if(!empty($_POST)) {
                             <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
-                            <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias'  value='<?php print(!empty($alias)?$alias:""); ?>'/>
+                            <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias' autocomplete="off" value='<?php print(!empty($alias)?$alias:""); ?>'/>
                             <?php print(!empty($aliasError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($contraseñaError)?"has-error":""); ?>'>
-                            <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autofocus />
+                            <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autocomplete="off" autofocus />
                         </div>
                         <div class='form-group <?php print(!empty($confirmarError)?"has-error":""); ?>'>
-                            <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus />
+                            <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autocomplete="off" autofocus />
                             <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
                         </div>
                         <div class='form-group'>
