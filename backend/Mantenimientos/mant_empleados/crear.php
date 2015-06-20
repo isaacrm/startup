@@ -96,8 +96,8 @@ if(!empty($_POST)) {
     else {
         if ($valid) {
             //SUBIR IMAGEN URL
-            if (!isset($_FILES['archivo'])) {
-                echo"<script type=\"text/javascript\">alert('Tienes que subir una imagen'); window.location='crear.php';</script>";
+            if ($_FILES['archivo']['name']=="") {
+                echo"<script type=\"text/javascript\">alert('Tienes que subir una imagen');</script>";
             } else {
 
                 $nombre = $_FILES['archivo']['name'];
@@ -124,9 +124,9 @@ if(!empty($_POST)) {
                         if (file_exists('../img_empleados/' . $nombre)) {
                             echo '<br/>El archivo ya existe: ' . $nombre;
                         } else {
-                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador);
-                            $url = "img_empleados/" . $identificador;
-                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador;
+                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
+                            $url = "img_empleados/" . $identificador . ".jpg";
+                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador. ".jpg";
 
                             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";

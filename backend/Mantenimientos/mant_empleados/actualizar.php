@@ -93,14 +93,14 @@ if(!empty($_POST)) {
             echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
         } else {
             //SUBIR IMAGEN URL
-            if (isset($_FILES['archivo'])) {
+            if ($_FILES['archivo']['name']=="") {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=? WHERE id_empleado='" . $id . "' ";
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento));
                 $PDO = null;
                 header("Location: empleados.php");
-            } else if (!isset($_FILES['archivo'])){
+            } else{
 
                 $nombre = $_FILES['archivo']['name'];
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
@@ -122,9 +122,9 @@ if(!empty($_POST)) {
                         echo 'Tipo: ' . $tipo . '<br/>';
                         echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
                         echo 'Guardado en: ' . $nombre_tmp;
-                        move_uploaded_file($nombre_tmp, "../img_empleados/" . $nombre);
-                        $url = "img_empleados/" . $nombre;
-                        echo "<br/>Guardado en: " . "../img_empleados/" . $nombre;
+                        move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
+                        $url = "img_empleados/" . $identificador . ".jpg";
+                        echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
 
                         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";

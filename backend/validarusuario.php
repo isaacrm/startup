@@ -9,7 +9,7 @@ if(!empty($_POST)) {
     **solo los campos que tenga como nombre_administrador el que el formulario
     **le ha enviado*/
     require("bd2.php");
-    $result = mysql_query("SELECT alias,contrasena FROM usuarios WHERE alias ='$usuario' AND estado=1");
+    $result = mysql_query("SELECT alias,contrasena, id_empleado FROM usuarios WHERE alias ='$usuario' AND estado=1");
     if($result === FALSE) {
         die(mysql_error()); // TODO: better error handling
     }
@@ -21,6 +21,7 @@ if(!empty($_POST)) {
             session_start();
             //Almacenamos el nombre de usuario en una variable de sesión usuario
             $_SESSION['alias'] = $usuario;
+            $_SESSION['id_empleado'] = $empleado;
             //Redireccionamos a la pagina: index.php
             header("Location: index.php");
         } else {

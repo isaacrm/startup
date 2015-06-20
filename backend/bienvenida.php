@@ -78,9 +78,8 @@ if(!empty($_POST)) {
     } else {
         if ($valid) {
             //SUBIR IMAGEN URL
-            if (!isset($_FILES['archivo'])) {
-                echo 'Ha habido un error, tienes que elegir una imagen<br/>';
-                echo '<a href="bienvenida.php">Subir archivo</a>';
+            if ($_FILES['archivo']['name']=="") {
+                echo"<script type=\"text/javascript\">alert('Tienes que subir una imagen');</script>";
             } else {
 
                 $nombre = $_FILES['archivo']['name'];
@@ -92,7 +91,7 @@ if(!empty($_POST)) {
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                $limite = 5000 * 1024;
+                $limite = 2000 * 1024;
 
                 if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
                     if ($_FILES['archivo']['error'] > 0) {
@@ -106,9 +105,9 @@ if(!empty($_POST)) {
                         if (file_exists('Mantenimients/img_empleados/' . $nombre)) {
                             echo '<br/>El archivo ya existe: ' . $nombre;
                         } else {
-                            move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $nombre);
-                            $url = "img_empleados/" . $nombre;
-                            echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $nombre;
+                            move_uploaded_file($nombre_tmp, "Mantenimientos/img_empleados/" . $identificador . ".jpg");
+                            $url = "img_empleados/" . $identificador . ".jpg";
+                            echo "<br/>Guardado en: " . "Manteniminetos/img_empleados/" . $identificador . ".jpg";
                             /*INGRESA DATOS DE EMPLEADOS*/
                             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
@@ -118,8 +117,9 @@ if(!empty($_POST)) {
                         }
                     }
                 } else {
-                    echo 'Archivo inválido';
+                    echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                 }
+                /*Si no funciona abir nuevamente el archivo de conexion (raro)*/
                 /*GUARDAR TIPOS DE USUARIOS*/
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO tipos_usuarios(nombre,descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
