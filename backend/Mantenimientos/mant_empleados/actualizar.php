@@ -95,9 +95,10 @@ if(!empty($_POST)) {
         else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
             echo"<script type=\"text/javascript\">alert('Formato de DUI incorrecto. Ej. XXXXXXXX-X');</script>";
         }
-        else if (!preg_match('^[2^6-7]{1}[0-9]{3}-[0-9]{4}$', $telefono)){
+        else if (!preg_match('/^[2|6|7]{1}\d{3}-\d{4}$/', $telefono)){
             echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
-        }else {
+        }
+        else {
             //SUBIR IMAGEN URL
             if ($_FILES['archivo']['name']=="") {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
