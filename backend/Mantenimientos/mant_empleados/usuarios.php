@@ -34,7 +34,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Empleados</div>
+                        Ver Usuarios</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -43,7 +43,6 @@ if(!isset($_SESSION['alias']))
                     <div class="col-lg-12">
                         <div class='container col-lg-12'>
                             <div class='row'>
-                                <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
