@@ -95,6 +95,7 @@ if(!empty($_POST)) {
         else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
             echo"<script type=\"text/javascript\">alert('Formato de DUI incorrecto. Ej. XXXXXXXX-X');</script>";
         }
+        /*Valida numero de telefono formato El Salvador*/
         else if (!preg_match('/^[2|6|7]{1}\d{3}-\d{4}$/', $telefono)){
             echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
         }
