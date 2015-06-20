@@ -11,7 +11,7 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
-require("../../bd.php");
+
 $id = null;
 if(!empty($_GET['id_empleado'])) {
     $id = $_GET['id_empleado'];
@@ -19,6 +19,7 @@ if(!empty($_GET['id_empleado'])) {
 if($id == null) {
     header("Location: empleados.php");
 }
+require("../../bd.php");
 if(!empty($_POST)) {
 
 // validation errors
@@ -112,13 +113,12 @@ if(!empty($_POST)) {
                     echo 'No se pudo ejecutar la consulta: ' . mysql_error();
                     exit;
                 }
-                $fila2 = mysql_fetch_row($resultado2);
-                $idtip = $fila2[0];
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
                 $PDO = null;
+                header("Location: empleados.php");
             } else {
 
                 $nombre = $_FILES['archivo']['name'];
@@ -149,20 +149,19 @@ if(!empty($_POST)) {
                             echo 'No se pudo ejecutar la consulta: ' . mysql_error();
                             exit;
                         }
-                        $fila2 = mysql_fetch_row($resultado2);
-                        $idtip = $fila2[0];
                         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                         $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
                         $stmt = $PDO->prepare($sql);
                         $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
                         $PDO = null;
-
+                        header("Location: empleados.php");
                     }
                 } else {
                     echo 'Archivo inválido';
                 }
             }
         }
+    }
     } else {
         // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -183,9 +182,9 @@ if(!empty($_POST)) {
         $sexo = $data['sexo'];
         $alias = $data['alias'];
         $tipo = $data['tipo'];
-
+        $foto = $data['foto'];
     }
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -284,7 +283,7 @@ if(!empty($_POST)) {
                         <div class='form-group'>
                             <label for='genero'>Tipo de usuario</label>
                             <select name='tipo' required='required' id='tipo' class='form-control'>
-                                <option></option>
+                                <option value='<?php print(!empty($alias)?$alias:""); ?>></option>
                                 <?php
                                 require("../../bd.php");
                                 $sql = "SELECT nombre FROM tipos_usuarios ORDER BY id_tipo_usuario ASC ";
