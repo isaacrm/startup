@@ -98,7 +98,7 @@ if(!empty($_POST)) {
             alert("No se puede dejar datos en blanco");
         </script>
     <?php
-    } else if (!isset($_POST['fecha_nacimiento'])) {
+    } else if (!isset($fecha_nacimiento)) {
         ?>
         <script language="JavaScript">
             alert("Debe seleccionar una fecha");
@@ -233,23 +233,23 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form action="#" method="post" class="form" role="form" enctype="multipart/form-data">
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
+                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" maxlength="45" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($apellidosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos' autocomplete="off" value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
+                            <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required='required' id='apellidos' autocomplete="off" maxlength="60" value='<?php print(!empty($apellidos)?$apellidos:""); ?>' />
                             <?php print(!empty($apellidosError)?"<span class='help-block'>$apellidosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($identificadorError)?"has-error":""); ?>'>
-                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador' autocomplete="off"  value='<?php print(!empty($identificador)?$identificador:""); ?>' />
+                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador' autocomplete="off" maxlength="10" value='<?php print(!empty($identificador)?$identificador:""); ?>' />
                             <?php print(!empty($identificadorError)?"<span class='help-block'>$identificadorError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($telefonosError)?"has-error":""); ?>'>
-                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono' autocomplete="off"  value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
+                            <input class="form-control" name="telefono" placeholder="Telefono" type="text" required='required' id='telefono' autocomplete="off" maxlength="9" value='<?php print(!empty($telefono)?$telefono:""); ?>'/>
                             <?php print(!empty($telefonosError)?"<span class='help-block'>$telefonosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($correoError)?"has-error":""); ?>'>
-                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo' autocomplete="off" value='<?php print(!empty($correo)?$correo:""); ?>' />
+                            <input class="form-control" name="correo" placeholder="Correo" type="email" required='required' id='correo' autocomplete="off" maxlength="75" value='<?php print(!empty($correo)?$correo:""); ?>' />
                             <?php print(!empty($correoError)?"<span class='help-block'>$correoError</span>":""); ?>
                         </div>
                         <div class="form-group">
@@ -270,14 +270,14 @@ if(!empty($_POST)) {
                             <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
-                            <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias' autocomplete="off" value='<?php print(!empty($alias)?$alias:""); ?>'/>
+                            <input class="form-control" name="alias" placeholder="Alias" type="text" required='required' id='alias' autocomplete="off" maxlength="15" value='<?php print(!empty($alias)?$alias:""); ?>'/>
                             <?php print(!empty($aliasError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($contraseñaError)?"has-error":""); ?>'>
-                            <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autocomplete="off" autofocus />
+                            <input class="form-control" name="contra" placeholder="Contraseña" type="password" required='required' id='contra' autocomplete="off" maxlength="15" autofocus />
                         </div>
                         <div class='form-group <?php print(!empty($confirmarError)?"has-error":""); ?>'>
-                            <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autocomplete="off" autofocus />
+                            <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autocomplete="off" maxlength="15" autofocus />
                             <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
                         </div>
                         <div class='form-group'>
