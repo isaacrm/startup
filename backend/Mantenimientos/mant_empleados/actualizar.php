@@ -11,6 +11,7 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
 if(!empty($_GET['id_empleado'])) {
     $id = $_GET['id_empleado'];
@@ -43,11 +44,6 @@ if(!empty($_POST)) {
     $tipo = $_POST['tipo'];
 // validate input
     $valid = true;
-
-// $regex = '/(^\d{8})-(\d$)/';
-//if (!preg_match($regex, $identificador)) {
-// echo 'El DUI NO es válido';
-//}
 
     if (empty($nombres)) {
         $nombresError = "Por favor ingrese los nombres.";
@@ -85,13 +81,23 @@ if(!empty($_POST)) {
     }
 
 // insert data
-
+// $regex = '/(^\d{8})-(\d$)/';
+//if (!preg_match($regex, $identificador)) {
+// echo 'El DUI NO es válido';
+//}
     if ($valid) {
         if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
             echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
         } else if (!isset($_POST['fecha_nacimiento'])) {
             echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
-        } else {
+        }
+        /*Valida DUI*/
+        else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
+            echo"<script type=\"text/javascript\">alert('Formato de DUI incorrecto. Ej. XXXXXXXX-X');</script>";
+        }
+        else if (!preg_match('^[2^6-7]{1}[0-9]{3}-[0-9]{4}$', $telefono)){
+            echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
+        }else {
             //SUBIR IMAGEN URL
             if ($_FILES['archivo']['name']=="") {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

@@ -13,6 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 
 if(!empty($_POST)) {
+    error_reporting(E_ALL ^ E_NOTICE);
     require("../../bd.php");
     // validation errors
     $nombresError = null;
@@ -92,6 +93,13 @@ if(!empty($_POST)) {
         echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     } else if (!isset($fecha_nacimiento)) {
         echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
+    }
+    /*Valida DUI*/
+    else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
+        echo"<script type=\"text/javascript\">alert('Formato de DUI incorrecto. Ej. XXXXXXXX-X');</script>";
+    }
+    else if (!preg_match('^[2^6-7]{1}[0-9]{3}-[0-9]{4}$', $telefono)){
+        echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
     }
     else {
         if ($valid) {
@@ -222,7 +230,7 @@ if(!empty($_POST)) {
                             <?php print(!empty($apellidosError)?"<span class='help-block'>$apellidosError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($identificadorError)?"has-error":""); ?>'>
-                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required='required' id='identificador' autocomplete="off" maxlength="10" value='<?php print(!empty($identificador)?$identificador:""); ?>' />
+                            <input class="form-control" name="identificador" placeholder="DUI" type="text" required="required" id='identificador' autocomplete="off" maxlength="10" value='<?php print(!empty($identificador)?$identificador:""); ?>' />
                             <?php print(!empty($identificadorError)?"<span class='help-block'>$identificadorError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($telefonosError)?"has-error":""); ?>'>
