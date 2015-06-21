@@ -47,7 +47,7 @@ if(!isset($_SESSION['alias']))
                             <div class='row'>
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
                                 <form method='POST' action="buscar.php">
-                                    <input  class="col-lg-9" name="buscar" placeholder="Buscar por Nombre" type="text" id='buscar' autocomplete="off" maxlength="60"/>
+                                    <input  class="col-lg-9" name="buscar" placeholder="Buscar por Encabezado" type="text" id='buscar' autocomplete="off" maxlength="60"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
                                 </form>
                                 <div class="table-responsive">
@@ -62,14 +62,28 @@ if(!isset($_SESSION['alias']))
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_pagina, encabezado, frase, estado FROM paginas ORDER BY id_pagina ASC";
+                                        require_once("../../libs/Zebra_Pagination.php");
+                                        /*Aqui obtenemos el total de registros*/
+                                        $sql0 = "SELECT COUNT(*) as total_datos FROM paginas";
+                                        foreach ($PDO->query($sql0) as $row0) {
+                                            $totaldatos = "$row0[total_datos]";
+                                        }
+                                        /*Numero de registros que se quiere por tabla*/
+                                        $filas = 10;
+                                        /*Aqui instanciamos la clase*/
+                                        $paginacion = new Zebra_Pagination();
+                                        /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                        $paginacion->records($totaldatos);
+                                        $paginacion->records_per_page($filas);
+                                        $paginacion->padding(false);
+                                        $sql = "SELECT id_pagina, encabezado, frase, estado FROM paginas ORDER BY id_pagina ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_pagina]</td>";
                                             $data .= "<td>$row[encabezado]</td>";
                                             $data .= "<td>$row[frase]</td>";
-                                            $data .= "<td>$row[estado]</td>";
+                                            $data .= "<td >$row[estado]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_paginas/consultar.php?id_pagina=$row[id_pagina]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_paginas/actualizar.php?id_pagina=$row[id_pagina]'>Actualizar</a>&nbsp;";
@@ -82,6 +96,10 @@ if(!isset($_SESSION['alias']))
                                         ?>
                                         </tbody>
                                     </table>
+                                    <!-- Aqui se imprime la paginacion-->
+                                    <div>
+                                        <?php $paginacion->render();?>
+                                    </div>
                                 </div>
                             </div> <!-- /row -->
 
