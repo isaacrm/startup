@@ -57,8 +57,24 @@ if(!isset($_SESSION['alias']))
                                         </tr>
                                         <tbody>
                                         <?php
+                                        error_reporting(E_ALL ^ E_NOTICE);
                                         require("../../bd.php");
-                                        $sql = "SELECT id_noticia, titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia ASC";
+                                        /*Se llama la libreria de paginacion*/
+                                        require_once("../../libs/Zebra_Pagination.php");
+                                        /*Aqui obtenemos el total de registros*/
+                                        $sql0 = "SELECT COUNT(*) as total_datos FROM noticias";
+                                        foreach ($PDO->query($sql0) as $row0) {
+                                            $totaldatos = "$row0[total_datos]";
+                                        }
+                                        /*Numero de registros que se quiere por tabla*/
+                                        $filas = 10;
+                                        /*Aqui instanciamos la clase*/
+                                        $paginacion = new Zebra_Pagination();
+                                        /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                        $paginacion->records($totaldatos);
+                                        $paginacion->records_per_page($filas);
+                                        $paginacion->padding(false);
+                                        $sql = "SELECT id_noticia, titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
@@ -78,6 +94,10 @@ if(!isset($_SESSION['alias']))
                                         ?>
                                         </tbody>
                                     </table>
+                                    <!-- Aqui se imprime la paginacion-->
+                                    <div>
+                                        <?php $paginacion->render();?>
+                                    </div>
                                 </div>
                             </div> <!-- /row -->
 

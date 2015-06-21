@@ -49,7 +49,6 @@ if(!isset($_SESSION['alias']))
                                         <input  class="col-lg-9" name="buscar" placeholder="Buscar por Nombre" type="text" id='buscar' autocomplete="off" maxlength="60"/>
                                         <input class="col-lg-3" type="submit" name="submit" value="Buscar">
                                     </form>
-                                    <p></p>
                                         <div class="table-responsive">
                                         <table class='table table-striped table-bordered table-hover'>
                                             <tr class='warning '>
