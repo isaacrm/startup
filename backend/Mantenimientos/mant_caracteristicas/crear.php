@@ -11,12 +11,13 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
     $tituloError = null;
     // post values
     $titulo = $_POST['titulo'];
-
+    $descripcion= $_POST['descripcion'];
     // validate input
     $valid = true;
     if(empty($titulo)) {
@@ -25,13 +26,26 @@ if(!empty($_POST)) {
     }
     // insert data
     if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO caracteristicas(titulo) values(?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo ));
-        $PDO = null;
-        header("Location: caracteristicas.php");
+        try {
+            if (ctype_space($titulo) || ctype_space($descripcion)) {
+                echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+            } else if (strlen(trim($titulo, ' ')) <= 3) {
+                echo "<script type=\"text/javascript\">alert('El titulo debe de tener al menos 4 caracteres');</script>";
+            } else if (strlen(trim($descripcion, ' ')) <= 5) {
+                echo "<script type=\"text/javascript\">alert('La frase debe de tener al menos 6 caracteres');</script>";
+            } else if (!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i', $titulo)) {
+                echo "<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
+            } else {
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "INSERT INTO caracteristicas(titulo, descripcion) values(?,?)";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($titulo, $descripcion));
+                $PDO = null;
+                header("Location: caracteristicas.php");
+            }
+        } catch (Exception $e) {
+            echo "<script type=\"text/javascript\">alert('Esta característica ya existe');</script>";
+        }
     }
 }
 ?>
@@ -67,8 +81,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
-                            <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print(!empty($titulo)?$titulo:""); ?>'>
+                            <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off" maxlength="8" value='<?php print(!empty($titulo)?$titulo:""); ?>'>
                             <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
+                        </div>
+                        <div class='form-group' >
+                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>

@@ -42,6 +42,10 @@ if(!empty($_POST)) {
         {
             echo"<script type=\"text/javascript\">alert('El encabezado debe de tener al menos 6 caracteres');</script>";
         }
+        else if (strlen(trim($frase, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('La frase debe de tener al menos 6 caracteres');</script>";
+        }
         else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$encabezado)){
             echo"<script type=\"text/javascript\">alert('El encabezado no debe tener números');</script>";
         }
