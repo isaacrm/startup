@@ -11,15 +11,19 @@
                     </i><span class="menu-title">Tipos de usuario</span></a>
 
             </li>
-            <li><a href="../mant_empleados/empleados.php"><i class="fa fa-database fa-fw">
+            <li><a><i class="fa fa-database fa-fw">
                         <div class="icon-bg bg-red"></div>
-                    </i><span class="menu-title">Empleados - Usuarios</span></a>
+                    </i><span class="menu-title">Empleados-Usuarios</span></a>
+            <ul class="nav nav-second-level">
+            <li><a href="../mant_empleados/empleados.php">
+                    <span class="menu-title">Empleados</span></a>
 
             </li>
-            <li><a href="../mant_empleados/usuarios.php"><i class="fa fa-database fa-fw">
-                        <div class="icon-bg bg-red"></div>
-                    </i><span class="menu-title">Ver Usuarios</span></a>
+            <li><a href="../mant_empleados/usuarios.php">
+                    <span class="menu-title">Ver Usuarios</span></a>
 
+            </li>
+                </ul>
             </li>
             <li><a href="../mant_paginas/paginas.php"><i class="fa fa-send-o fa-fw">
                         <div class="icon-bg bg-green"></div>
