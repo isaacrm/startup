@@ -67,10 +67,16 @@ if(!isset($_SESSION['alias']))
                                             /*Se llama la libreria de paginacion*/
                                             require_once("../../libs/Zebra_Pagination.php");
                                             $buscar=$_POST['buscar'];
+                                            if ($buscar!="")
+                                            {
                                             /*Aqui obtenemos el total de registros*/
                                             $sql0 = "SELECT COUNT(*) as total_datos FROM tipos_usuarios WHERE nombre like '%".$buscar."'";
                                             foreach ($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
+                                            }
+                                            if ($totaldatos==0)
+                                            {
+                                                echo "<p class='alert bg-danger'>'No se encontraron resultados'</p>";
                                             }
                                             /*Numero de registros que se quiere por tabla*/
                                             $filas = 10;
@@ -100,7 +106,10 @@ if(!isset($_SESSION['alias']))
                                     </table>
                                     <!-- Aqui se imprime la paginacion-->
                                     <div>
-                                        <?php $paginacion->render();?>
+                                        <?php $paginacion->render();}
+                                        else{
+                                            echo "<p class='alert bg-danger'>'Ingrese el dato que desea encontrar'</p>";
+                                        }?>
                                     </div>
                                 </div>
                             </div> <!-- /row -->
