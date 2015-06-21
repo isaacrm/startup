@@ -52,6 +52,7 @@ if(!empty($_POST)) {
     }
     else {
     if($valid) {
+        try {
         //SUBIR IMAGEN URL
         if ($_FILES['archivo']['name'] == "") {
             echo "<script type=\"text/javascript\">alert('Tienes que subir una imagen');</script>";
@@ -114,6 +115,9 @@ if(!empty($_POST)) {
                 echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 720px de alto x 480px de ancho');</script>";
 
             }
+        }
+        }catch (Exception $e){
+            echo"<script type=\"text/javascript\">alert('La imagen con este titulo ya existe');</script>";
         }
     }
     }

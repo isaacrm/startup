@@ -54,66 +54,70 @@ if(!empty($_POST)) {
         echo "<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
     } else {
         if ($valid) {
-            if ($_FILES['archivo']['name'] == "") {
-                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
-                $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
-                foreach ($PDO->query($sql2) as $row2) {
-                    $id_servicio = "$row2[id_servicio]";
-                }
-                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = "UPDATE imagenes_servicios SET  titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
-                $stmt = $PDO->prepare($sql);
-                $stmt->execute(array($titulo, $descripcion,  $id_servicio, $id));
-                header("Location: imagenes_servicios.php");
-            } else {
-                $nombre = $_FILES['archivo']['name'];
-                $nombre_tmp = $_FILES['archivo']['tmp_name'];
-                $tipo = $_FILES['archivo']['type'];
-                $tamano = $_FILES['archivo']['size'];
+            try {
+                if ($_FILES['archivo']['name'] == "") {
+                    /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                    $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
+                    foreach ($PDO->query($sql2) as $row2) {
+                        $id_servicio = "$row2[id_servicio]";
+                    }
+                    $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $sql = "UPDATE imagenes_servicios SET  titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
+                    $stmt = $PDO->prepare($sql);
+                    $stmt->execute(array($titulo, $descripcion, $id_servicio, $id));
+                    header("Location: imagenes_servicios.php");
+                } else {
+                    $nombre = $_FILES['archivo']['name'];
+                    $nombre_tmp = $_FILES['archivo']['tmp_name'];
+                    $tipo = $_FILES['archivo']['type'];
+                    $tamano = $_FILES['archivo']['size'];
 
-                $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
-                $partes_nombre = explode('.', $nombre);
-                $extension = end($partes_nombre);
-                $ext_correcta = in_array($extension, $ext_permitidas);
-                $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                $limite = 2048 * 1024;
-                /*Toma el tamaño de la imagen subida*/
-                $dimensiones = getimagesize($nombre_tmp);
-                $ancho = $dimensiones[0];
-                $alto = $dimensiones[1];
-                /*Compara el tamaño con el que debe de ser*/
-                if ($ancho == 720 && $alto == 480) {
-                    /*Compara el peso de la imagen, debe ser menor a 2 MB  (Esto es mas codigo de validacion [extension y tipo])$ext_correcta && $tipo_correcto*/
-                    if ($tamano <= $limite) {
-                        if ($_FILES['archivo']['error'] > 0) {
-                            echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
-                        } else {
-                            echo 'Nombre: ' . $nombre . '<br/>';
-                            echo 'Tipo: ' . $tipo . '<br/>';
-                            echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
-                            echo 'Guardado en: ' . $nombre_tmp;
-                            /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
-                            $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
-                            foreach ($PDO->query($sql2) as $row2) {
-                                $id_servicio = "$row2[id_servicio]";
-                            }
-                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $id . ".jpg");
-                            $url = "img_empleados/" . $id . ".jpg";
-                            echo "<br/>Guardado en: " . "../img_empleados/" . $id . ".jpg";
+                    $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+                    $partes_nombre = explode('.', $nombre);
+                    $extension = end($partes_nombre);
+                    $ext_correcta = in_array($extension, $ext_permitidas);
+                    $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+                    $limite = 2048 * 1024;
+                    /*Toma el tamaño de la imagen subida*/
+                    $dimensiones = getimagesize($nombre_tmp);
+                    $ancho = $dimensiones[0];
+                    $alto = $dimensiones[1];
+                    /*Compara el tamaño con el que debe de ser*/
+                    if ($ancho == 720 && $alto == 480) {
+                        /*Compara el peso de la imagen, debe ser menor a 2 MB  (Esto es mas codigo de validacion [extension y tipo])$ext_correcta && $tipo_correcto*/
+                        if ($tamano <= $limite) {
+                            if ($_FILES['archivo']['error'] > 0) {
+                                echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                            } else {
+                                echo 'Nombre: ' . $nombre . '<br/>';
+                                echo 'Tipo: ' . $tipo . '<br/>';
+                                echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                                echo 'Guardado en: ' . $nombre_tmp;
+                                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                                $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
+                                foreach ($PDO->query($sql2) as $row2) {
+                                    $id_servicio = "$row2[id_servicio]";
+                                }
+                                move_uploaded_file($nombre_tmp, "../img_empleados/" . $id . ".jpg");
+                                $url = "img_empleados/" . $id . ".jpg";
+                                echo "<br/>Guardado en: " . "../img_empleados/" . $id . ".jpg";
 
                                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $sql = "UPDATE imagenes_servicios SET url = ?, titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
                                 $stmt = $PDO->prepare($sql);
                                 $stmt->execute(array($url, $titulo, $descripcion, $id_servicio, $id));
                                 header("Location: imagenes_servicios.php");
+                            }
+                        } else {
+                            echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                         }
                     } else {
-                        echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
-                    }
-                } else {
-                    echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 720px de alto x 480px de ancho');</script>";
+                        echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 720px de alto x 480px de ancho');</script>";
                     }
                 }
+            }catch (Exception $e){
+                echo"<script type=\"text/javascript\">alert('La imagen con este titulo ya existe');</script>";
+            }
             }
         }
     }
