@@ -34,7 +34,7 @@ if(!empty($_POST)) {
     // insert data
 
     if($valid) {
-
+        try {
         if (ctype_space($encabezado) || ctype_space($frase) ) {
             echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
         }
@@ -52,6 +52,9 @@ if(!empty($_POST)) {
             $stmt->execute(array($encabezado, $frase, 1));
             $PDO = null;
             header("Location: paginas.php");
+        }
+        } catch (Exception $e) {
+            echo"<script type=\"text/javascript\">alert('Esta página ya existe');</script>";
         }
     }
 

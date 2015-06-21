@@ -41,6 +41,7 @@ if(!empty($_POST)) {
     }
     // update data
     if ($valid) {
+        try {
         if (ctype_space($encabezado) || ctype_space($frase)) {
             echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
         } else if (strlen(trim($encabezado, ' ')) <= 5) {
@@ -53,6 +54,9 @@ if(!empty($_POST)) {
             $stmt = $PDO->prepare($sql);
             $stmt->execute(array($encabezado, $frase, 1, $id));
             header("Location: paginas.php");
+        }
+        } catch (Exception $e) {
+            echo"<script type=\"text/javascript\">alert('Esta página ya existe');</script>";
         }
     }
     }else {
