@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2015 a las 02:42:50
+-- Tiempo de generación: 21-06-2015 a las 10:41:08
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -28,8 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `caracteristicas` (
 `id_caracteristica` int(11) NOT NULL,
-  `titulo` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
-  `id_pagina` int(11) NOT NULL
+  `titulo` varchar(8) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -60,18 +59,18 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `sexo` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `foto` varchar(150) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
 INSERT INTO `empleados` (`id_empleado`, `nombres`, `apellidos`, `identificador`, `telefono`, `correo`, `sexo`, `fecha_nacimiento`, `foto`) VALUES
-(6, 'Jorge Isaac', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-14', 'img_empleados/fotoflores ues.jpg'),
-(8, 'dfghjk', 'jhgfrdeswe', '06464610-1', '6242-5254', 'sdasdsa@dasdsa.cas', 'Femenino', '1997-06-06', 'img_empleados/1490742_779574108726394_1619493180_o.jpg'),
-(13, 'Kun ', 'AgÃ¼ero ', '04527525-9', '2234-5678', 'sadsadsadsa@asdsa.dc', 'Masculino', '1996-07-19', 'img_empleados/01234567-8.jpg'),
-(14, 'Lala', 'sadsad', '98765432-1', '2645-7875', 'dsadsadsadsad@dasdsadasd.sdf', 'Masculino', '1997-06-06', 'img_empleados/98765432-1.jpg'),
-(15, 'asdsad', 'asdsadsa', '06988888-8', '6997-4545', 'asdsadsa@asdasd.casd', 'Masculino', '1997-06-06', 'img_empleados/06988888-8.jpg');
+(6, 'Jorge Isaac', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-14', 'img_empleados/05429426-1.jpg'),
+(8, 'dfghjk', 'jhgfrdeswe', '06464610-1', '6242-5254', 'mendezisaac.11@gmail.com', 'Femenino', '1997-06-06', 'img_empleados/1490742_779574108726394_1619493180_o.jpg'),
+(13, 'Kun ', 'AgÃ¼ero ', '04527525-9', '2234-5678', 'mendezisaac.11@gmail.com', 'Masculino', '1996-07-19', 'img_empleados/01234567-8.jpg'),
+(14, 'Lala', 'sadsad', '98765432-1', '2645-7875', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-06', 'img_empleados/98765432-1.jpg'),
+(16, 'Jajajajjajaja', 'Lopez', '32145698-5', '6549-8987', 'sadasd@asdas.sd', 'Masculino', '1997-06-01', 'img_empleados/16.jpg');
 
 -- --------------------------------------------------------
 
@@ -87,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `frase` varchar(175) COLLATE utf8_unicode_ci NOT NULL,
   `twitter` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `facebook` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `id_pagina` int(11) NOT NULL
+  `foto` varchar(250) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -116,7 +115,15 @@ CREATE TABLE IF NOT EXISTS `noticias` (
   `subtitulo` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
   `leyenda` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `foto` varchar(250) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `noticias`
+--
+
+INSERT INTO `noticias` (`id_noticia`, `titulo`, `subtitulo`, `leyenda`, `foto`) VALUES
+(10, 'WineFun', 'Creando tu mundo', 'asdasdasdas', 'img_noticias/10.jpg'),
+(11, 'Comidas 2x1', 'Grandes promociones 100pre', 'Excelentes', 'img_noticias/11.jpg');
 
 -- --------------------------------------------------------
 
@@ -140,8 +147,7 @@ CREATE TABLE IF NOT EXISTS `paginas` (
 CREATE TABLE IF NOT EXISTS `politicas` (
 `id_politica` int(11) NOT NULL,
   `titulo` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `id_pagina` int(11) NOT NULL
+  `descripcion` varchar(100) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -153,8 +159,7 @@ CREATE TABLE IF NOT EXISTS `politicas` (
 CREATE TABLE IF NOT EXISTS `preguntas` (
 `id_pregunta` int(11) NOT NULL,
   `pregunta` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `respuesta` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
-  `id_pagina` int(11) NOT NULL
+  `respuesta` varchar(300) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -167,8 +172,7 @@ CREATE TABLE IF NOT EXISTS `servicios` (
 `id_servicio` int(11) NOT NULL,
   `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `precio` decimal(7,2) unsigned NOT NULL,
-  `id_pagina` int(11) NOT NULL
+  `precio` decimal(7,2) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -185,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
   `modificar` tinyint(1) NOT NULL,
   `eliminar` tinyint(1) NOT NULL,
   `consultar` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `tipos_usuarios`
@@ -193,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
 
 INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `nombre`, `descripcion`, `agregar`, `modificar`, `eliminar`, `consultar`) VALUES
 (25, 'Administrador', 'El que controla todo', 1, 1, 1, 1),
-(26, 'hola', 'asdsadsadsa', 1, 1, 0, 0),
+(26, 'hola xD', 'asdsadsadsa', 1, 1, 0, 0),
 (27, 'ghjfgdf', 'kkkkk', 0, 1, 1, 0),
 (28, 'erwtyuy', 'rtyuuyttr', 0, 0, 0, 1),
 (29, 'adsdsd', 'sadsadsadsa', 0, 1, 0, 0),
@@ -207,7 +211,8 @@ INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `nombre`, `descripcion`, `agreg
 (51, 'Gerente', 'sadsadsdasda', 1, 1, 0, 0),
 (68, 'xcdfghjklÃ±', 'lkjhgfd', 1, 0, 0, 0),
 (70, ' Gerente de Sucursal', 'asdsadas', 1, 0, 0, 0),
-(71, 'asdsadsadsad asdasdasdsa asda ssd sa sada ', 'dasdsadasda', 1, 0, 0, 0);
+(71, 'asdsadsadsad asdasdasdsa asda ssd sa sada ', 'dasdsadasda', 1, 0, 0, 0),
+(72, 'asdsad', 'sasdsa', 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `estado` tinyint(1) NOT NULL,
   `id_empleado` int(11) NOT NULL,
   `id_tipo_usuario` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -233,7 +238,7 @@ INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_emple
 (7, 'Chaco', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 8, 70),
 (13, 'Asdf', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 13, 70),
 (14, 'Aaaa', '3da541559918a808c2402bba5012f6c60b27661c', 1, 14, 37),
-(15, 'Jajajajaja', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 15, 51);
+(16, 'Jojojo', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 16, 32);
 
 --
 -- Índices para tablas volcadas
@@ -243,7 +248,7 @@ INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_emple
 -- Indices de la tabla `caracteristicas`
 --
 ALTER TABLE `caracteristicas`
- ADD PRIMARY KEY (`id_caracteristica`), ADD UNIQUE KEY `titulo` (`titulo`), ADD KEY `id_pagina` (`id_pagina`);
+ ADD PRIMARY KEY (`id_caracteristica`), ADD UNIQUE KEY `titulo` (`titulo`);
 
 --
 -- Indices de la tabla `detalles_caracteristicas`
@@ -261,7 +266,7 @@ ALTER TABLE `empleados`
 -- Indices de la tabla `equipos`
 --
 ALTER TABLE `equipos`
- ADD PRIMARY KEY (`id_equipo`), ADD KEY `id_pagina` (`id_pagina`);
+ ADD PRIMARY KEY (`id_equipo`);
 
 --
 -- Indices de la tabla `imagenes_servicios`
@@ -285,19 +290,19 @@ ALTER TABLE `paginas`
 -- Indices de la tabla `politicas`
 --
 ALTER TABLE `politicas`
- ADD PRIMARY KEY (`id_politica`), ADD UNIQUE KEY `titulo` (`titulo`), ADD KEY `id_pagina` (`id_pagina`);
+ ADD PRIMARY KEY (`id_politica`), ADD UNIQUE KEY `titulo` (`titulo`);
 
 --
 -- Indices de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
- ADD PRIMARY KEY (`id_pregunta`), ADD KEY `id_pagina` (`id_pagina`);
+ ADD PRIMARY KEY (`id_pregunta`);
 
 --
 -- Indices de la tabla `servicios`
 --
 ALTER TABLE `servicios`
- ADD PRIMARY KEY (`id_servicio`), ADD UNIQUE KEY `tipo` (`tipo`), ADD KEY `id_pagina` (`id_pagina`);
+ ADD PRIMARY KEY (`id_servicio`), ADD UNIQUE KEY `tipo` (`tipo`);
 
 --
 -- Indices de la tabla `tipos_usuarios`
@@ -329,7 +334,7 @@ MODIFY `id_detalle_caracteristica` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
@@ -344,7 +349,7 @@ MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `noticias`
 --
 ALTER TABLE `noticias`
-MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `paginas`
 --
@@ -369,21 +374,15 @@ MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
-MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
+MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
+MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `caracteristicas`
---
-ALTER TABLE `caracteristicas`
-ADD CONSTRAINT `fk_paginas_caracteristicas` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
 
 --
 -- Filtros para la tabla `detalles_caracteristicas`
@@ -392,34 +391,10 @@ ALTER TABLE `detalles_caracteristicas`
 ADD CONSTRAINT `fk_caracteristicas_detalles` FOREIGN KEY (`id_caracteristica`) REFERENCES `caracteristicas` (`id_caracteristica`);
 
 --
--- Filtros para la tabla `equipos`
---
-ALTER TABLE `equipos`
-ADD CONSTRAINT `fk_paginas_equipos` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
-
---
 -- Filtros para la tabla `imagenes_servicios`
 --
 ALTER TABLE `imagenes_servicios`
 ADD CONSTRAINT `fk_servicios_imagenes` FOREIGN KEY (`id_servicio`) REFERENCES `servicios` (`id_servicio`);
-
---
--- Filtros para la tabla `politicas`
---
-ALTER TABLE `politicas`
-ADD CONSTRAINT `fk_equipos_politicas` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
-
---
--- Filtros para la tabla `preguntas`
---
-ALTER TABLE `preguntas`
-ADD CONSTRAINT `fk_paginas_preguntas` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
-
---
--- Filtros para la tabla `servicios`
---
-ALTER TABLE `servicios`
-ADD CONSTRAINT `fk_paginas_servicios` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
 
 --
 -- Filtros para la tabla `usuarios`
