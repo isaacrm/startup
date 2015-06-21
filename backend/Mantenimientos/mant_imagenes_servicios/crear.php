@@ -85,7 +85,7 @@ if(!empty($_POST)) {
                         if (file_exists('../img_servicios/' . $nombre)) {
                             echo '<br/>El archivo ya existe: ' . $nombre;
                         } else {
-                            $sql = "SELECT MAX(id_imagen) as id_ser FROM servicios";
+                            $sql = "SELECT MAX(id_imagen) as id_ser FROM imagenes_servicios";
                             foreach ($PDO->query($sql) as $row) {
                                 $idservicio = "$row[id_ser]";
                                 $id = $idservicio + 1;

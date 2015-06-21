@@ -12,8 +12,8 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_imagen_servicio'])) {
-    $id = $_GET['id_imagen_servicio'];
+if(!empty($_GET['id_imagen'])) {
+    $id = $_GET['id_imagen'];
 }
 if($id == null) {
     header("Location: imagenes_servicios.php");
@@ -22,9 +22,9 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios where id_imagen_servicio = ?";
+    $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios where id_imagen = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_imagen_servicio));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
