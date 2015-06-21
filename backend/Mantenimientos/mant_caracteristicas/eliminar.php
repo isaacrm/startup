@@ -24,9 +24,9 @@ if(!empty($_POST)) {
     require("../../bd.php");
     $id = $_POST['id_caracteristica'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM caracteristicas WHERE id_caracteristica = ?";
+    $sql = "DELETE FROM caracteristicas WHERE id_caracteristica= ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_caracteristica));
+    $stmt->execute(array($id));
     $PDO = null;
     header("Location: caracteristicas.php");
 }

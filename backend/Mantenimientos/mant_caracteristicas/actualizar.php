@@ -24,7 +24,7 @@ if(!empty($_POST)){
     $tituloError = null;
     // post values
     $titulo = $_POST['titulo'];
-
+    $descripcion= $_POST['descripcion'];
     // validate input
     $valid = true;
     if(empty($titulo)) {
@@ -34,26 +34,40 @@ if(!empty($_POST)){
 
     // update data
     if($valid) {
+    try {
+    if (ctype_space($titulo) || ctype_space($descripcion)) {
+        echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    } else if (strlen(trim($titulo, ' ')) <= 3) {
+        echo "<script type=\"text/javascript\">alert('El titulo debe de tener al menos 4 caracteres');</script>";
+    } else if (strlen(trim($descripcion, ' ')) <= 5) {
+        echo "<script type=\"text/javascript\">alert('La frase debe de tener al menos 6 caracteres');</script>";
+    } else if (!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i', $titulo)) {
+        echo "<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
+    } else {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE caracteristicas SET titulo = ? WHERE id_caracteristica = ?";
+        $sql = "UPDATE caracteristicas SET titulo = ?, descripcion=? WHERE id_caracteristica = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo, $id_caracteristica));
-        $PDO = null;
+        $stmt->execute(array($titulo, $descripcion, $id));
         header("Location: caracteristicas.php");
     }
-}
-else {
+    } catch (Exception $e) {
+        echo "<script type=\"text/javascript\">alert('Esta característica ya existe');</script>";
+    }
+    }
+    }
+    else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo FROM noticias WHERE id_caracteristica = ?";
+    $sql = "SELECT titulo, descripcion FROM caracteristicas WHERE id_caracteristica = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_caracteristica));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
         header("Location: caracteristicas.php");
     }
     $titulo = $data['titulo'];
+    $descripcion = $data['descripcion'];
 }
 ?>
 <!DOCTYPE html>
@@ -84,12 +98,15 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
+
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
-                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print($titulo); ?>'>
+                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off" maxlength="8" value='<?php print($titulo); ?>'>
                         <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
+                    </div>
+                    <div class='form-group' >
+                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="350" value='<?php print($descripcion); ?>'>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>

@@ -70,6 +70,12 @@ else {
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Descripción:</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
                             <a class="btn btn btn-default" href="caracteristicas.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
