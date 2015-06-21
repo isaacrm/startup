@@ -50,16 +50,14 @@ if(!isset($_SESSION['alias']))
                                 <form method='POST' action="buscar_usuarios.php">
                                     <input  class="col-lg-6" name="buscar" placeholder="Buscar por Alias" type="text" id='buscar' autocomplete="off" maxlength="10"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
-                                    <input class="col-lg-3" type="submit" name="regresar" formaction="empleados.php" value="Regresar">
+                                    <input class="col-lg-3" type="submit" name="regresar" formaction="usuarios.php" value="Regresar">
                                 </form>
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>NOMBRES</th>
-                                            <th>APELLIDOS</th>
-                                            <th>IDENTIFICADOR</th>
-                                            <th>ACCION</th>
+                                            <th>ALIAS</th>
+                                            <th>EMPLEADO</th>
                                         </tr>
                                         <tbody>
                                             <?php
@@ -88,7 +86,7 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $busqueda= "SELECT id_usuario, alias,nombres, apellidos FROM usuarios, empleados WHERE usuarios.id_empleado=empleados.id_empleado AND WHERE alias like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                            $busqueda= "SELECT id_usuario, alias,nombres, apellidos FROM usuarios, empleados WHERE usuarios.id_empleado=empleados.id_empleado AND  alias like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                             $data="";
                                             foreach($PDO->query($busqueda) as $row) {
                                                 $data .= "<tr>";

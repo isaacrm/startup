@@ -43,7 +43,7 @@ if(!isset($_SESSION['alias']))
                     <div class="col-lg-12">
                         <div class='container col-lg-12'>
                             <div class='row'>
-                                <form method='POST' action="buscar.php">
+                                <form method='POST' action="buscar_usuarios.php">
                                     <input  class="col-lg-9" name="buscar" placeholder="Buscar por Alias" type="text" id='buscar' autocomplete="off" maxlength="10"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
                                 </form>
