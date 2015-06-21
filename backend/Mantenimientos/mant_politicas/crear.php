@@ -46,6 +46,29 @@ if(!empty($_POST)) {
     }
     // insert data
     if($valid) {
+try {
+    if (ctype_space($titulo) || ctype_space($titulo) ) {
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    }
+    else if (strlen(trim($titulo, ' ')) <= 5)
+    {
+        echo"<script type=\"text/javascript\">alert('El titulo debe de tener al menos 6 caracteres');</script>";
+    }
+    else if (strlen(trim($subtitulo, ' ')) <= 5)
+    {
+        echo"<script type=\"text/javascript\">alert('El subtitulo debe de tener al menos 6 caracteres');</script>";
+    }
+    else if (strlen(trim($leyenda, ' ')) <= 5)
+    {
+        echo"<script type=\"text/javascript\">alert('La leyensa debe de tener al menos 6 caracteres');</script>";
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$titulo)){
+        echo"<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$leyenda)){
+        echo"<script type=\"text/javascript\">alert('La leyenda no debe tener números');</script>";
+    }
+    else {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "INSERT INTO noticias(titulo, subtitulo, leyenda, imagen) values(?, ?, ?, ?)";
@@ -54,14 +77,11 @@ if(!empty($_POST)) {
         $PDO = null;
         header("Location: politicas.php");
     }
-    else if (ctype_space($titulo) || ctype_space($subtitulo) || ctype_space($leyenda) || ctype_space($imagen)) {
-        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }
-    else if (strlen(trim($alias, ' ')) <= 5)
-    {
-        echo"<script type=\"text/javascript\">alert('El campo debe de tener al menos cinco caracteres');</script>";
-    }
+  }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
