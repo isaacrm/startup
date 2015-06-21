@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2015 a las 17:51:27
+-- Tiempo de generación: 21-06-2015 a las 02:42:50
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -60,14 +60,18 @@ CREATE TABLE IF NOT EXISTS `empleados` (
   `sexo` varchar(12) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_nacimiento` date NOT NULL,
   `foto` varchar(150) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `empleados`
 --
 
 INSERT INTO `empleados` (`id_empleado`, `nombres`, `apellidos`, `identificador`, `telefono`, `correo`, `sexo`, `fecha_nacimiento`, `foto`) VALUES
-(6, 'Jorge Isaac ', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-05', 'img_empleados/Penguins.jpg');
+(6, 'Jorge Isaac', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-14', 'img_empleados/fotoflores ues.jpg'),
+(8, 'dfghjk', 'jhgfrdeswe', '06464610-1', '6242-5254', 'sdasdsa@dasdsa.cas', 'Femenino', '1997-06-06', 'img_empleados/1490742_779574108726394_1619493180_o.jpg'),
+(13, 'Kun ', 'AgÃ¼ero ', '04527525-9', '2234-5678', 'sadsadsadsa@asdsa.dc', 'Masculino', '1996-07-19', 'img_empleados/01234567-8.jpg'),
+(14, 'Lala', 'sadsad', '98765432-1', '2645-7875', 'dsadsadsadsad@dasdsadasd.sdf', 'Masculino', '1997-06-06', 'img_empleados/98765432-1.jpg'),
+(15, 'asdsad', 'asdsadsa', '06988888-8', '6997-4545', 'asdsadsa@asdasd.casd', 'Masculino', '1997-06-06', 'img_empleados/06988888-8.jpg');
 
 -- --------------------------------------------------------
 
@@ -84,30 +88,6 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `twitter` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `facebook` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `id_pagina` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `funciones`
---
-
-CREATE TABLE IF NOT EXISTS `funciones` (
-`id_funcion` int(11) NOT NULL,
-  `nombre` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `funciones_tipos_usuarios`
---
-
-CREATE TABLE IF NOT EXISTS `funciones_tipos_usuarios` (
-`id_relacion` int(11) NOT NULL,
-  `id_tipo_usuario` int(11) NOT NULL,
-  `id_funcion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -134,7 +114,8 @@ CREATE TABLE IF NOT EXISTS `noticias` (
 `id_noticia` int(11) NOT NULL,
   `titulo` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
   `subtitulo` varchar(35) COLLATE utf8_unicode_ci NOT NULL,
-  `leyenda` varchar(30) COLLATE utf8_unicode_ci NOT NULL
+  `leyenda` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `foto` varchar(250) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -146,7 +127,8 @@ CREATE TABLE IF NOT EXISTS `noticias` (
 CREATE TABLE IF NOT EXISTS `paginas` (
 `id_pagina` int(11) NOT NULL,
   `encabezado` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
-  `frase` varchar(250) COLLATE utf8_unicode_ci NOT NULL
+  `frase` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -203,14 +185,29 @@ CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
   `modificar` tinyint(1) NOT NULL,
   `eliminar` tinyint(1) NOT NULL,
   `consultar` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `tipos_usuarios`
 --
 
 INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `nombre`, `descripcion`, `agregar`, `modificar`, `eliminar`, `consultar`) VALUES
-(1, 'Administrador', 'El que controla todo', 1, 1, 1, 1);
+(25, 'Administrador', 'El que controla todo', 1, 1, 1, 1),
+(26, 'hola', 'asdsadsadsa', 1, 1, 0, 0),
+(27, 'ghjfgdf', 'kkkkk', 0, 1, 1, 0),
+(28, 'erwtyuy', 'rtyuuyttr', 0, 0, 0, 1),
+(29, 'adsdsd', 'sadsadsadsa', 0, 1, 0, 0),
+(30, 'wqewqewqe', 'wqewqewqeqw', 0, 0, 1, 1),
+(31, 'sadsaddfgdg', 'dfgdfgfgfdg', 0, 1, 0, 0),
+(32, 'dsadsadsad', 'sadsadsadsadas', 1, 0, 0, 0),
+(33, 'dhhfghg', 'dhgfhd', 1, 1, 0, 0),
+(35, 'fhghgfhgf', 'hgfghfghgfhfd', 0, 0, 1, 0),
+(36, 'sdfgdgsdgf', 'dgdfgdfgdf', 0, 0, 1, 0),
+(37, 'dsfsfdsfd', 'sfdsfdsf', 0, 1, 0, 0),
+(51, 'Gerente', 'sadsadsdasda', 1, 1, 0, 0),
+(68, 'xcdfghjklÃ±', 'lkjhgfd', 1, 0, 0, 0),
+(70, ' Gerente de Sucursal', 'asdsadas', 1, 0, 0, 0),
+(71, 'asdsadsadsad asdasdasdsa asda ssd sa sada ', 'dasdsadasda', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -225,14 +222,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `estado` tinyint(1) NOT NULL,
   `id_empleado` int(11) NOT NULL,
   `id_tipo_usuario` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_empleado`, `id_tipo_usuario`) VALUES
-(1, 'isaac', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 6, 1);
+(3, 'Isaac', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 6, 25),
+(7, 'Chaco', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 8, 70),
+(13, 'Asdf', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 13, 70),
+(14, 'Aaaa', '3da541559918a808c2402bba5012f6c60b27661c', 1, 14, 37),
+(15, 'Jajajajaja', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 15, 51);
 
 --
 -- Índices para tablas volcadas
@@ -261,18 +262,6 @@ ALTER TABLE `empleados`
 --
 ALTER TABLE `equipos`
  ADD PRIMARY KEY (`id_equipo`), ADD KEY `id_pagina` (`id_pagina`);
-
---
--- Indices de la tabla `funciones`
---
-ALTER TABLE `funciones`
- ADD PRIMARY KEY (`id_funcion`), ADD UNIQUE KEY `nombre` (`nombre`);
-
---
--- Indices de la tabla `funciones_tipos_usuarios`
---
-ALTER TABLE `funciones_tipos_usuarios`
- ADD PRIMARY KEY (`id_relacion`), ADD KEY `id_tipo_usuario` (`id_tipo_usuario`,`id_funcion`), ADD KEY `fk_funciones_tipos_usuarios` (`id_funcion`);
 
 --
 -- Indices de la tabla `imagenes_servicios`
@@ -340,22 +329,12 @@ MODIFY `id_detalle_caracteristica` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `empleados`
 --
 ALTER TABLE `empleados`
-MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
 MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `funciones`
---
-ALTER TABLE `funciones`
-MODIFY `id_funcion` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `funciones_tipos_usuarios`
---
-ALTER TABLE `funciones_tipos_usuarios`
-MODIFY `id_relacion` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `imagenes_servicios`
 --
@@ -390,12 +369,12 @@ MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
-MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- Restricciones para tablas volcadas
 --
@@ -417,13 +396,6 @@ ADD CONSTRAINT `fk_caracteristicas_detalles` FOREIGN KEY (`id_caracteristica`) R
 --
 ALTER TABLE `equipos`
 ADD CONSTRAINT `fk_paginas_equipos` FOREIGN KEY (`id_pagina`) REFERENCES `paginas` (`id_pagina`);
-
---
--- Filtros para la tabla `funciones_tipos_usuarios`
---
-ALTER TABLE `funciones_tipos_usuarios`
-ADD CONSTRAINT `fk_funciones_tipos_usuarios` FOREIGN KEY (`id_funcion`) REFERENCES `funciones` (`id_funcion`),
-ADD CONSTRAINT `fk_tipos_usuarios_funciones` FOREIGN KEY (`id_tipo_usuario`) REFERENCES `tipos_usuarios` (`id_tipo_usuario`);
 
 --
 -- Filtros para la tabla `imagenes_servicios`
