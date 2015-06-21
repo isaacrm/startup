@@ -52,7 +52,10 @@ if(!empty($_POST)) {
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen ));
         $PDO = null;
-        header("Location: funcion.php");
+        header("Location: politicas.php");
+    }
+    else if (ctype_space($titulo) || ctype_space($subtitulo) || ctype_space($leyenda) || ctype_space($imagen)) {
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }
 }
 ?>
@@ -105,7 +108,7 @@ if(!empty($_POST)) {
                         </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
-                            <a class='btn btn btn-default' href='funcion.php'>Regresar</a>
+                            <a class='btn btn btn-default' href='politicas.php'>Regresar</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

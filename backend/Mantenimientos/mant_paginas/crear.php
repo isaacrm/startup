@@ -31,6 +31,7 @@ if(!empty($_POST)) {
         $valid = false;
     }
     // insert data
+
     if($valid) {
         require("../../bd.php");
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,7 +41,11 @@ if(!empty($_POST)) {
         $PDO = null;
         header("Location: paginas.php");
     }
+    else if (ctype_space($encabezado) || ctype_space($frase) ) {
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

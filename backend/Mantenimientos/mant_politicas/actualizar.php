@@ -12,11 +12,11 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_noticia'])) {
-    $id = $_GET['id_noticia'];
+if(!empty($_GET['id_politica'])) {
+    $id = $_GET['id_politica'];
 }
 if($id == null) {
-    header("Location: noticia.php");
+    header("Location: politicas.php");
 }
 require("../../bd.php");
 if(!empty($_POST)){
@@ -60,7 +60,10 @@ if(!empty($_POST)){
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen , $id_noticia));
         $PDO = null;
-        header("Location: noticias.php");
+        header("Location: politicas.php");
+    }
+    else if (ctype_space($titulo) || ctype_space($subtitulo) || ctype_space($leyenda) || ctype_space($imagen)) {
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }
 }
 else {
@@ -72,7 +75,7 @@ else {
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: noticias.php");
+        header("Location: politicas.php");
     }
     $titulo = $data['titulo'];
     $subtitulo= $data['subtitulo'];
@@ -132,7 +135,7 @@ s
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
-                        <a class='btn btn btn-default' href='noticias.php'>Regresar</a>
+                        <a class='btn btn btn-default' href='politicas.php'>Regresar</a>
                     </div>
                 </form>
 

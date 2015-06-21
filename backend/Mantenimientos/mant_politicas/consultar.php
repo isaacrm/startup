@@ -12,11 +12,11 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_noticia'])) {
-    $id = $_GET['id_noticia'];
+if(!empty($_GET['id_politica'])) {
+    $id = $_GET['id_politica'];
 }
 if($id == null) {
-    header("Location: noticias.php");
+    header("Location: politicas.php");
 }
 else {
     // read data
@@ -28,7 +28,7 @@ else {
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
-        header("Location: noticias.php");
+        header("Location: politicas.php");
     }
 }
 ?>
@@ -88,7 +88,7 @@ else {
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <a class="btn btn btn-default" href="noticias.php">Regresar</a>
+                            <a class="btn btn btn-default" href="politicas.php">Regresar</a>
                         </div>
                     </div> <!-- /row -->
                 </div> <!-- /container -->

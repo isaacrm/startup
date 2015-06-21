@@ -12,23 +12,23 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_funcion'])) {
-    $id = $_GET['id_funcion'];
+if(!empty($_GET['id_politica'])) {
+    $id = $_GET['id_politica'];
 }
 if($id == null) {
-    header("Location: funcion.php");
+    header("Location: politicas.php");
 }
 
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_funcion'];
+    $id = $_POST['id_politica'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM funciones WHERE id_funcion = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $PDO = null;
-    header("Location: funcion.php");
+    header("Location: politicas.php");
 }
 ?>
 <!DOCTYPE html>
@@ -66,7 +66,7 @@ if(!empty($_POST)) {
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
-                            <a class='btn btn btn-default' href='funcion.php'>No</a>
+                            <a class='btn btn btn-default' href='politicas.php'>No</a>
                         </div>
                     </form>
                 </div> <!-- /row -->

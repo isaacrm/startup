@@ -48,6 +48,9 @@ if(!empty($_POST)){
         $PDO = null;
         header("Location: paginas.php");
     }
+    else if (ctype_space($encabezado) || ctype_space($frase) ) {
+        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    }
 }
 else {
     // read data
