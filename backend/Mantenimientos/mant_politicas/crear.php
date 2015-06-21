@@ -59,7 +59,7 @@ if(!empty($_POST)) {
     }
     else if (strlen(trim($alias, ' ')) <= 5)
     {
-        echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos cinco caracteres');</script>";
+        echo"<script type=\"text/javascript\">alert('El campo debe de tener al menos cinco caracteres');</script>";
     }
 }
 ?>
