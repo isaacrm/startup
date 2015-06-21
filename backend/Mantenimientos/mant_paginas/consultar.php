@@ -73,7 +73,7 @@ else {
                             <label class="col-sm-2 control-label">Frase</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['frase']); ?></p>
-                            </div>s
+                            </div>
                         </div>
                         <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Estado</label>
