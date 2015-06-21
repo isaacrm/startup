@@ -32,29 +32,46 @@ if(!empty($_POST)) {
         $descripcionError = "Por favor ingrese la descripcion.";
         $valid = false;
     }
-
-
     if(empty($precio)) {
         $precioError = "Por favor ingrese el precio del servicio.";
         $valid = false;
     }
     // insert data
     if($valid) {
-        require("../../bd2.php");
-        $resultado2 = mysql_query("SELECT id_pagina FROM paginas WHERE encabezado ='".$_POST['tipo']."'");
-        if (!$resultado2) {
-            echo 'No se pudo ejecutar la consulta: ' . mysql_error();
-            exit;
-        }
-        $fila2 = mysql_fetch_row($resultado2);
-        $idtip = $fila2[0];
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO servicios(tipo, descripcion, precio, id_pagina) values(?, ?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($tipo , $descripcion, $precio, $idtip));
-        $PDO = null;
-        header("Location: servicios.php");
+        try {
+            /*Comprueba si hay espacios en blanco*/
+            if (ctype_space($tipo)||ctype_space($descripcion)||ctype_space($precio)){
+                echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+            }
+            /*No cuenta un primer espacio ni un ultimo como caracter*/
+            else if (strlen(trim($tipo, ' ')) <= 1)
+            {
+                echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+            }
+            else if (strlen(trim($descripcion, ' ')) <= 4)
+            {
+                echo"<script type=\"text/javascript\">alert('La descripcion debe de tener al menos cinco caracteres');</script>";
+            }
+            /*VAlida solo letras */
+            else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$tipo)){
+                echo"<script type=\"text/javascript\">alert('El nombre no debe tener números');</script>";
+            }
+            else if(!preg_match('/^\d+(\.(\d{2}))?$/',$precio)){
+                echo"<script type=\"text/javascript\">alert('Formato de precio incorrecto. Debe tener dos decimales. Ej.00.00');</script>";
+            }
+            else {
+                require("../../bd.php");
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "INSERT INTO servicios(tipo, descripcion, precio) values(?, ?, ?)";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($tipo, $descripcion, $precio));
+                $PDO = null;
+                header("Location: servicios.php");
+            }
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Este tipo de usuario ya existe');</script>";
+            }
+
     }
 }
 ?>
@@ -90,15 +107,15 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($tipoError)?"has-error":""); ?>'>
-                            <input type='text' name='tipo' placeholder='Tipo' required='required' id='tipo' class='form-control' value='<?php print(!empty($tipo)?$tipo:""); ?>'>
+                            <input type='text' name='tipo' placeholder='Tipo' required='required' id='tipo' class='form-control' autocomplete="off" maxlength="20" value='<?php print(!empty($tipo)?$tipo:""); ?>'>
                             <?php print(!empty($tipoError)?"<span class='help-block'>$tipoError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
+                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                             <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($precioError)?"has-error":""); ?>'>
-                            <input type='text' name='precio' placeholder='Precio' required='required' id='precio' class='form-control' value='<?php print(!empty($precio)?$precio:""); ?>'>
+                            <input type='text' name='precio' placeholder='Precio' required='required' id='precio' class='form-control' autocomplete="off" maxlength="7" value='<?php print(!empty($precio)?$precio:""); ?>'>
                             <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
