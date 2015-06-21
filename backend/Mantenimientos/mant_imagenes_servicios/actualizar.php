@@ -169,7 +169,7 @@ if(!empty($_POST)) {
                 <form method="post" class="form" role="form" enctype="multipart/form-data">
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
-                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off"  maxlength="25" value='<?php print($titulo); ?>'>
+                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off"  maxlength="40" value='<?php print($titulo); ?>'>
                         <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
