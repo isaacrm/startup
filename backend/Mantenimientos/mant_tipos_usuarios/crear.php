@@ -113,11 +113,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' autocomplete="off" value='<?php print(!empty($nombre)?$nombre:""); ?>'>
+                            <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' autocomplete="off"  maxlength="60" value='<?php print(!empty($nombre)?$nombre:""); ?>'>
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
-                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
+                            <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off"  maxlength="250" value='<?php print(!empty($descripcion)?$descripcion:""); ?>'>
                             <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                         </div>
                         <div class="form-group">
