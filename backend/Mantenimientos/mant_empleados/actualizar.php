@@ -163,9 +163,9 @@ if(!empty($_POST)) {
                             echo 'Tipo: ' . $tipo . '<br/>';
                             echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
                             echo 'Guardado en: ' . $nombre_tmp;
-                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
-                            $url = "img_empleados/" . $identificador . ".jpg";
-                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
+                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $id . ".jpg");
+                            $url = "img_empleados/" . $id . ".jpg";
+                            echo "<br/>Guardado en: " . "../img_empleados/" . $id . ".jpg";
 
                             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                             $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";

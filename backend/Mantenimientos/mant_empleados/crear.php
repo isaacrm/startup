@@ -168,9 +168,14 @@ if(!empty($_POST)) {
                             if (file_exists('../img_empleados/' . $nombre)) {
                                 echo '<br/>El archivo ya existe: ' . $nombre;
                             } else {
-                                move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
-                                $url = "img_empleados/" . $identificador . ".jpg";
-                                echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
+                                $sql = "SELECT MAX(id_empleado) as id_emp FROM empleados";
+                                foreach ($PDO->query($sql) as $row) {
+                                    $idempleado = "$row[id_emp]";
+                                    $id= $idempleado+1;
+                                }
+                                move_uploaded_file($nombre_tmp, "../img_empleados/" . $id . ".jpg");
+                                $url = "img_empleados/" . $id . ".jpg";
+                                echo "<br/>Guardado en: " . "../img_empleados/" . $id . ".jpg";
 
                                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";

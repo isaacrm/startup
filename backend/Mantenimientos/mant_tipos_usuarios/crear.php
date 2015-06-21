@@ -50,6 +50,7 @@ if(!empty($_POST)) {
             else if(!isset($_POST['agregar']) && !isset($_POST['modificar']) && !isset($_POST['eliminar']) && !isset($_POST['consultar'])) {
                 echo"<script type=\"text/javascript\">alert('Seleccione al menos una operacion');</script>";
             }
+            /*No cuenta un primer espacio ni un ultimo como caracter*/
             else if (strlen(trim($nombre, ' ')) <= 1)
             {
                 echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";

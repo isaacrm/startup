@@ -23,10 +23,16 @@ if($id == null) {
 if(!empty($_POST)) {
     require("../../bd.php");
     $id = $_POST['id_noticia'];
+    $sql= "SELECT foto FROM noticias WHERE id_noticia= ".$id;
+    foreach($PDO->query($sql) as $row) {
+        $foto = "$row[foto]";
+    }
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM noticias WHERE id_noticia = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
+    /*Esta pequeña linea de codigo elimina la imagen relacionada con el registro a eliminar*/
+    unlink("../".$foto);
     $PDO = null;
     header("Location: noticias.php");
 }
