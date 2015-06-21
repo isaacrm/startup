@@ -12,8 +12,8 @@ if(!isset($_SESSION['alias']))
 
 <?php
 $id = null;
-if(!empty($_GET['id_imagen_servicio'])) {
-    $id = $_GET['id_imagen_servicio'];
+if(!empty($_GET['id_imagen'])) {
+    $id = $_GET['id_imagen'];
 }
 if($id == null) {
     header("Location: imagenes_servicios.php");
@@ -22,11 +22,18 @@ if($id == null) {
 // Delete Data
 if(!empty($_POST)) {
     require("../../bd.php");
-    $id = $_POST['id_imagen_servicio'];
+    /*SELECCIONAR LA FOTO DEL EMPLEADO SELECCIONADO*/
+    $sql= "SELECT url FROM imagenes_servicios WHERE id_imagen= ".$id;
+    foreach($PDO->query($sql) as $row) {
+        $foto = "$row[foto]";
+    }
+    $id = $_POST['id_imagen'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM imagenes_servicios WHERE id_imagen_servicio = ?";
+    $sql = "DELETE FROM imagenes_servicios WHERE id_imagen = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_imagen_servicio));
+    $stmt->execute(array($id));
+    /*Esta pequeña linea de codigo elimina la imagen relacionada con el registro a eliminar*/
+    unlink("../".$foto);
     $PDO = null;
     header("Location: imagenes_servicios.php");
 }
@@ -62,7 +69,7 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_tipo_usuario' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_imagen' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>

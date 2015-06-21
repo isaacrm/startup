@@ -85,9 +85,9 @@ if(!isset($_SESSION['alias']))
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td><img src='../$row[url] 'border='0' width='150' height='100'></td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_imagenes_servicios/consultar.php?id_imagen_servicio=$row[id_imagen]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_imagenes_servicios/actualizar.php?id_imagen_servicio=$row[id_imagen]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_imagenes_servicios/eliminar.php?id_imagen_servicio=$row[id_imagen]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_imagen=$row[id_imagen]'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_imagen=$row[id_imagen]'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_imagen=$row[id_imagen]'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }
