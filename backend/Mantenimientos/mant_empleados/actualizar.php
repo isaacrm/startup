@@ -319,7 +319,7 @@ if(!empty($_POST)) {
                             <select name='tipo' required='required' id='tipo' class='form-control'>
                                 <option><?php print(!empty($tipo_usuario)?$tipo_usuario:""); ?></option>
                                 <?php
-                                $sql = "SELECT nombre FROM tipos_usuarios WHERE nombre!= '".$tipo."' ORDER BY id_tipo_usuario ASC ";
+                                $sql = "SELECT nombre FROM tipos_usuarios WHERE nombre!= '".$tipo_usuario."' ORDER BY id_tipo_usuario ASC ";
                                 $data = "";
                                 foreach($PDO->query($sql) as $row) {
                                     $data .= "<option value= '$row[nombre]'>$row[nombre]</option>";
