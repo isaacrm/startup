@@ -22,7 +22,7 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios where id_imagen = ?";
+    $sql = "SELECT url, titulo, imagenes_servicios.descripcion, tipo FROM imagenes_servicios, servicios WHERE id_imagen = ? AND imagenes_servicios.id_servicio=servicios.id_servicio";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -64,12 +64,6 @@ else {
                 <div class="container">
                     <div class="col-sm-12">
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Url:</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['url']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
                             <label class="col-sm-2 control-label">Titulo:</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['titulo']); ?></p>
@@ -79,6 +73,18 @@ else {
                             <label class="col-sm-2 control-label">Descripción</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['descripcion']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Foto</label>
+                            <div class="col-sm-10">
+                                <?php print "<img src='../".$data['url']."'border='0' width='300' height='200'>";?>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Tipo de Servicio</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['tipo']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">

@@ -13,6 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 require("../../bd.php");
 if(!empty($_POST)) {
+    error_reporting(E_ALL ^ E_NOTICE);
     // validation errors
     $urlError = null;
     $tituloError = null;
