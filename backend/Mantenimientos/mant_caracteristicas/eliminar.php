@@ -24,7 +24,7 @@ if(!empty($_POST)) {
     require("../../bd.php");
     $id = $_POST['id_caracteristica'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM caracteristicas WHERE id_caracteristica=?";
+    $sql = "DELETE FROM caracteristicas WHERE id_caracteristica = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $PDO = null;
@@ -62,7 +62,7 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_funcion' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_caracteristica' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>
