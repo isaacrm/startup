@@ -97,6 +97,10 @@ if(!empty($_POST)) {
                             foreach ($PDO->query($sql2) as $row2) {
                                 $id_servicio = "$row2[id_servicio]";
                             }
+                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $id . ".jpg");
+                            $url = "img_empleados/" . $id . ".jpg";
+                            echo "<br/>Guardado en: " . "../img_empleados/" . $id . ".jpg";
+
                                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $sql = "UPDATE imagenes_servicios SET url = ?, titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
                                 $stmt = $PDO->prepare($sql);
