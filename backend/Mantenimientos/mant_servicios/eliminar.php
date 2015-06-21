@@ -26,7 +26,7 @@ if(!empty($_POST)) {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM servicios WHERE id_servicio = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_servicio));
+    $stmt->execute(array($id));
     $PDO = null;
     header("Location: servicios.php");
 }
@@ -62,7 +62,7 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_tipo_usuario' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_servicio' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>

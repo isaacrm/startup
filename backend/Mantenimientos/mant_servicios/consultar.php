@@ -24,7 +24,7 @@ else {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT tipo, descripcion, precio FROM servicios where id_servicio = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_servicio));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
