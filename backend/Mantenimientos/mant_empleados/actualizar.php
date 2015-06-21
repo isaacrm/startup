@@ -20,6 +20,7 @@ if($id == null) {
     header("Location: empleados.php");
 }
 require("../../bd.php");
+
 if(!empty($_POST)) {
 
 // validation errors
@@ -42,6 +43,7 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
     $tipo = $_POST['tipo'];
+    $foto= $_POST['foto'];
 // validate input
     $valid = true;
 
@@ -80,16 +82,19 @@ if(!empty($_POST)) {
         $valid = false;
     }
 
-// insert data
-// $regex = '/(^\d{8})-(\d$)/';
-//if (!preg_match($regex, $identificador)) {
-// echo 'El DUI NO es válido';
-//}
     if ($valid) {
+
         if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
             echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
         } else if (!isset($_POST['fecha_nacimiento'])) {
             echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
+        }
+        /*VAlida solo letras en nombre y apellido*/
+        else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
+            echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
+        }
+        else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$apellidos)){
+            echo"<script type=\"text/javascript\">alert('Los apellidos no tienen números');</script>";
         }
         /*Valida DUI*/
         else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
@@ -99,6 +104,19 @@ if(!empty($_POST)) {
         else if (!preg_match('/^[2|6|7]{1}\d{3}-\d{4}$/', $telefono)){
             echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
         }
+        /*Valida correo electronico*/
+        else if (!preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $correo)){
+            echo"<script type=\"text/javascript\">alert('Formato de Correo Electrónico erróneo. Ej. hola.mundo@algo.algo');</script>";
+        }
+        /*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres y apellidos*/
+        else if (strlen(trim($nombres, ' ')) <= 1)
+        {
+            echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+        }
+        else if (strlen(trim($apellidos, ' ')) <= 1)
+        {
+            echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
+        }
         else {
             //SUBIR IMAGEN URL
             if ($_FILES['archivo']['name']=="") {
@@ -106,7 +124,16 @@ if(!empty($_POST)) {
                 $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=? WHERE id_empleado='" . $id . "' ";
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento));
-                $PDO = null;
+
+                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
+                foreach($PDO->query($sql2) as $row2) {
+                    $idtip = "$row2[id_tipo_usuario]";
+                }
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "UPDATE usuarios SET id_tipo_usuario=? WHERE id_empleado= '".$id. "' ";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($idtip));
                 header("Location: empleados.php");
             } else{
 
@@ -138,13 +165,23 @@ if(!empty($_POST)) {
                         $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
                         $stmt = $PDO->prepare($sql);
                         $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
-                        $PDO = null;
+
+                        /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                        $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
+                        foreach($PDO->query($sql2) as $row2) {
+                            $idtip = "$row2[id_tipo_usuario]";
+                        }
+                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                        $sql = "UPDATE usuarios SET id_tipo_usuario=? WHERE id_empleado= '".$id. "' ";
+                        $stmt = $PDO->prepare($sql);
+                        $stmt->execute(array($idtip));
                         header("Location: empleados.php");
                     }
                 }
                 else {
                     echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                 }
+
             }
         }
     }
@@ -155,7 +192,7 @@ if(!empty($_POST)) {
         $stmt = $PDO->prepare($sql);
         $stmt->execute(array($id));
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        $PDO = null;
+
         if (empty($data)) {
             header("Location: empleados.php");
         }
@@ -172,7 +209,7 @@ if(!empty($_POST)) {
     }
 
 ?>
-
+<!-- VALIDACIONES -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -223,9 +260,9 @@ if(!empty($_POST)) {
 
                 </div>
                 <div class='row'>
-                    <form  method="post" class="form" role="form" enctype="multipart/form-data">
+                    <form method="post" class="form" role="form" enctype="multipart/form-data">
                         <div class='form-group <?php print(!empty($nombresError)?"has-error":""); ?>'>
-                            <input class="form-control" name="nombres" placeholder="Nombres" required='required' id='nombres' type="text" autofocus autocomplete="off" maxlength="45" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
+                            <input class="form-control" name="nombres" placeholder="Nombres" required='required'  id='nombres' type="text" autofocus autocomplete="off" maxlength="45" value='<?php print(!empty($nombres)?$nombres:""); ?>'  />
                             <?php print(!empty($nombresError)?"<span class='help-block'>$nombresError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($apellidosError)?"has-error":""); ?>'>
@@ -259,7 +296,7 @@ if(!empty($_POST)) {
                             <?php print(!empty($generoError)?"<span class='help-block'>$generoError</span>":""); ?>
                         </div>
                         <div class='form-group'>
-                            <img src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
+                            <img  name="foto" id="foto" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
                             <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
@@ -269,10 +306,9 @@ if(!empty($_POST)) {
                         <div class='form-group'>
                             <label for='genero'>Tipo de usuario</label>
                             <select name='tipo' required='required' id='tipo' class='form-control'>
-                                <option value='<?php print(!empty($alias)?$alias:""); ?>></option>
+                                <option><?php print(!empty($tipo)?$tipo:""); ?></option>
                                 <?php
-                                require("../../bd.php");
-                                $sql = "SELECT nombre FROM tipos_usuarios ORDER BY id_tipo_usuario ASC ";
+                                $sql = "SELECT nombre FROM tipos_usuarios WHERE nombre!= '".$tipo."' ORDER BY id_tipo_usuario ASC ";
                                 $data = "";
                                 foreach($PDO->query($sql) as $row) {
                                     $data .= "<option value= '$row[nombre]'>$row[nombre]</option>";

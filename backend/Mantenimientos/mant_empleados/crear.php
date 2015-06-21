@@ -11,10 +11,10 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
-
+require("../../bd.php");
 if(!empty($_POST)) {
     error_reporting(E_ALL ^ E_NOTICE);
-    require("../../bd.php");
+
     // validation errors
     $nombresError = null;
     $apellidosError = null;
@@ -35,6 +35,7 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
     $contra = sha1($_POST['contra']);
+    $tipo = $_POST['tipo'];
     // validate input
     $valid = true;
 
@@ -94,20 +95,49 @@ if(!empty($_POST)) {
     } else if (!isset($fecha_nacimiento)) {
         echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
     }
+    /*VAlida solo letras en nombre y apellido*/
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
+        echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$apellidos)){
+        echo"<script type=\"text/javascript\">alert('Los apellidos no tienen números');</script>";
+    }
     /*Valida DUI*/
     else if (!preg_match('/^\d{8}-\d{1}$/', $identificador)){
         echo"<script type=\"text/javascript\">alert('Formato de DUI incorrecto. Ej. XXXXXXXX-X');</script>";
     }
-    else if (!preg_match('^[2^6-7]{1}[0-9]{3}-[0-9]{4}$', $telefono)){
+    /*Valida numero de telefono formato El Salvador*/
+    else if (!preg_match('/^[2|6|7]{1}\d{3}-\d{4}$/', $telefono)){
         echo"<script type=\"text/javascript\">alert('Formato de Teléfono incorrecto. Ej. (2,6 o 7)XXX-XXXX');</script>";
+    }
+    /*Valida correo electronico*/
+    else if (!preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $correo)){
+        echo"<script type=\"text/javascript\">alert('Formato de Correo Electrónico erróneo. Ej. hola.mundo@algo.algo');</script>";
+    }
+    /*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres, apellidos, alias y contraseña*/
+    else if (strlen(trim($nombres, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+    }
+    else if (strlen(trim($apellidos, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
+    }
+    else if (strlen(trim($alias, ' ')) <= 3)
+    {
+        echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos cuatro caracteres');</script>";
+    }
+    else if (strlen(trim($contra, ' ')) <= 3)
+    {
+        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos cuatro caracteres');</script>";
     }
     else {
         if ($valid) {
             //SUBIR IMAGEN URL
             if ($_FILES['archivo']['name']=="") {
                 echo"<script type=\"text/javascript\">alert('Tienes que subir una imagen');</script>";
-            } else {
-
+            }
+            else {
                 $nombre = $_FILES['archivo']['name'];
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
                 $tipo = $_FILES['archivo']['type'];
@@ -140,30 +170,27 @@ if(!empty($_POST)) {
                             $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
                             $stmt = $PDO->prepare($sql);
                             $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
-                            $PDO = null;
+
+                            /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
+                            $sql= "SELECT MAX(id_empleado) as id_emp FROM empleados";
+                            foreach($PDO->query($sql) as $row) {
+                                $idemp = "$row[id_emp]";
+                            }
+                            /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                            $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
+                            foreach($PDO->query($sql2) as $row2) {
+                                $idtip = "$row2[id_tipo_usuario]";
+                            }
+                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
+                            $stmt = $PDO->prepare($sql);
+                            $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
+                            header("Location: empleados.php");
                         }
                     }
                 } else {
                     echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                 }
-                require("../../bd.php");
-                /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
-                $sql= "SELECT MAX(id_empleado) as id_emp FROM empleados";
-                foreach($PDO->query($sql) as $row) {
-                    $idemp = "$row[id_emp]";
-                }
-                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
-                $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
-                foreach($PDO->query($sql2) as $row2) {
-                    $idtip = "$row2[id_tipo_usuario]";
-                }
-
-                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
-                $stmt = $PDO->prepare($sql);
-                $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
-                $PDO = null;
-                header("Location: empleados.php");
             }
         }
 
@@ -249,7 +276,7 @@ if(!empty($_POST)) {
                         </div>
                         <div class='form-group <?php print(!empty($generoError)?"has-error":""); ?>'>
                             <select name='sexo' required='required' id='sexo' class='form-control'>
-                                <option></option>
+                                <option><?php print(!empty($tipo)?$tipo:""); ?></option>
                                 <option value='Masculino' <?php print(isset($sexo) && $sexo == "Masculino"?"selected":""); ?>>Masculino</option>
                                 <option value='Femenino' <?php print(isset($sexo) && $sexo == "Femenino"?"selected":""); ?>>Femenino</option>
                             </select>
@@ -272,13 +299,15 @@ if(!empty($_POST)) {
                         <div class='form-group'>
                             <label for='genero'>Tipo de usuario</label>
                             <select name='tipo' required='required' id='tipo' class='form-control'>
-                                <option></option>
+                                <option ></option>
                                 <?php
-                                require("../../bd2.php");
-                                $result = mysql_query("SELECT nombre FROM tipos_usuarios");
-                                while ( $resultado = mysql_fetch_array($result)){
-                                    echo "<option value='".$resultado['nombre']."'> ".$resultado['nombre']."</option>";
+                                $sql = "SELECT nombre FROM tipos_usuarios ORDER BY id_tipo_usuario ASC ";
+                                $data = "";
+                                foreach($PDO->query($sql) as $row) {
+                                    $data .= "<option value= '$row[nombre]'>$row[nombre]</option>";
                                 }
+                                print($data);
+                                $PDO = null;
                                 ?>
                             </select>
                         </div>
