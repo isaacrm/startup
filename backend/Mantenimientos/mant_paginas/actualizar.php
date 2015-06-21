@@ -51,6 +51,10 @@ if(!empty($_POST)){
     else if (ctype_space($encabezado) || ctype_space($frase) ) {
         echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }
+    else if (strlen(trim($alias, ' ')) <= 5)
+    {
+        echo"<script type=\"text/javascript\">alert('El campo debe de tener al menos cinco caracteres');</script>";
+    }
 }
 else {
     // read data
