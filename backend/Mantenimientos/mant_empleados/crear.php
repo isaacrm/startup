@@ -35,7 +35,7 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
     $contra = sha1($_POST['contra']);
-    $tipo = $_POST['tipo'];
+    $tipo_usuario = $_POST['tipo'];
     // validate input
     $valid = true;
 
