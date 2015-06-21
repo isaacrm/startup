@@ -11,6 +11,7 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+require("../../bd.php");
 if(!empty($_POST)) {
     // validation errors
     $encabezadoError = null;
@@ -33,21 +34,27 @@ if(!empty($_POST)) {
     // insert data
 
     if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO paginas(encabezado, frase, estado) values(?, ?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($encabezado, $frase,1));
-        $PDO = null;
-        header("Location: paginas.php");
+
+        if (ctype_space($encabezado) || ctype_space($frase) ) {
+            echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+        }
+        else if (strlen(trim($encabezado, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('El encabezado debe de tener al menos 6 caracteres');</script>";
+        }
+        else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$encabezado)){
+            echo"<script type=\"text/javascript\">alert('El encabezado no debe tener números');</script>";
+        }
+        else {
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO paginas(encabezado, frase, estado) values(?, ?, ?)";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($encabezado, $frase, 1));
+            $PDO = null;
+            header("Location: paginas.php");
+        }
     }
-    else if (ctype_space($encabezado) || ctype_space($frase) ) {
-        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
-    }
-    else if (strlen(trim($alias, ' ')) <= 5)
-    {
-        echo"<script type=\"text/javascript\">alert('El campo debe de tener al menos cinco caracteres');</script>";
-    }
+
 }
 
 ?>
@@ -83,11 +90,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($encabezadoError)?"has-error":""); ?>'>
-                            <input type='text' name='encabezado' placeholder='Encabezado' required='required' id='encabezado' class='form-control' value='<?php print(!empty($encabezado)?$encabezado:""); ?>'>
+                            <input type='text' name='encabezado' placeholder='Encabezado' required='required' id='encabezado' class='form-control' autocomplete="off" maxlength="25" value='<?php print(!empty($encabezado)?$encabezado:""); ?>'>
                             <?php print(!empty($encabezadoError)?"<span class='help-block'>$encabezadoError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
-                            <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print(!empty($frase)?$frase:""); ?>'>
+                            <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($frase)?$frase:""); ?>'>
                             <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                         </div>
                         <div class='form-actions'>
