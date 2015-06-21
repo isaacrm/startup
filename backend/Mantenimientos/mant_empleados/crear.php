@@ -155,7 +155,7 @@ if(!empty($_POST)) {
                 $alto = $dimensiones[1];
                 /*Compara el tamaño con el que debe de ser*/
                 if ($ancho == 150 && $alto == 195) {
-                    /*Compara el peso de la imagen, debe ser menor a 2 MB*/
+                    /*Compara el peso de la imagen, debe ser menor a 2 MB  (Esto es mas codigo de validacion [extension y tipo])$ext_correcta && $tipo_correcto*/
                     if ($tamano <= $limite) {
                         if ($_FILES['archivo']['error'] > 0) {
                             echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
