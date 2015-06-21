@@ -148,48 +148,58 @@ if(!empty($_POST)) {
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                $limite = 2000 * 1024;
-
-                if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
-                    if ($_FILES['archivo']['error'] > 0) {
-                        echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
-                    } else {
-                        echo 'Nombre: ' . $nombre . '<br/>';
-                        echo 'Tipo: ' . $tipo . '<br/>';
-                        echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
-                        echo 'Guardado en: ' . $nombre_tmp;
-
-                        if (file_exists('../img_empleados/' . $nombre)) {
-                            echo '<br/>El archivo ya existe: ' . $nombre;
+                $limite = 2048 * 1024;
+                /*Toma el tamaño de la imagen subida*/
+                $dimensiones = getimagesize($nombre_tmp);
+                $ancho = $dimensiones[0];
+                $alto = $dimensiones[1];
+                /*Compara el tamaño con el que debe de ser*/
+                if ($ancho == 150 && $alto == 195) {
+                    /*Compara el peso de la imagen, debe ser menor a 2 MB*/
+                    if ($tamano <= $limite) {
+                        if ($_FILES['archivo']['error'] > 0) {
+                            echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
                         } else {
-                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
-                            $url = "img_empleados/" . $identificador . ".jpg";
-                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador. ".jpg";
+                            echo 'Nombre: ' . $nombre . '<br/>';
+                            echo 'Tipo: ' . $tipo . '<br/>';
+                            echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                            echo 'Guardado en: ' . $nombre_tmp;
 
-                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
-                            $stmt = $PDO->prepare($sql);
-                            $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+                            if (file_exists('../img_empleados/' . $nombre)) {
+                                echo '<br/>El archivo ya existe: ' . $nombre;
+                            } else {
+                                move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
+                                $url = "img_empleados/" . $identificador . ".jpg";
+                                echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
 
-                            /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
-                            $sql= "SELECT MAX(id_empleado) as id_emp FROM empleados";
-                            foreach($PDO->query($sql) as $row) {
-                                $idemp = "$row[id_emp]";
+                                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $sql = "INSERT INTO empleados(nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto) values(?, ?, ?, ?, ?, ?, ?,?)";
+                                $stmt = $PDO->prepare($sql);
+                                $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
+
+                                /*SELECCIONAR EL ID DEL ULTIMO EMPLEADO INGRESADO*/
+                                $sql = "SELECT MAX(id_empleado) as id_emp FROM empleados";
+                                foreach ($PDO->query($sql) as $row) {
+                                    $idemp = "$row[id_emp]";
+                                }
+                                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                                $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'";
+                                foreach ($PDO->query($sql2) as $row2) {
+                                    $idtip = "$row2[id_tipo_usuario]";
+                                }
+                                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
+                                $stmt = $PDO->prepare($sql);
+                                $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
+                                header("Location: empleados.php");
                             }
-                            /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
-                            $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
-                            foreach($PDO->query($sql2) as $row2) {
-                                $idtip = "$row2[id_tipo_usuario]";
-                            }
-                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                            $sql = "INSERT INTO usuarios(alias,contrasena, estado, id_empleado, id_tipo_usuario) values(?, ?, ?, ?, ?)";
-                            $stmt = $PDO->prepare($sql);
-                            $stmt->execute(array($alias, $contra, 1, $idemp, $idtip));
-                            header("Location: empleados.php");
                         }
+                    } else {
+                        echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                     }
-                } else {
-                    echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
+                }else {
+                    echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 150px de alto x 195px de ancho');</script>";
+
                 }
             }
         }

@@ -42,7 +42,7 @@ if(!empty($_POST)) {
     $correo = $_POST['correo'];
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $tipo = $_POST['tipo'];
+    $tipo_usuario = $_POST['tipo'];
     $foto= $_POST['foto'];
 // validate input
     $valid = true;
@@ -135,7 +135,7 @@ if(!empty($_POST)) {
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($idtip));
                 header("Location: empleados.php");
-            } else{
+            } else {
 
                 $nombre = $_FILES['archivo']['name'];
                 $nombre_tmp = $_FILES['archivo']['tmp_name'];
@@ -147,41 +147,52 @@ if(!empty($_POST)) {
                 $extension = end($partes_nombre);
                 $ext_correcta = in_array($extension, $ext_permitidas);
                 $tipo_correcto = preg_match('/^image\/(jpg|jpeg|gif|png)$/', $tipo);
-                $limite = 2000 * 1024;
+                $limite = 2048 * 1024;
+                /*Toma el tamaño de la imagen subida*/
+                $dimensiones = getimagesize ($nombre_tmp);
+                $ancho = $dimensiones[0];
+                $alto = $dimensiones[1];
+                /*Compara el tamaño con el que debe de ser*/
+                if ($ancho == 150 && $alto == 195) {
+                    /*Compara el peso de la imagen, debe ser menor a 2 MB*/
+                    if ( $tamano <= $limite) {
+                        if ($_FILES['archivo']['error'] > 0) {
+                            echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                        } else {
+                            echo 'Nombre: ' . $nombre . '<br/>';
+                            echo 'Tipo: ' . $tipo . '<br/>';
+                            echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                            echo 'Guardado en: ' . $nombre_tmp;
+                            move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
+                            $url = "img_empleados/" . $identificador . ".jpg";
+                            echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
 
-                if ($ext_correcta && $tipo_correcto && $tamano <= $limite) {
-                    if ($_FILES['archivo']['error'] > 0) {
-                        echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
-                    } else {
-                        echo 'Nombre: ' . $nombre . '<br/>';
-                        echo 'Tipo: ' . $tipo . '<br/>';
-                        echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
-                        echo 'Guardado en: ' . $nombre_tmp;
-                        move_uploaded_file($nombre_tmp, "../img_empleados/" . $identificador . ".jpg");
-                        $url = "img_empleados/" . $identificador . ".jpg";
-                        echo "<br/>Guardado en: " . "../img_empleados/" . $identificador . ".jpg";
+                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
+                            $stmt = $PDO->prepare($sql);
+                            $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
 
-                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $sql = "UPDATE empleados SET nombres=?, apellidos=?, identificador=?, telefono=?, correo=?, sexo=?, fecha_nacimiento=?, foto=? WHERE id_empleado='" . $id . "' ";
-                        $stmt = $PDO->prepare($sql);
-                        $stmt->execute(array($nombres, $apellidos, $identificador, $telefono, $correo, $sexo, $fecha_nacimiento, $url));
-
-                        /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
-                        $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='".$_POST['tipo']."'";
-                        foreach($PDO->query($sql2) as $row2) {
-                            $idtip = "$row2[id_tipo_usuario]";
+                            /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                            $sql2 = "SELECT id_tipo_usuario FROM tipos_usuarios  WHERE nombre='" . $_POST['tipo'] . "'";
+                            foreach ($PDO->query($sql2) as $row2) {
+                                $idtip = "$row2[id_tipo_usuario]";
+                            }
+                            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                            $sql = "UPDATE usuarios SET id_tipo_usuario=? WHERE id_empleado= '" . $id . "' ";
+                            $stmt = $PDO->prepare($sql);
+                            $stmt->execute(array($idtip));
+                            header("Location: empleados.php");
                         }
-                        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                        $sql = "UPDATE usuarios SET id_tipo_usuario=? WHERE id_empleado= '".$id. "' ";
-                        $stmt = $PDO->prepare($sql);
-                        $stmt->execute(array($idtip));
-                        header("Location: empleados.php");
+                    } else {
+                        echo $tamano;
+                        echo $limite;
+                        echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                     }
                 }
                 else {
-                    echo"<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
-                }
+                    echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 150px de alto x 195px de ancho');</script>";
 
+                }
             }
         }
     }
@@ -204,7 +215,7 @@ if(!empty($_POST)) {
         $fecha_nacimiento = $data['fecha_nacimiento'];
         $sexo = $data['sexo'];
         $alias = $data['alias'];
-        $tipo = $data['tipo'];
+        $tipo_usuario = $data['tipo'];
         $foto = $data['foto'];
     }
 
@@ -306,7 +317,7 @@ if(!empty($_POST)) {
                         <div class='form-group'>
                             <label for='genero'>Tipo de usuario</label>
                             <select name='tipo' required='required' id='tipo' class='form-control'>
-                                <option><?php print(!empty($tipo)?$tipo:""); ?></option>
+                                <option><?php print(!empty($tipo_usuario)?$tipo_usuario:""); ?></option>
                                 <?php
                                 $sql = "SELECT nombre FROM tipos_usuarios WHERE nombre!= '".$tipo."' ORDER BY id_tipo_usuario ASC ";
                                 $data = "";
