@@ -54,9 +54,9 @@ if(!isset($_SESSION['alias']))
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>IMAGEN</th>
                                             <th>TITULO</th>
                                             <th>DESCRIPCION</th>
+                                            <th>IMAGEN</th>
                                             <th>ACCION</th>
                                         </tr>
                                         <tbody>
@@ -81,9 +81,9 @@ if(!isset($_SESSION['alias']))
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_imagen]</td>";
-                                            $data .= "<td><img src='../$row[url] 'border='0' width='150' height='100'></td>";
                                             $data .= "<td>$row[titulo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
+                                            $data .= "<td><img src='../$row[url] 'border='0' width='150' height='100'></td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='../mant_imagenes_servicios/consultar.php?id_imagen_servicio=$row[id_imagen]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='../mant_imagenes_servicios/actualizar.php?id_imagen_servicio=$row[id_imagen]'>Actualizar</a>&nbsp;";
