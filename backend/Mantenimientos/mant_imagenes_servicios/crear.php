@@ -79,11 +79,11 @@ if(!empty($_POST)) {
                     if ($_FILES['archivo']['error'] > 0) {
                         echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
                     } else {
-                        echo 'Nombre: ' . $nombre . '<br/>';
+                       /* echo 'Nombre: ' . $nombre . '<br/>';
                         echo 'Tipo: ' . $tipo . '<br/>';
                         echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
                         echo 'Guardado en: ' . $nombre_tmp;
-
+                        */
                         if (file_exists('../img_servicios/' . $nombre)) {
                             echo '<br/>El archivo ya existe: ' . $nombre;
                         } else {
@@ -94,8 +94,7 @@ if(!empty($_POST)) {
                             }
                             move_uploaded_file($nombre_tmp, "../img_servicios/" . $id . ".jpg");
                             $url = "img_servicios/" . $id . ".jpg";
-                            echo "<br/>Guardado en: " . "../img_servicios/" . $id . ".jpg";
-
+                            /*echo "<br/>Guardado en: " . "../img_servicios/" . $id . ".jpg";*/
                             /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
                             $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
                             foreach ($PDO->query($sql2) as $row2) {
@@ -117,6 +116,7 @@ if(!empty($_POST)) {
             }
         }
         }catch (Exception $e){
+            unlink("../".$url);
             echo"<script type=\"text/javascript\">alert('La imagen con este titulo ya existe');</script>";
         }
     }
