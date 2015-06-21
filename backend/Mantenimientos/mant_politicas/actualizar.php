@@ -119,6 +119,7 @@ else {
 <div>
     <!--BEGIN THEME SETTING--><!--END THEME SETTING-->
     <!--BEGIN BACK TO TOP-->
+
     <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
     <!--END BACK TO TOP-->
     <?php include '../topbar.php';?>
