@@ -89,6 +89,15 @@ if(!empty($_POST)) {
         } else if (!isset($_POST['fecha_nacimiento'])) {
             echo"<script type=\"text/javascript\">alert('Debe seleccionar una fecha');</script>";
         }
+        /*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres y apellidos*/
+        else if (strlen(trim($nombres, ' ')) <= 1)
+        {
+            echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+        }
+        else if (strlen(trim($apellidos, ' ')) <= 1)
+        {
+            echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
+        }
         /*VAlida solo letras en nombre y apellido*/
         else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
             echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
@@ -107,15 +116,6 @@ if(!empty($_POST)) {
         /*Valida correo electronico*/
         else if (!preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $correo)){
             echo"<script type=\"text/javascript\">alert('Formato de Correo Electrónico erróneo. Ej. hola.mundo@algo.algo');</script>";
-        }
-        /*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres y apellidos*/
-        else if (strlen(trim($nombres, ' ')) <= 1)
-        {
-            echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
-        }
-        else if (strlen(trim($apellidos, ' ')) <= 1)
-        {
-            echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
         }
         else {
             //SUBIR IMAGEN URL

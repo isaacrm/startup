@@ -44,20 +44,28 @@ if(!empty($_POST)) {
         try {
             /*Comprueba si hay espacios en blanco*/
             if (ctype_space($nombre)||ctype_space($descripcion)){
-                ?>
-                <script language="JavaScript">
-                    alert("No se puede dejar datos en blanco");
-                </script>
-            <?php
+                echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
             }
             /*Comprueba que hay al menos un CRUD seleccionado*/
             else if(!isset($_POST['agregar']) && !isset($_POST['modificar']) && !isset($_POST['eliminar']) && !isset($_POST['consultar'])) {
-                ?>
-                <script language="JavaScript">
-                    alert("Seleccione al menos una operacion");
-                </script>
-            <?php
+                echo"<script type=\"text/javascript\">alert('Seleccione al menos una operacion');</script>";
             }
+            else if (strlen(trim($nombre, ' ')) <= 1)
+            {
+                echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+            }
+            else if (strlen(trim($descripcion, ' ')) <= 4)
+            {
+                echo"<script type=\"text/javascript\">alert('La descripcion debe de tener al menos cinco caracteres');</script>";
+            }
+            /*VAlida solo letras */
+            else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombre)){
+                echo"<script type=\"text/javascript\">alert('El nombre no tiene números');</script>";
+            }
+            else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$descripcion)){
+                echo"<script type=\"text/javascript\">alert('La descripcion no tiene números');</script>";
+            }
+
             else {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "INSERT INTO tipos_usuarios(nombre, descripcion, agregar, modificar, eliminar, consultar) values(?, ?, ?, ?, ?, ?)";
