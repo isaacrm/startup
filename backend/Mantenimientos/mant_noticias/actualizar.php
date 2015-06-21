@@ -85,7 +85,7 @@ if(!empty($_POST)){
                      $extension = end($partes_nombre);
                      $ext_correcta = in_array($extension, $ext_permitidas);
                      $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
-                     $limite = 500 * 1024;
+                     $limite = 2048 * 1024;
 
                      /*Toma el tamaño de la imagen subida*/
                      $dimensiones = getimagesize($nombre_tmp);
