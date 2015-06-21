@@ -106,7 +106,7 @@ if(!empty($_POST)){
                         <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                     </div>
                     <div class='form-group' >
-                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="350" value='<?php print($descripcion); ?>'>
+                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="500" value='<?php print($descripcion); ?>'>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
