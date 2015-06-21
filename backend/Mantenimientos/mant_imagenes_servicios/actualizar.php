@@ -11,9 +11,10 @@ if(!isset($_SESSION['alias']))
 ?>
 
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
-if(!empty($_GET['id_imagen_servicio'])) {
-    $id = $_GET['id_imagen_servicio'];
+if(!empty($_GET['id_imagen'])) {
+    $id = $_GET['id_imagen'];
 }
 if($id == null) {
     header("Location: imagenes_servicios.php");
@@ -25,53 +26,108 @@ if(!empty($_POST)) {
     $tituloError = null;
     $descripcionError = null;
     // post values
-    $url = $_POST['url'];
+    $foto = $_POST['url'];
     $titulo = $_POST['titulo'];
     $descripcion = $_POST['descripcion'];
-
+    $tipo_servicio = $_POST['tipo'];
     // validate input
     $valid = true;
-    if(empty($url)) {
-        $urlError = "Por favor ingrese la url de la imagen.";
-        $valid = false;
-    }
 
-
-    if(empty($titulo)) {
+    if (empty($titulo)) {
         $tituloError = "Por favor ingrese el titulo.";
         $valid = false;
     }
 
-    if(empty($descripcion)) {
+    if (empty($descripcion)) {
         $descripcionError = "Por favor ingrese la descripcion.";
         $valid = false;
     }
 
     // update data
-    if($valid) {
+    if (ctype_space($titulo) || ctype_space($descripcion)) {
+        echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    } else if (strlen(trim($titulo, ' ')) <= 2) {
+        echo "<script type=\"text/javascript\">alert('El nombre debe de tener al menos tres caracteres');</script>";
+    } else if (strlen(trim($descripcion, ' ')) <= 4) {
+        echo "<script type=\"text/javascript\">alert('La descripcion debe de tener al menos cinco caracteres');</script>";
+    } else if (!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i', $titulo)) {
+        echo "<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
+    } else {
+        if ($valid) {
+            if ($_FILES['archivo']['name'] == "") {
+                /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
+                foreach ($PDO->query($sql2) as $row2) {
+                    $id_servicio = "$row2[id_servicio]";
+                }
+                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sql = "UPDATE imagenes_servicios SET  titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
+                $stmt = $PDO->prepare($sql);
+                $stmt->execute(array($titulo, $descripcion,  $id_servicio, $id));
+                header("Location: imagenes_servicios.php");
+            } else {
+                $nombre = $_FILES['archivo']['name'];
+                $nombre_tmp = $_FILES['archivo']['tmp_name'];
+                $tipo = $_FILES['archivo']['type'];
+                $tamano = $_FILES['archivo']['size'];
+
+                $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+                $partes_nombre = explode('.', $nombre);
+                $extension = end($partes_nombre);
+                $ext_correcta = in_array($extension, $ext_permitidas);
+                $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+                $limite = 2048 * 1024;
+                /*Toma el tamaño de la imagen subida*/
+                $dimensiones = getimagesize($nombre_tmp);
+                $ancho = $dimensiones[0];
+                $alto = $dimensiones[1];
+                /*Compara el tamaño con el que debe de ser*/
+                if ($ancho == 720 && $alto == 480) {
+                    /*Compara el peso de la imagen, debe ser menor a 2 MB  (Esto es mas codigo de validacion [extension y tipo])$ext_correcta && $tipo_correcto*/
+                    if ($tamano <= $limite) {
+                        if ($_FILES['archivo']['error'] > 0) {
+                            echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                        } else {
+                            echo 'Nombre: ' . $nombre . '<br/>';
+                            echo 'Tipo: ' . $tipo . '<br/>';
+                            echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                            echo 'Guardado en: ' . $nombre_tmp;
+                            /*SELECCIONAR EL ID DEL TIPO DE USUARIO DONDE EL NOMBRE SEA el tipo seleccionado*/
+                            $sql2 = "SELECT id_servicio FROM servicios WHERE tipo='" . $_POST['tipo'] . "'";
+                            foreach ($PDO->query($sql2) as $row2) {
+                                $id_servicio = "$row2[id_servicio]";
+                            }
+                                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $sql = "UPDATE imagenes_servicios SET url = ?, titulo = ?, descripcion = ?, id_servicio=? WHERE id_imagen = ?";
+                                $stmt = $PDO->prepare($sql);
+                                $stmt->execute(array($url, $titulo, $descripcion, $id_servicio, $id));
+                                header("Location: imagenes_servicios.php");
+                        }
+                    } else {
+                        echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
+                    }
+                } else {
+                    echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 720px de alto x 480px de ancho');</script>";
+                    }
+                }
+            }
+        }
+    }
+    else {
+        // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE imagenes_servicios SET url = ?, titulo = ?, descripcion = ? WHERE id_imagen_servicio = ?";
+        $sql = "SELECT url, titulo,  imagenes_servicios.descripcion, tipo FROM imagenes_servicios, servicios  WHERE id_imagen = ?  AND imagenes_servicios.id_servicio=servicios.id_servicio";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($url, $titulo, $descripcion, $id));
-        $PDO = null;
-        header("Location: imagenes_servicios.php");
+        $stmt->execute(array($id));
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(empty($data)) {
+            header("Location: imagenes_servicios.php");
+        }
+        $foto = $data['url'];
+        $titulo = $data['titulo'];
+        $descripcion= $data['descripcion'];
+        $tipo_servicio=$data['tipo'];
     }
-}
-else {
-    // read data
-    $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT url, titulo, descripcion FROM imagenes_servicios WHERE id_imagen_servicio = ?";
-    $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_imagen_servicio));
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $PDO = null;
-    if(empty($data)) {
-        header("Location: imagenes_servicios.php");
-    }
-    $url = $data['url'];
-    $titulo = $data['titulo'];
-    $descripcion= $data['descripcion'];
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -102,21 +158,35 @@ else {
                 <div class="clearfix">
                 </div>
 
-                <form method='POST'>
-                    <div class='form-group <?php print(!empty($urlError)?"has-error":""); ?>'>
-                        <label for='url'>Url</label>
-                        <input type='text' name='url' placeholder='Url' required='required' id='url' class='form-control' value='<?php print($url); ?>'>
-                        <?php print(!empty($urlError)?"<span class='help-block'>$urlError</span>":""); ?>
-                    </div>
+                <form method="post" class="form" role="form" enctype="multipart/form-data">
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
-                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print($titulo); ?>'>
+                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off"  maxlength="25" value='<?php print($titulo); ?>'>
                         <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($descripcionError)?"has-error":""); ?>'>
                         <label for='descripcion'>Descripción</label>
-                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' value='<?php print($descripcion); ?>'>
+                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off"  maxlength="60" value='<?php print($descripcion); ?>'>
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
+                    </div>
+                    <div class='form-group'>
+                        <img  name="url" id="url" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='300' height='200'>
+                        <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
+                    </div>
+                    <div class='form-group'>
+                        <label for='genero'>Tipo de servicio</label>
+                        <select name='tipo' required='required' id='tipo' class='form-control'>
+                            <option ><?php print(!empty($tipo_servicio)?$tipo_servicio:""); ?></option>
+                            <?php
+                            $sql = "SELECT tipo FROM servicios  WHERE tipo!= '".$tipo_servicio."' ORDER BY id_servicio ASC";
+                            $data = "";
+                            foreach($PDO->query($sql) as $row) {
+                                $data .= "<option value= '$row[tipo]'>$row[tipo]</option>";
+                            }
+                            print($data);
+                            $PDO = null;
+                            ?>
+                        </select>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
