@@ -75,12 +75,7 @@ if(!empty($_POST)) {
                 header("Location: tipo_usuario.php");
             }
         } catch (Exception $e) {
-            ?>
-            <script language="JavaScript">
-                alert("Este tipo de usuario ya existe");
-                location.href = "crear.php";
-            </script>
-        <?php
+            echo"<script type=\"text/javascript\">alert('Este tipo de usuario ya existe');</script>";
         }
 
     }

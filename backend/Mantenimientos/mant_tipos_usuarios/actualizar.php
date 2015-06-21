@@ -49,32 +49,34 @@ if(!empty($_POST)) {
         try {
             /*Comprueba si hay espacios en blanco*/
             if (ctype_space($nombre) || ctype_space($descripcion)) {
-                ?>
-                <script language="JavaScript">
-                    alert("No se puede dejar datos en blanco");
-                </script>
-            <?php
+                echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
             } /*Comprueba que hay al menos un CRUD seleccionado*/
             else if (!isset($_POST['agregar']) && !isset($_POST['modificar']) && !isset($_POST['eliminar']) && !isset($_POST['consultar'])) {
-                ?>
-                <script language="JavaScript">
-                    alert("Seleccione al menos una operacion");
-                </script>
-            <?php
-            } else {
+                echo"<script type=\"text/javascript\">alert('Seleccione al menos una operacion');</script>";
+            }
+            else if (strlen(trim($nombre, ' ')) <= 1)
+            {
+                echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+            }
+            else if (strlen(trim($descripcion, ' ')) <= 4)
+            {
+                echo"<script type=\"text/javascript\">alert('La descripcion debe de tener al menos cinco caracteres');</script>";
+            }
+            /*VAlida solo letras */
+            else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombre)){
+                echo"<script type=\"text/javascript\">alert('El nombre no tiene números');</script>";
+            }
+            else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$descripcion)){
+                echo"<script type=\"text/javascript\">alert('La descripcion no tiene números');</script>";
+            }else {
                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $sql = "UPDATE tipos_usuarios SET nombre = ?, descripcion = ?, agregar=?, modificar=?, eliminar=?, consultar=? WHERE id_tipo_usuario = ?";
                 $stmt = $PDO->prepare($sql);
                 $stmt->execute(array($nombre, $descripcion, $agregar, $modificar, $eliminar, $consultar, $id));
-                $PDO = null;
                 header("Location: tipo_usuario.php");
             }
         } catch (Exception $e) {
-            ?>
-            <script language="JavaScript">
-                alert("Este tipo de usuario ya existe");
-            </script>
-        <?php
+            echo"<script type=\"text/javascript\">alert('Este tipo de usuario ya existe');</script>";
         }
     }
     }else {
