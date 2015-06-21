@@ -8,6 +8,7 @@ if(!isset($_SESSION['alias']))
     header('Location: ../../Login.php');
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +46,10 @@ if(!isset($_SESSION['alias']))
                         <div class='container col-lg-12'>
                             <div class='row'>
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
+                                <form method='POST' action="buscar.php">
+                                    <input  class="col-lg-9" name="buscar" placeholder="Buscar por DUI" type="text" id='buscar' autocomplete="off" maxlength="10"/>
+                                    <input class="col-lg-3" type="submit" name="submit" value="Buscar">
+                                </form>
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
@@ -56,6 +61,8 @@ if(!isset($_SESSION['alias']))
                                         </tr>
                                         <tbody>
                                         <?php
+                                        /*Esta pequeña  linea quita errores molestos que muestra php*/
+                                        error_reporting(E_ALL ^ E_NOTICE);
                                         require("../../bd.php");
                                         /*Se llama la libreria de paginacion*/
                                         require_once("../../libs/Zebra_Pagination.php");

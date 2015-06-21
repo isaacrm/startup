@@ -8,6 +8,7 @@ if(!isset($_SESSION['alias']))
     header('Location: ../../login.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,7 +35,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Tipos de Usuario</div>
+                        Empleados</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -47,18 +48,17 @@ if(!isset($_SESSION['alias']))
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
 
                                 <form method='POST' action="buscar.php">
-                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por Nombre" type="text" id='buscar' autocomplete="off" maxlength="60"/>
+                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por DUI" type="text" id='buscar' autocomplete="off" maxlength="10"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
-                                    <input class="col-lg-3" type="submit" name="regresar" formaction="tipo_usuario.php" value="Regresar">
+                                    <input class="col-lg-3" type="submit" name="regresar" formaction="empleados.php" value="Regresar">
                                 </form>
-                                <div class="clearfix">
-                                </div>
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>NOMBRE</th>
-                                            <th>DESCRIPCION</th>
+                                            <th>NOMBRES</th>
+                                            <th>APELLIDOS</th>
+                                            <th>IDENTIFICADOR</th>
                                             <th>ACCION</th>
                                         </tr>
                                         <tbody>
@@ -72,7 +72,7 @@ if(!isset($_SESSION['alias']))
                                             if ($buscar!="")
                                             {
                                             /*Aqui obtenemos el total de registros*/
-                                            $sql0 = "SELECT COUNT(*) as total_datos FROM tipos_usuarios WHERE nombre like '%".$buscar."'";
+                                            $sql0 = "SELECT COUNT(*) as total_datos FROM empleados WHERE identificador like '%".$buscar."'";
                                             foreach ($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
                                             }
@@ -88,17 +88,18 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $busqueda= "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                            $busqueda= "SELECT  id_empleado, nombres, apellidos, identificador FROM empleados WHERE identificador like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                             $data="";
                                             foreach($PDO->query($busqueda) as $row) {
                                                 $data .= "<tr>";
-                                                $data .= "<td>$row[id_tipo_usuario]</td>";
-                                                $data .= "<td>$row[nombre]</td>";
-                                                $data .= "<td>$row[descripcion]</td>";
+                                                $data .= "<td>$row[id_empleado]</td>";
+                                                $data .= "<td>$row[nombres]</td>";
+                                                $data .= "<td>$row[apellidos]</td>";
+                                                $data .= "<td>$row[identificador]</td>";
                                                 $data .= "<td>";
-                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Consultar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Actualizar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Eliminar</a>";
+                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_empleado=$row[id_empleado]'>Consultar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_empleado=$row[id_empleado]'>Actualizar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_empleado=$row[id_empleado]'>Eliminar</a>";
                                                 $data .= "</td>";
                                                 $data .= "</tr>";
                                             }
