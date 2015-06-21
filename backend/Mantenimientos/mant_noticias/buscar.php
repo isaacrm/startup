@@ -34,7 +34,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Tipos de Usuario</div>
+                        Noticias</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -47,9 +47,9 @@ if(!isset($_SESSION['alias']))
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
 
                                 <form method='POST' action="buscar.php">
-                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por Nombre" type="text" id='buscar' autocomplete="off" maxlength="60"/>
+                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por Titulo" type="text" id='buscar' autocomplete="off" maxlength="60"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
-                                    <input class="col-lg-3" type="submit" name="regresar" formaction="tipo_usuario.php" value="Regresar">
+                                    <input class="col-lg-3" type="submit" name="regresar" formaction="noticias.php" value="Regresar">
                                 </form>
                                 <div class="clearfix">
                                 </div>
@@ -57,8 +57,9 @@ if(!isset($_SESSION['alias']))
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>NOMBRE</th>
-                                            <th>DESCRIPCION</th>
+                                            <th>TITULO</th>
+                                            <th>SUBTITULO</th>
+                                            <th>LEYENDA</th>
                                             <th>ACCION</th>
                                         </tr>
                                         <tbody>
@@ -72,7 +73,7 @@ if(!isset($_SESSION['alias']))
                                             if ($buscar!="")
                                             {
                                             /*Aqui obtenemos el total de registros*/
-                                            $sql0 = "SELECT COUNT(*) as total_datos FROM tipos_usuarios WHERE nombre like '%".$buscar."'";
+                                            $sql0 = "SELECT COUNT(*) as total_datos FROM noticias WHERE titulo like '%".$buscar."'";
                                             foreach ($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
                                             }
@@ -88,17 +89,18 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $busqueda= "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                            $busqueda= "SELECT id_noticia, titulo, subtitulo, leyenda, foto FROM noticias WHERE titulo like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                             $data="";
                                             foreach($PDO->query($busqueda) as $row) {
                                                 $data .= "<tr>";
-                                                $data .= "<td>$row[id_tipo_usuario]</td>";
-                                                $data .= "<td>$row[nombre]</td>";
-                                                $data .= "<td>$row[descripcion]</td>";
+                                                $data .= "<td>$row[id_noticia]</td>";
+                                                $data .= "<td>$row[titulo]</td>";
+                                                $data .= "<td>$row[subtitulo]</td>";
+                                                $data .= "<td>$row[leyenda]</td>";
                                                 $data .= "<td>";
-                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Consultar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Actualizar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_tipo_usuario=$row[id_tipo_usuario]'>Eliminar</a>";
+                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_noticia=$row[id_noticia]'>Consultar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_noticia=$row[id_noticia]'>Actualizar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_noticia=$row[id_noticia]'>Eliminar</a>";
                                                 $data .= "</td>";
                                                 $data .= "</tr>";
                                             }
