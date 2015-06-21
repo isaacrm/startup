@@ -101,19 +101,6 @@ if(!empty($_POST)) {
                             <input type='text' name='precio' placeholder='Precio' required='required' id='precio' class='form-control' value='<?php print(!empty($precio)?$precio:""); ?>'>
                             <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
                         </div>
-                        <div class='form-group'>
-                            <label for='genero'>Nombre de página</label>
-                            <select name='tipo' required='required' id='tipo' class='form-control'>
-                                <option></option>
-                                <?php
-                                require("../../bd2.php");
-                                $result = mysql_query("SELECT encabezado FROM paginas");
-                                while ( $resultado = mysql_fetch_array($result)){
-                                    echo "<option value='".$resultado['encabezado']."'> ".$resultado['encabezado']."</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-success'>Crear</button>
                             <a class='btn btn btn-default' href='servicios.php'>Regresar</a>
