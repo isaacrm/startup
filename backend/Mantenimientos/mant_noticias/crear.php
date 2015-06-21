@@ -102,9 +102,9 @@ if(!empty($_POST)) {
                                     $idnot = "$row[id_not]";
                                     $id= $idnot+1;
                                 }
-                                move_uploaded_file($nombre_tmp, "../img_noticias/" . $id. ".jpg");
-                                $url = "img_noticias/" . $id. ".jpg";
-                                echo "<br/>Guardado en: " . "../img_noticias/" . $id. ".jpg";
+                                move_uploaded_file($nombre_tmp, "../img_noticias/" . $id . ".jpg");
+                                $url = "img_noticias/" . $id . ".jpg";
+                                echo "<br/>Guardado en: " . "../img_noticias/" . $id . ".jpg";
 
                                 $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $sql = "INSERT INTO noticias(titulo, subtitulo, leyenda, foto) values(?, ?, ?, ?)";

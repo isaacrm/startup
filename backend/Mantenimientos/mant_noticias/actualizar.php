@@ -112,7 +112,7 @@ if(!empty($_POST)){
                                      header("Location: noticias.php");
                              }
                          } else {
-                             echo 'Archivo inválido';
+                             echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
                          }
                      }else {
                          echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 1600px de alto x 800px de ancho');</script>";
@@ -170,7 +170,7 @@ else {
                 <div class="clearfix">
                 </div>
 
-                <form method='POST'>
+                <form method="post"  class="form" role="form" enctype="multipart/form-data" >
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
                         <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off"  maxlength="16" value='<?php print($titulo); ?>'>
