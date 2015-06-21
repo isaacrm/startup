@@ -19,7 +19,7 @@ if($id == null) {
     header("Location: paginas.php");
 }
 require("../../bd.php");
-if(!empty($_POST)){
+if(!empty($_POST)) {
     // validation errors
     $encabezadoError = null;
     $fraseError = null;
@@ -30,46 +30,48 @@ if(!empty($_POST)){
 
     // validate input
     $valid = true;
-    if(empty($encabezado)) {
+    if (empty($encabezado)) {
         $encabezadoError = "Por favor ingrese un encabezado.";
         $valid = false;
     }
 
-    if(empty($frase)) {
+    if (empty($frase)) {
         $fraseError = "Por favor ingrese una frase.";
         $valid = false;
     }
     // update data
-    if($valid) {
+    if ($valid) {
+        if (ctype_space($encabezado) || ctype_space($frase)) {
+            echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+        } else if (strlen(trim($encabezado, ' ')) <= 5) {
+            echo "<script type=\"text/javascript\">alert('El encabezado debe de tener al menos 6 caracteres');</script>";
+        } else if (!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i', $encabezado)) {
+            echo "<script type=\"text/javascript\">alert('El encabezado no debe tener números');</script>";
+        } else {
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE paginas SET encabezado = ?, frase = ?, estado =? WHERE id_pagina = ?";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($encabezado, $frase, 1, $id));
+            header("Location: paginas.php");
+        }
+    }
+    }else {
+        // read data
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE paginas SET encabezado = ?, frase = ?, estado =? WHERE id_pagina = ?";
+        $sql = "SELECT encabezado, frase FROM paginas WHERE id_pagina = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($encabezado, $frase, 1, $id));
+        $stmt->execute(array($id));
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
         $PDO = null;
-        header("Location: paginas.php");
+        if (empty($data)) {
+            header("Location: paginas.php");
+        }
+        $encabezado = $data['encabezado'];
+        $frase = $data['frase'];
     }
-    else if (ctype_space($encabezado) || ctype_space($frase) ) {
-        echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
-    }
-    else if (strlen(trim($alias, ' ')) <= 5)
-    {
-        echo"<script type=\"text/javascript\">alert('El campo debe de tener al menos cinco caracteres');</script>";
-    }
-}
-else {
-    // read data
-    $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT encabezado, frase FROM paginas WHERE id_pagina = ?";
-    $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id));
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $PDO = null;
-    if(empty($data)) {
-        header("Location: paginas.php");
-    }
-    $encabezado = $data['encabezado'];
-    $frase= $data['frase'];
-}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -103,12 +105,12 @@ else {
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($encabezadoError)?"has-error":""); ?>'>
                         <label for='encabezado'>Encabezado</label>
-                        <input type='text' name='encabezado' placeholder='Encabezado' required='required' id='encabezado' class='form-control' value='<?php print($encabezado); ?>'>
+                        <input type='text' name='encabezado' placeholder='Encabezado' required='required' id='encabezado' class='form-control'  autocomplete="off" maxlength="25" value='<?php print($encabezado); ?>'>
                         <?php print(!empty($encabezadoError)?"<span class='help-block'>$encabezadoError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
                         <label for='frase'>Frase</label>
-                        <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print($frase); ?>'>
+                        <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control'  autocomplete="off" maxlength="250" value='<?php print($frase); ?>'>
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
