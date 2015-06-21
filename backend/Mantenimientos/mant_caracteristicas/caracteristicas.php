@@ -46,24 +46,42 @@ if(!isset($_SESSION['alias']))
                         <div class='container col-lg-12'>
                             <div class='row'>
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
+                                <form method='POST' action="buscar.php">
+                                    <input  class="col-lg-9" name="buscar" placeholder="Buscar por Titulo" type="text" id='buscar' autocomplete="off" maxlength="60"/>
+                                    <input class="col-lg-3" type="submit" name="submit" value="Buscar">
+                                </form>
                                 <div class="table-responsive">
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
                                             <th>TITULO</th>
-                                            <th>ID</th>
+                                            <th>DESCRIPCIÓN</th>
                                             <th>ACCION</th>
                                         </tr>
                                         <tbody>
                                         <?php
                                         require("../../bd.php");
-                                        $sql = "SELECT id_caracteristica, titulo, id_pagina FROM caracteristicas ORDER BY id_caracteristica ASC";
+                                        require_once("../../libs/Zebra_Pagination.php");
+                                        /*Aqui obtenemos el total de registros*/
+                                        $sql0 = "SELECT COUNT(*) as total_datos FROM caracteristicas";
+                                        foreach ($PDO->query($sql0) as $row0) {
+                                            $totaldatos = "$row0[total_datos]";
+                                        }
+                                        /*Numero de registros que se quiere por tabla*/
+                                        $filas = 10;
+                                        /*Aqui instanciamos la clase*/
+                                        $paginacion = new Zebra_Pagination();
+                                        /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                                        $paginacion->records($totaldatos);
+                                        $paginacion->records_per_page($filas);
+                                        $paginacion->padding(false);
+                                        $sql = "SELECT id_caracteristica, titulo, descripcion FROM caracteristicas ORDER BY id_caracteristica ASC  LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_caracteristica]</td>";
                                             $data .= "<td>$row[titulo]</td>";
-                                            $data .= "<td>$row[id_pagina]</td>";
+                                            $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td>";
                                             $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_caracteristica=$row[id_caracteristica]'>Consultar</a>&nbsp;";
                                             $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_caracteristica=$row[id_caracteristica]'>Actualizar</a>&nbsp;";
@@ -76,6 +94,10 @@ if(!isset($_SESSION['alias']))
                                         ?>
                                         </tbody>
                                     </table>
+                                    <!-- Aqui se imprime la paginacion-->
+                                    <div>
+                                        <?php $paginacion->render();?>
+                                    </div>
                                 </div>
                             </div> <!-- /row -->
 
