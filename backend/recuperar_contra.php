@@ -1,10 +1,11 @@
 <?php
+error_reporting(E_ALL ^ E_NOTICE);
 require("bd.php");
 if(!empty($_POST)) {
     $correo = $_POST['correo'];
-    $alias= $_POST['alias'];
+    $alias = $_POST['alias'];
     $correo = trim($correo);
-    $alias= trim($alias);
+    $alias = trim($alias);
     $valid = true;
     if (empty($correo)) {
         $valid = false;
@@ -14,36 +15,55 @@ if(!empty($_POST)) {
     }
     if ($valid) {
         /*SELECCIONAR EL ID QUE CORRESPONDE AL USUARIO DEL CORREO*/
-        $sql1 = "SELECT id_empleado FROM empleados  WHERE correo='" . $correo. "'";
-        foreach ($PDO->query($sql1) as $row1) {
-            $id_empleado_correo = "$row1[id_empleado]";
+        $sql = "SELECT id_empleado FROM empleados  WHERE correo='" . $correo . "'";
+        foreach ($PDO->query($sql) as $row) {
+            $id_empleado1 = "$row[id_empleado]";
         }
         /*SELECCIONAR EL ID QUE CORRESPONDE AL USUARIO DEL ALIAS*/
-        $sql2 = "SELECT id_empleado FROM usuarios  WHERE alias='" . $alias. "'";
-        foreach ($PDO->query($sql2) as $row2) {
-            $id_empleado_alias = "$row2[id_empleado]";
+        $sql1 = "SELECT id_empleado FROM usuarios  WHERE alias='" . $alias . "'";
+        foreach ($PDO->query($sql1) as $row1) {
+            $comprobar = "$row1[id_empleado]";
         }
-        if (ctype_space($actual) || ctype_space($nueva) || ctype_space($confirmar)) {
-            echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
-            $correo=null;
-            $alias=null;
-        }
-        else if ($id_empleado_correo!=$id_empleado_alias){
+        if ($id_empleado1 != $comprobar) {
             echo "<script type=\"text/javascript\">alert('El alias no tiene relación con el correo ingresado.');</script>";
-            $correo=null;
-            $alias=null;
-        }
-        else{
+            $correo = null;
+            $alias = null;
+        } else if (ctype_space($correo) || ctype_space($alias)) {
+            echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+            $correo = null;
+            $alias = null;
+        } else if ($id_empleado1 == "") {
+            echo "<script type=\"text/javascript\">alert('Ese correo electrónico no está en el sistema');</script>";
+            $correo = null;
+            $alias = null;
+        } else {
+            $num_caracteres = "10"; // asignamos el número de caracteres que va a tener la nueva contraseña
+            $nueva_clave = substr(sha1(rand()),0,$num_caracteres); // generamos una nueva contraseña de forma aleatoria
+            $usuario_clave = $nueva_clave; // la nueva contraseña que se enviará por correo al usuario
+            $usuario_clave2 = sha1($usuario_clave); // encriptamos la nueva contraseña para guardarla en la BD
+            // Enviamos por email la nueva contraseña
+            $remite_nombre = "WINEFUN"; // Tu nombre o el de tu página
+            $remite_email = "winefunofficial@gmail.com"; // tu correo
+            $asunto = "Recuperación de contraseña"; // Asunto (se puede cambiar)
+            $mensaje = "Se ha generado una nueva contraseña para el usuario <strong>".$alias."</strong>. La nueva contraseña es: <strong>".$usuario_clave."</strong>.";
+            $cabeceras = "From: ".$remite_nombre." <".$remite_email.">\r\n";
+            $cabeceras = $cabeceras."Mime-Version: 1.0\n";
+            $cabeceras = $cabeceras."Content-Type: text/html";
+            $enviar_email = mail($correo,$asunto,$mensaje,$cabeceras);
+            if($enviar_email) {
+                echo "<script type=\"text/javascript\">alert('Contraseña Enviada');</script>";
+            }else {
+                echo "<script type=\"text/javascript\">alert('No se ha podido enviar el correo');</script>";
+            } // actualizamos los datos (contraseña) del usuario que solicitó su contraseña
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE usuarios SET contrasena=? WHERE alias='" . $_SESSION['alias'] . "' ";
+            $sql = "UPDATE usuarios SET contrasena=? WHERE id_empleado='" . $id_empleado1 . "' ";
             $stmt = $PDO->prepare($sql);
-            $stmt->execute(array(sha1($nueva)));
+            $stmt->execute(array($usuario_clave2));
             $PDO = null;
             header("Location: Login.php");
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +86,6 @@ if(!empty($_POST)) {
         <div class="panel-body pan">
             <form action="recuperar_contra.php" class="form-horizontal" method="post">
                 <div class="form-body pal">
-                    <form method='POST' >
                         <div class='form-group '>
                             <input type='email' name='correo' placeholder='Dirección E-Mail' required='required' id='correo' class='form-control' autocomplete="off" maxlength="75">
                         </div>
@@ -79,14 +98,13 @@ if(!empty($_POST)) {
                                     <div class="col-lg-3">
                                         &nbsp;
                                     </div>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-9 ">
                                         <button type='submit' class='btn btn-success'>Recuperar</button>
                                         <a class='btn btn btn-default' href='Login.php'>Atrás</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
             </form>
                 </div>
             </form>
