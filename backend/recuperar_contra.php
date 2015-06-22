@@ -52,14 +52,14 @@ if(!empty($_POST)) {
             $confirmar=null;
         }
         else{
-                    $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $sql = "UPDATE usuarios SET contrasena=? WHERE alias='" . $_SESSION['alias'] . "' ";
-                    $stmt = $PDO->prepare($sql);
-                    $stmt->execute(array(sha1($nueva)));
-                    $PDO = null;
-                    header("Location: logout.php");
-            }
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE usuarios SET contrasena=? WHERE alias='" . $_SESSION['alias'] . "' ";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array(sha1($nueva)));
+            $PDO = null;
+            header("Location: logout.php");
         }
+    }
 }
 
 ?>
@@ -95,12 +95,15 @@ if(!empty($_POST)) {
                 <form method='POST'>
                     <div class='form-group '>
                         <input type='password' name='actual' placeholder='Contraseña Actual' required='required' id='actual' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($actual)?$actual:""); ?>' >
+                        <?php print(!empty($tipoError)?"<span class='help-block'>$tipoError</span>":""); ?>
                     </div>
                     <div class='form-group'>
                         <input type='password' name='nueva' placeholder='Nueva Contraseña' required='required' id='nueva' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($nueva)?$nueva:""); ?>' >
+                        <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
                     <div class='form-group'>
                         <input type='password' name='confirmar' placeholder='Confirmar Nueva Contraseña' required='required' id='confirmar' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($confirmar)?$confirmar:""); ?>' >
+                        <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-success'>Cambiar Contraseña</button>
