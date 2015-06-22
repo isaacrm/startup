@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2015 a las 10:41:08
+-- Tiempo de generación: 22-06-2015 a las 05:29:39
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -28,20 +28,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `caracteristicas` (
 `id_caracteristica` int(11) NOT NULL,
-  `titulo` varchar(8) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
+  `titulo` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `descripcion` varchar(500) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Estructura de tabla para la tabla `detalles_caracteristicas`
+-- Volcado de datos para la tabla `caracteristicas`
 --
 
-CREATE TABLE IF NOT EXISTS `detalles_caracteristicas` (
-`id_detalle_caracteristica` int(11) NOT NULL,
-  `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `id_caracteristica` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `caracteristicas` (`id_caracteristica`, `titulo`, `descripcion`) VALUES
+(1, 'VisiÃ³n', 'Garantizar a nuestros clientes una calidad de servicio, con caracterÃ­sticas innovativas y creativas a travÃ©s de la excelencia, eficiencia y desarrollo de nuestro equipo de trabajo. Brindando profesionalismo en la organizaciÃ³n de sus eventos y de esta manera satisfacer sus necesidades por encima de sus expectativas.');
 
 -- --------------------------------------------------------
 
@@ -67,9 +63,9 @@ CREATE TABLE IF NOT EXISTS `empleados` (
 
 INSERT INTO `empleados` (`id_empleado`, `nombres`, `apellidos`, `identificador`, `telefono`, `correo`, `sexo`, `fecha_nacimiento`, `foto`) VALUES
 (6, 'Jorge Isaac', 'RodrÃ­guez MÃ©ndez', '05429426-1', '7182-7243', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-14', 'img_empleados/05429426-1.jpg'),
-(8, 'dfghjk', 'jhgfrdeswe', '06464610-1', '6242-5254', 'mendezisaac.11@gmail.com', 'Femenino', '1997-06-06', 'img_empleados/1490742_779574108726394_1619493180_o.jpg'),
-(13, 'Kun ', 'AgÃ¼ero ', '04527525-9', '2234-5678', 'mendezisaac.11@gmail.com', 'Masculino', '1996-07-19', 'img_empleados/01234567-8.jpg'),
-(14, 'Lala', 'sadsad', '98765432-1', '2645-7875', 'mendezisaac.11@gmail.com', 'Masculino', '1997-06-06', 'img_empleados/98765432-1.jpg'),
+(8, 'dfghjk', 'jhgfrdeswe', '06464610-1', '6242-5254', 'mendezisasdasdsaac.11@gmail.com', 'Femenino', '1997-06-06', 'img_empleados/1490742_779574108726394_1619493180_o.jpg'),
+(13, 'Kun ', 'AgÃ¼ero ', '04527525-9', '2234-5678', 'mendeziasdsadsaac.11@gmail.com', 'Masculino', '1996-07-19', 'img_empleados/01234567-8.jpg'),
+(14, 'Lala', 'sadsad', '98765432-1', '2645-7875', 'menddasdezisaac.11@gmail.com', 'Masculino', '1997-06-06', 'img_empleados/98765432-1.jpg'),
 (16, 'Jajajajjajaja', 'Lopez', '32145698-5', '6549-8987', 'sadasd@asdas.sd', 'Masculino', '1997-06-01', 'img_empleados/16.jpg');
 
 -- --------------------------------------------------------
@@ -98,10 +94,20 @@ CREATE TABLE IF NOT EXISTS `equipos` (
 CREATE TABLE IF NOT EXISTS `imagenes_servicios` (
 `id_imagen` int(11) NOT NULL,
   `url` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
-  `titulo` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `titulo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `id_servicio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `imagenes_servicios`
+--
+
+INSERT INTO `imagenes_servicios` (`id_imagen`, `url`, `titulo`, `descripcion`, `id_servicio`) VALUES
+(5, 'img_empleados/5.jpg', 'Para los niÃ±os', 'Diversion al mÃ¡ximo', 3),
+(7, 'img_empleados/7.jpg', 'Noche', 'asasdsad', 3),
+(8, 'img_servicios/8.jpg', 'Celebraciones Inolvidables', 'Exitosas', 5),
+(17, 'img_servicios/9.jpg', 'Bodas', 'blablabla', 5);
 
 -- --------------------------------------------------------
 
@@ -136,7 +142,14 @@ CREATE TABLE IF NOT EXISTS `paginas` (
   `encabezado` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `frase` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `estado` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `paginas`
+--
+
+INSERT INTO `paginas` (`id_pagina`, `encabezado`, `frase`, `estado`) VALUES
+(2, 'Jajajaj', 'Hola', 1);
 
 -- --------------------------------------------------------
 
@@ -173,7 +186,15 @@ CREATE TABLE IF NOT EXISTS `servicios` (
   `tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `precio` decimal(7,2) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `servicios`
+--
+
+INSERT INTO `servicios` (`id_servicio`, `tipo`, `descripcion`, `precio`) VALUES
+(3, 'Hogar', ' ofrecemos dif', '40.56'),
+(5, 'Especiales', 'Consadisadiksad', '16.32');
 
 -- --------------------------------------------------------
 
@@ -189,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `tipos_usuarios` (
   `modificar` tinyint(1) NOT NULL,
   `eliminar` tinyint(1) NOT NULL,
   `consultar` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `tipos_usuarios`
@@ -199,7 +220,7 @@ INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `nombre`, `descripcion`, `agreg
 (25, 'Administrador', 'El que controla todo', 1, 1, 1, 1),
 (26, 'hola xD', 'asdsadsadsa', 1, 1, 0, 0),
 (27, 'ghjfgdf', 'kkkkk', 0, 1, 1, 0),
-(28, 'erwtyuy', 'rtyuuyttr', 0, 0, 0, 1),
+(28, 'as d', 'rtyuuyttr', 0, 0, 0, 1),
 (29, 'adsdsd', 'sadsadsadsa', 0, 1, 0, 0),
 (30, 'wqewqewqe', 'wqewqewqeqw', 0, 0, 1, 1),
 (31, 'sadsaddfgdg', 'dfgdfgfgfdg', 0, 1, 0, 0),
@@ -234,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_empleado`, `id_tipo_usuario`) VALUES
-(3, 'Isaac', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 6, 25),
+(3, 'Isaac', '382bb32f61f5ba9eb867360e84e4c6b580ccaf7b', 1, 6, 25),
 (7, 'Chaco', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 8, 70),
 (13, 'Asdf', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 13, 70),
 (14, 'Aaaa', '3da541559918a808c2402bba5012f6c60b27661c', 1, 14, 37),
@@ -249,12 +270,6 @@ INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_emple
 --
 ALTER TABLE `caracteristicas`
  ADD PRIMARY KEY (`id_caracteristica`), ADD UNIQUE KEY `titulo` (`titulo`);
-
---
--- Indices de la tabla `detalles_caracteristicas`
---
-ALTER TABLE `detalles_caracteristicas`
- ADD PRIMARY KEY (`id_detalle_caracteristica`), ADD KEY `id_caracteristica` (`id_caracteristica`);
 
 --
 -- Indices de la tabla `empleados`
@@ -324,12 +339,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `caracteristicas`
 --
 ALTER TABLE `caracteristicas`
-MODIFY `id_caracteristica` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `detalles_caracteristicas`
---
-ALTER TABLE `detalles_caracteristicas`
-MODIFY `id_detalle_caracteristica` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_caracteristica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `empleados`
 --
@@ -344,7 +354,7 @@ MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `imagenes_servicios`
 --
 ALTER TABLE `imagenes_servicios`
-MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT de la tabla `noticias`
 --
@@ -354,7 +364,7 @@ MODIFY `id_noticia` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT de la tabla `paginas`
 --
 ALTER TABLE `paginas`
-MODIFY `id_pagina` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_pagina` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `politicas`
 --
@@ -369,12 +379,12 @@ MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
-MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
-MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=74;
+MODIFY `id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
@@ -383,12 +393,6 @@ MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `detalles_caracteristicas`
---
-ALTER TABLE `detalles_caracteristicas`
-ADD CONSTRAINT `fk_caracteristicas_detalles` FOREIGN KEY (`id_caracteristica`) REFERENCES `caracteristicas` (`id_caracteristica`);
 
 --
 -- Filtros para la tabla `imagenes_servicios`
