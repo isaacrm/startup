@@ -38,13 +38,13 @@ if(!isset($_SESSION['alias']))
                     </div>
                     <div class="clearfix">
                     </div>
-                    <!-- Form validations -->
                 </div>
-                <!--END TITLE & BREADCRUMB PAGE-->
+             <div class="page-content">
+                <h1 class="text-center">BIENVENIDOS AL SITIO ADMNISTRATIVO DE WINEFUN</h1>
+                <img class="img-responsive" src="img_page/fondo.jpg">
+             </div>
                 <!--BEGIN CONTENT-->
-                <div class="page-content"></div>
-                <!--END CONTENT-->
-            </div>
+
             <!--END PAGE WRAPPER-->
         </div>
 </div>
