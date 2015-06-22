@@ -63,64 +63,47 @@ if(!empty($_POST)) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Cambiar Contraseña</title>
+    <title>Login</title>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php include 'Mantenimientos/estilos.php';?>
+    <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,800italic,400,700,800">
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,700,300">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/main.css">
+    <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/style-responsive.css">
 </head>
-<body>
-<div>
-    <!--BEGIN THEME SETTING--><!--END THEME SETTING-->
-    <!--BEGIN BACK TO TOP-->
-    <a id="totop" href="#"><i class="fa fa-angle-up"></i></a>
-    <!--END BACK TO TOP-->
-    <?php include 'Mantenimientos/topbar2.php';?>
-    <div id="wrapper">
-        <?php include 'Mantenimientos/sidebar2.php';?>
-        <!--BEGIN PAGE WRAPPER-->
-        <div id="page-wrapper">
-            <!--BEGIN TITLE & BREADCRUMB PAGE-->
-            <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
-                <div class="page-header pull-left">
-                    <div class="page-title">
-                        Cambiar Contraseña</div>
+<body class="img-responsive" style="background: url('Mantenimientos/images/bg/bg.jpg') center center fixed;">
+<div class="page-form">
+    <div class="panel panel-blue">
+        <div class="panel-body pan">
+            <form action="validarusuario.php" class="form-horizontal" method="post">
+                <div class="form-body pal">
+                    <form method='POST'>
+                        <div class='form-group '>
+                            <input type='email' name='correo' placeholder='Dirección E-Mail' required='required' id='correo' class='form-control' autocomplete="off" maxlength="75">
+                        </div>
+                        <div class='form-group'>
+                            <input type='text' name='alias' placeholder='Alias' required='required' id='alias' class='form-control' autocomplete="off" maxlength="15">
+                        </div>
+                        <div class='form-actions'>
+                            <button type='submit' class='btn btn-success'>Recuperar</button>
+                            <a class='btn btn btn-default' href='Login.php'>Atrás</a>
+                        </div>
+                    </form>
+            </form>
                 </div>
-                <div class="clearfix">
-                </div>
-
-                <form method='POST'>
-                    <div class='form-group '>
-                        <input type='password' name='actual' placeholder='Contraseña Actual' required='required' id='actual' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($actual)?$actual:""); ?>' >
-                        <?php print(!empty($tipoError)?"<span class='help-block'>$tipoError</span>":""); ?>
-                    </div>
-                    <div class='form-group'>
-                        <input type='password' name='nueva' placeholder='Nueva Contraseña' required='required' id='nueva' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($nueva)?$nueva:""); ?>' >
-                        <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
-                    </div>
-                    <div class='form-group'>
-                        <input type='password' name='confirmar' placeholder='Confirmar Nueva Contraseña' required='required' id='confirmar' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($confirmar)?$confirmar:""); ?>' >
-                        <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
-                    </div>
-                    <div class='form-actions'>
-                        <button type='submit' class='btn btn-success'>Cambiar Contraseña</button>
-                        <a class='btn btn btn-default' href='index.php'>Cancelar</a>
-                    </div>
-                </form>
-                </form>
-
-            </div>
-            <!--END TITLE & BREADCRUMB PAGE-->
-            <!--BEGIN CONTENT-->
-            <div class="page-content"></div>
-            <!--END CONTENT-->
+            </form>
         </div>
-        <!--END PAGE WRAPPER-->
+    </div>
+    <div class="col-lg-12 text-center">
+        <p>&nbsp;</p>
     </div>
 </div>
-<?php include 'Mantenimientos/funciones.php';?>
 </body>
 </html>
