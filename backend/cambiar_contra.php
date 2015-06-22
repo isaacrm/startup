@@ -12,7 +12,7 @@ if(!isset($_SESSION['alias']))
 <?php
 require("bd.php");
 if(!empty($_POST)) {
-    $actual = sha1($_POST['actual']);
+    $actual = $_POST['actual'];
     $nueva = $_POST['nueva'];
     $confirmar = $_POST['confirmar'];
     $valid = true;
@@ -30,16 +30,26 @@ if(!empty($_POST)) {
         $sql2 = "SELECT contrasena FROM usuarios  WHERE alias='" . $_SESSION['alias'] . "'";
         foreach ($PDO->query($sql2) as $row2) {
             $contra = "$row2[contrasena]";
+        }
         if (ctype_space($actual) || ctype_space($nueva) || ctype_space($confirmar)) {
             echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
-        } else if (!preg_match('/^.*(?=.{4,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $nueva)) {
-            echo "<script type=\"text/javascript\">alert('La contraseña debe tener una minúscula, una mayúscula , un número, un caracter especial y debe de ser de 4 a 15 caracteres');</script>";
-        } else if ($nueva != $confirmar) {
-            echo "<script type=\"text/javascript\">alert('Las contraseñas no coinciden');</script>";
-        }
-        else if ($actual!=$contra)
-        {
+            $actual=null;
+            $nueva=null;
+            $confirmar=null;
+        }else if (sha1($actual)!=$contra) {
             echo "<script type=\"text/javascript\">alert('Esa no es su contraseña actual');</script>";
+            $actual=null;
+            $nueva=null;
+            $confirmar=null;
+        }else if ($nueva != $confirmar) {
+            echo "<script type=\"text/javascript\">alert('Las contraseñas no coinciden');</script>";
+            $nueva=null;
+            $confirmar=null;
+        }
+        else if (!preg_match('/^.*(?=.{4,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $nueva)) {
+            echo "<script type=\"text/javascript\">alert('La contraseña nueva debe tener una minúscula, una mayúscula , un número y debe de ser de 4 a 15 caracteres');</script>";
+            $nueva=null;
+            $confirmar=null;
         }
         else{
                     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -47,18 +57,16 @@ if(!empty($_POST)) {
                     $stmt = $PDO->prepare($sql);
                     $stmt->execute(array(sha1($nueva)));
                     $PDO = null;
-                    echo "<script type=\"text/javascript\">alert('Los cambios tendran efectos cuando ingrese de nuevo al sistema');</script>";
-                    header("Location: index.php");
+                    header("Location: logout.php");
             }
         }
-    }
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Cambair Contraseña</title>
+    <title>Winefun | Cambiar Contraseña</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,15 +94,15 @@ if(!empty($_POST)) {
 
                 <form method='POST'>
                     <div class='form-group '>
-                        <input type='password' name='actual' placeholder='Contraseña Actual' required='required' id='actual' class='form-control' autocomplete="off" maxlength="15">
+                        <input type='password' name='actual' placeholder='Contraseña Actual' required='required' id='actual' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($actual)?$actual:""); ?>' >
                         <?php print(!empty($tipoError)?"<span class='help-block'>$tipoError</span>":""); ?>
                     </div>
                     <div class='form-group'>
-                        <input type='password' name='nueva' placeholder='Nueva Contraseña' required='required' id='nueva' class='form-control' autocomplete="off" maxlength="15">
+                        <input type='password' name='nueva' placeholder='Nueva Contraseña' required='required' id='nueva' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($nueva)?$nueva:""); ?>' >
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
                     <div class='form-group'>
-                        <input type='password' name='confirmar' placeholder='Confirmar Nueva Contraseña' required='required' id='confirmar' class='form-control' autocomplete="off" maxlength="15">
+                        <input type='password' name='confirmar' placeholder='Confirmar Nueva Contraseña' required='required' id='confirmar' class='form-control' autocomplete="off" maxlength="15" value='<?php print(!empty($confirmar)?$confirmar:""); ?>' >
                         <?php print(!empty($precioError)?"<span class='help-block'>$precioError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
