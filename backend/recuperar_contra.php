@@ -41,20 +41,28 @@ if(!empty($_POST)) {
             $nueva_clave = substr(sha1(rand()),0,$num_caracteres); // generamos una nueva contraseña de forma aleatoria
             $usuario_clave = $nueva_clave; // la nueva contraseña que se enviará por correo al usuario
             $usuario_clave2 = sha1($usuario_clave); // encriptamos la nueva contraseña para guardarla en la BD
-            // Enviamos por email la nueva contraseña
-            $remite_nombre = "WINEFUN"; // Tu nombre o el de tu página
-            $remite_email = "winefunofficial@gmail.com"; // tu correo
-            $asunto = "Recuperación de contraseña"; // Asunto (se puede cambiar)
-            $mensaje = "Se ha generado una nueva contraseña para el usuario <strong>".$alias."</strong>. La nueva contraseña es: <strong>".$usuario_clave."</strong>.";
-            $cabeceras = "From: ".$remite_nombre." <".$remite_email.">\r\n";
-            $cabeceras = $cabeceras."Mime-Version: 1.0\n";
-            $cabeceras = $cabeceras."Content-Type: text/html";
-            $enviar_email = mail($correo,$asunto,$mensaje,$cabeceras);
-            if($enviar_email) {
-                echo "<script type=\"text/javascript\">alert('Contraseña Enviada');</script>";
-            }else {
-                echo "<script type=\"text/javascript\">alert('No se ha podido enviar el correo');</script>";
-            } // actualizamos los datos (contraseña) del usuario que solicitó su contraseña
+
+            //Enviamos por correo
+            include("libs/class.phpmailer.php");
+            include("libs/class.smtp.php");
+            $mail = new PHPMailer();
+            $mail->IsSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = "ssl";
+            $mail->Host = "smtp.gmail.com";
+            $mail->Port = 465;
+            $mail->Username = "winefunofficial@gmail.com";
+            $mail->Password = "winefun123";
+            $mail->From = "winefunofficial@gmail.com";
+            $mail->FromName = "WINEFUN";
+            $mail->Subject = "Recuperación de Contraseña";
+            $mail->AltBody = "Hola, su contraseña se ha generado con éxito. \nSe  recomienda cambiar la contraseña cuando inicie sesión:.";
+            $mail->MsgHTML("Nueva Contraseña:<b>".$nueva_clave."</b>");
+            $mail->AddAddress($correo, "Destinatario");
+            $mail->IsHTML(true);
+            $mail->CharSet = 'UTF-8';
+            $mail->Send();
+             // actualizamos los datos (contraseña) del usuario que solicitó su contraseña
             $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $sql = "UPDATE usuarios SET contrasena=? WHERE id_empleado='" . $id_empleado1 . "' ";
             $stmt = $PDO->prepare($sql);

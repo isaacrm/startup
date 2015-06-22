@@ -41,7 +41,7 @@
                         <div class="col-md-12">
                             <div class="input-icon right">
                                 <i class="fa fa-user"></i>
-                                <input id="usuario" name="usuario" type="text" placeholder="Usuario" required="required"  class="form-control" /></div>
+                                <input id="usuario" name="usuario" type="text" placeholder="Usuario" required="required" autocomplete="off" maxlength="15" class="form-control" /></div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -49,7 +49,7 @@
                         <div class="col-md-12">
                             <div class="input-icon right">
                                 <i class="fa fa-lock"></i>
-                                <input id="password" type="password" name="contraseña" placeholder="Contraseña" required="required" class="form-control" /></div>
+                                <input id="password" type="password" name="contraseña" placeholder="Contraseña" autocomplete="off"  maxlength="15" required="required" class="form-control" /></div>
                         </div>
                     </div>
                     <div class="form-group mbn">
