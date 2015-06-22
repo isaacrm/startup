@@ -77,7 +77,9 @@ try {
         $PDO = null;
         header("Location: politicas.php");
     }
-    }
+    } catch (Exception $e) {
+    echo"<script type=\"text/javascript\">alert('Esta politica ya existe');</script>";
+}
   }
 }
 
@@ -86,7 +88,7 @@ try {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Mantenimiento | Noticias</title>
+    <title>Mantenimiento | Politicas</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,7 +109,7 @@ try {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Noticias</div>
+                        Crear Politica</div>
                 </div>
                 <div class="clearfix">
 

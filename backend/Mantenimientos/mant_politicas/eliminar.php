@@ -24,7 +24,7 @@ if(!empty($_POST)) {
     require("../../bd.php");
     $id = $_POST['id_politica'];
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "DELETE FROM funciones WHERE id_funcion = ?";
+    $sql = "DELETE FROM politicas WHERE id_politica = ?";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $PDO = null;
@@ -34,7 +34,7 @@ if(!empty($_POST)) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Funciones</title>
+    <title>Winefun | Politicas</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

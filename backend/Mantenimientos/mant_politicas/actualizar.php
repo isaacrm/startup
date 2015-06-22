@@ -79,22 +79,24 @@ try {
     }
     else {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ?, imagen = ? WHERE id_noticia = ?";
+        $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ?, imagen = ? WHERE id_politica = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen , $id_noticia));
+        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen , $id_politica));
         $PDO = null;
         header("Location: politicas.php");
     }
-    }
+    } catch (Exception $e) {
+    echo"<script type=\"text/javascript\">alert('Esta politica ya existe');</script>";
+}
   }
 
 }
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM noticias WHERE id_noticia = ?";
+    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM politicas WHERE id_politica = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_noticia));
+    $stmt->execute(array($id_politica));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -109,7 +111,7 @@ else {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>Winefun | Noticias</title>
+    <title>Winefun | Politicas</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -131,7 +133,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Modificar Noticias</div>
+                        Modificar Politica</div>
                 </div>
                 <div class="clearfix">
                 </div>
