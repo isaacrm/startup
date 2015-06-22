@@ -94,7 +94,7 @@ if(!empty($_POST)) {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Crear Equipos</div>
+                        Crear Equipo</div>
                 </div>
                 <div class="clearfix">
 

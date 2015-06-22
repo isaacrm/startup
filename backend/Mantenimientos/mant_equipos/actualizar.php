@@ -72,9 +72,9 @@ if(!empty($_POST)) {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $sql = "UPDATE equipos SET nombre = ?, apellido = ?, cargo = ?, frase = ?, twitter = ?, facebook = ? WHERE id_equipo = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre, $descripcion, $id));
+        $stmt->execute(array($nombre, $apellido, $cargo));
         $PDO = null;
-        header("Location: tipo_usuario.php");
+        header("Location: equipos.php");
     }
 }
 else {
@@ -120,7 +120,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Modificar Equipos</div>
+                        Modificar Equipo</div>
                 </div>
                 <div class="clearfix">
                 </div>

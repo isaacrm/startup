@@ -56,7 +56,7 @@ else {
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Consultar Equipos</div>
+                        Consultar Equipo</div>
                 </div>
                 <div class="clearfix">
                 </div>
