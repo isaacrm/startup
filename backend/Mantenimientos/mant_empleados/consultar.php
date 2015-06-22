@@ -22,7 +22,7 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto FROM empleados where id_empleado = ?";
+    $sql = "SELECT nombres, apellidos, identificador, telefono, correo, sexo, fecha_nacimiento, foto, alias FROM empleados, usuarios where empleados.id_empleado = ? AND empleados.id_empleado=usuarios.id_empleado";
     $stmt = $PDO->prepare($sql);
     $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -103,6 +103,12 @@ else {
                             <label class="col-sm-2 control-label">Fecha de Nacimiento</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static"><?php print($data['fecha_nacimiento']); ?></p>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label class="col-sm-2 control-label">Usuario</label>
+                            <div class="col-sm-10">
+                                <p class="form-control-static"><?php print($data['alias']); ?></p>
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
