@@ -22,9 +22,9 @@ else {
     // read data
     require("../../bd.php");
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM politicas where id_politica = ?";
+    $sql = "SELECT titulo, descripcion FROM politicas where id_politica = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_politica));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -70,23 +70,12 @@ else {
                             </div>
                         </div>
                         <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Subtitulo</label>
+                            <label class="col-sm-2 control-label">Descripción</label>
                             <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['subtitulo']); ?></p>
+                                <p class="form-control-static"><?php print($data['descripcion']); ?></p>
                             </div>
                         </div>
-                        <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Leyenda</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['leyenda']); ?></p>
-                            </div>
-                        </div>
-                        <div class="form-group col-sm-12">
-                            <label class="col-sm-2 control-label">Imagen</label>
-                            <div class="col-sm-10">
-                                <p class="form-control-static"><?php print($data['imagen']); ?></p>
-                            </div>
-                        </div>
+
                         <div class="form-group col-sm-12">
                             <a class="btn btn btn-default" href="politicas.php">Regresar</a>
                         </div>

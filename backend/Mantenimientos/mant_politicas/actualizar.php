@@ -23,14 +23,10 @@ if(!empty($_POST)){
     // validation errors
     $tituloError = null;
     $subtituloError = null;
-    $leyendeError = null;
-    $imagenError = null;
+
     // post values
     $titulo = $_POST['titulo'];
-    $subtitulo = $_POST['subtitulo'];
-    $leyenda = $_POST['leyenda'];
-    $imagen = $_POST['imagen'];
-
+    $descripcion = $_POST['descripcion'];
     // validate input
     $valid = true;
     if(empty($titulo)) {
@@ -38,51 +34,34 @@ if(!empty($_POST)){
         $valid = false;
     }
 
-    if(empty($subtitulo)) {
+    if(empty($descripcion)) {
         $subtituloError = "Por favor ingrese el subtitulo.";
-        $valid = false;
-    }
-
-    if(empty($leyenda)) {
-        $leyendaError = "Por favor ingrese la leyenda.";
-        $valid = false;
-    }
-
-    if(empty($imagen)) {
-        $imagenError = "Por favor ingrese una imagen.";
         $valid = false;
     }
 
     // update data
     if($valid) {
-try {
-    if (ctype_space($titulo) || ctype_space($titulo) ) {
+    try {
+    if (ctype_space($titulo) || ctype_space($descripcion) ) {
         echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }
-    else if (strlen(trim($titulo, ' ')) <= 5)
+    else if (strlen(trim($titulo, ' ')) <= 3)
     {
-        echo"<script type=\"text/javascript\">alert('El titulo debe de tener al menos 6 caracteres');</script>";
+        echo"<script type=\"text/javascript\">alert('El titulo debe de tener al menos cuatro caracteres');</script>";
     }
-    else if (strlen(trim($subtitulo, ' ')) <= 5)
+    else if (strlen(trim($descripcion, ' ')) <= 5)
     {
         echo"<script type=\"text/javascript\">alert('El subtitulo debe de tener al menos 6 caracteres');</script>";
     }
-    else if (strlen(trim($leyenda, ' ')) <= 5)
-    {
-        echo"<script type=\"text/javascript\">alert('La leyensa debe de tener al menos 6 caracteres');</script>";
-    }
+
     else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$titulo)){
         echo"<script type=\"text/javascript\">alert('El titulo no debe tener números');</script>";
     }
-    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$leyenda)){
-        echo"<script type=\"text/javascript\">alert('La leyenda no debe tener números');</script>";
-    }
     else {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE noticias SET titulo = ?, subtitulo = ?, leyenda = ?, imagen = ? WHERE id_politica = ?";
+        $sql = "UPDATE politicas SET titulo = ?, descripcion=? WHERE id_politica = ?";
         $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($titulo, $subtitulo, $leyenda, $imagen , $id_politica));
-        $PDO = null;
+        $stmt->execute(array($titulo, $descripcion, $id));
         header("Location: politicas.php");
     }
     } catch (Exception $e) {
@@ -94,18 +73,16 @@ try {
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT titulo, subtitulo, leyenda, imagen FROM politicas WHERE id_politica = ?";
+    $sql = "SELECT titulo, descripcion FROM politicas WHERE id_politica = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_politica));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
         header("Location: politicas.php");
     }
     $titulo = $data['titulo'];
-    $subtitulo= $data['subtitulo'];
-    $leyenda = $data['leyenda'];
-    $imagen = $data['imagen'];
+    $descripcion= $data['descripcion'];
 }
 ?>
 <!DOCTYPE html>
@@ -137,27 +114,17 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
+
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($tituloError)?"has-error":""); ?>'>
                         <label for='titulo'>Titulo</label>
-                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' value='<?php print($titulo); ?>'>
+                        <input type='text' name='titulo' placeholder='Titulo' required='required' id='titulo' class='form-control' autocomplete="off" maxlength="25" value='<?php print($titulo); ?>'>
                         <?php print(!empty($tituloError)?"<span class='help-block'>$tituloError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($subtituloError)?"has-error":""); ?>'>
                         <label for='subtitulo'>Subtitulo</label>
-                        <input type='text' name='subtitulo' placeholder='Subtitulo' required='required' id='subtitulo' class='form-control' value='<?php print($subtitulo); ?>'>
+                        <input type='text' name='descripcion' placeholder='Descripción' required='required' id='descripcion' class='form-control' autocomplete="off" maxlength="100" value='<?php print($descripcion); ?>'>
                         <?php print(!empty($subtituloError)?"<span class='help-block'>$subtituloError</span>":""); ?>
-                    </div>
-                    <div class='form-group <?php print(!empty($leyendaError)?"has-error":""); ?>'>
-                        <label for='leyenda'>Leyenda</label>
-                        <input type='text' name='leyenda' placeholder='Leyenda' required='required' id='leyenda' class='form-control' value='<?php print($leyenda); ?>'>
-                        <?php print(!empty($leyendaError)?"<span class='help-block'>$leyendaError</span>":""); ?>
-                    </div>
-                    <div class='form-group <?php print(!empty($imagenError)?"has-error":""); ?>'>
-                        <label for='imagen'>Imagen</label>
-                        <input type='text' name='imagen' placeholder='Imagen' required='required' id='imagen' class='form-control' value='<?php print($imagen); ?>'>
-                        <?php print(!empty($imagenError)?"<span class='help-block'>$imagenError</span>":""); ?>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
