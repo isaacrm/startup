@@ -59,7 +59,7 @@
                                     &nbsp;
                                 </div>
                                 <div class="col-lg-9">
-                                    <a href="Login.php" class="btn btn-default">¿Olvidaste tu Contraseña??</a>&nbsp;&nbsp;
+                                    <a href="recuperar_contra.php" class="btn btn-default">¿Olvidaste tu Contraseña??</a>&nbsp;&nbsp;
                                     <button type="submit" name="iniciar" class="btn btn-default" value="Iniciar Sesión">
                                         Entrar</button>
                                 </div>
