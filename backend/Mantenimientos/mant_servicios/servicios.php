@@ -35,7 +35,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Preguntas</div>
+                        Servicios</div>
                 </div>
                 <div class="clearfix">
                 </div>
