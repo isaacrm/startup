@@ -13,7 +13,7 @@
     <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/main.css">
     <link type="text/css" rel="stylesheet" href="Mantenimientos/styles/style-responsive.css">
 </head>
-<body style="background: url('Mantenimientos/images/bg/bg.jpg') center center fixed;">
+<body class="img-responsive" style="background: url('Mantenimientos/images/bg/bg.jpg') center center fixed;">
     <div class="page-form">
         <div class="panel panel-blue">
             <div class="panel-body pan">
