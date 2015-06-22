@@ -23,10 +23,17 @@ if($id == null) {
 if(!empty($_POST)) {
     require("../../bd.php");
     $id = $_POST['id_equipo'];
+    /*SELECCIONAR LA FOTO DEL EMPLEADO SELECCIONADO*/
+    $sql= "SELECT foto FROM equipos WHERE id_equipo= ".$id;
+    foreach($PDO->query($sql) as $row) {
+        $foto = "$row[foto]";
+    }
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM equipos WHERE id_equipo = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_equipo));
+    $stmt->execute(array($id));
+    /*Esta pequeña linea de codigo elimina la imagen relacionada con el registro a eliminar*/
+    unlink("../".$foto);
     $PDO = null;
     header("Location: equipos.php");
 }
@@ -62,7 +69,7 @@ if(!empty($_POST)) {
                 <div class='container'>
                 <div class='row'>
                     <form method='POST'>
-                        <input type='hidden' name='id_tipo_usuario' value='<?php print($id); ?>'>
+                        <input type='hidden' name='id_equipo' value='<?php print($id); ?>'>
                         <p class='alert bg-danger'>¿Borrar datos?</p>
                         <div class='form-actions'>
                             <button type='submit' class='btn btn-danger'>Si</button>

@@ -19,6 +19,7 @@ if($id == null) {
     header("Location: equipos.php");
 }
 require("../../bd.php");
+error_reporting(E_ALL ^ E_NOTICE);
 if(!empty($_POST)) {
     // validation errors
     $nombreError = null;
@@ -28,16 +29,16 @@ if(!empty($_POST)) {
     $twitterError = null;
     $facebookError = null;
     // post values
-    $nombre = $_POST['nombre'];
+    $nombres = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $cargo = $_POST['cargo'];
     $frase = $_POST['frase'];
     $twitter = $_POST['twitter'];
     $facebook = $_POST['facebook'];
-
+    $foto=$_POST['foto'];
     // validate input
     $valid = true;
-    if(empty($nombre)) {
+    if(empty($nombres)) {
         $nombreError = "Por favor ingrese un nombre.";
         $valid = false;
     }
@@ -57,43 +58,119 @@ if(!empty($_POST)) {
         $valid = false;
     }
 
-    if(empty($twitter)) {
-        $twitterError = "Por favor ingrese el twitter.";
-        $valid = false;
-    }
-
-    if(empty($facebook)) {
-        $facebookError = "Por favor ingrese el facebook.";
-        $valid = false;
-    }
-
     // update data
-    if($valid) {
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE equipos SET nombre = ?, apellido = ?, cargo = ?, frase = ?, twitter = ?, facebook = ? WHERE id_equipo = ?";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($nombre, $apellido, $cargo));
-        $PDO = null;
-        header("Location: equipos.php");
+    if (ctype_space($nombres) || ctype_space($apellido) || ctype_space($cargo) || ctype_space($frase) || ctype_space($twitter) || ctype_space($facebook)) {
+        echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+    }/*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres, apellidos, alias y contraseña*/
+    else if (strlen(trim($nombres, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+    }
+    else if (strlen(trim($apellido, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
+    }
+    else if (strlen(trim($cargo, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos dos caracteres');</script>";
+    }
+    else if (strlen(trim($frase, ' ')) <= 1)
+    {
+        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
+    }
+    else if(!preg_match('/^(https?:\/\/)?((w{3}\.)?)twitter\.com\/(#!\/)?[a-z0-9_]+$/',$twitter)){
+        if ($twitter!=""){
+            echo"<script type=\"text/javascript\">alert('URL de Twitter no válido. Ej.https://twitter.com/usuario  ');</script>";}
+    }
+    else if(!preg_match('/^(http\:\/\/|https\:\/\/)?((w{3}\.)?)facebook\.com\/(?:#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)+$/',$facebook)){
+        if ($facebook!=""){
+            echo"<script type=\"text/javascript\">alert('URL de Facebook no válido. Ej.https://www.facebook.com/username/');</script>";}
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
+        echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$apellido)){
+        echo"<script type=\"text/javascript\">alert('Los apellidos no tienen números');</script>";
+    }
+    else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$cargo)){
+        echo"<script type=\"text/javascript\">alert('El cargo no tienen números');</script>";
+    }
+    else {
+            if ($valid) {
+                //SUBIR IMAGEN URL
+                if ($_FILES['archivo']['name'] == "") {
+                    $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                    $sql = "UPDATE equipos SET nombre = ?, apellido = ?, cargo = ?, frase = ?, twitter = ?, facebook = ? WHERE id_equipo = ?";
+                    $stmt = $PDO->prepare($sql);
+                    $stmt->execute(array($nombres, $apellido, $cargo, $frase, $twitter, $facebook,  $id));
+                    header("Location: equipos.php");
+                } else {
+                    $nombre = $_FILES['archivo']['name'];
+                    $nombre_tmp = $_FILES['archivo']['tmp_name'];
+                    $tipo = $_FILES['archivo']['type'];
+                    $tamano = $_FILES['archivo']['size'];
+
+                    $ext_permitidas = array('jpg', 'jpeg', 'gif', 'png');
+                    $partes_nombre = explode('.', $nombre);
+                    $extension = end($partes_nombre);
+                    $ext_correcta = in_array($extension, $ext_permitidas);
+                    $tipo_correcto = preg_match('/^image\/(pjpeg|jpeg|gif|png)$/', $tipo);
+                    $limite = 2048 * 1024;
+                    /*Toma el tamaño de la imagen subida*/
+                    $dimensiones = getimagesize($nombre_tmp);
+                    $ancho = $dimensiones[0];
+                    $alto = $dimensiones[1];
+                    /*Compara el tamaño con el que debe de ser*/
+                    if ($ancho == 214 && $alto == 238) {
+                        /*Compara el peso de la imagen, debe ser menor a 2 MB  (Esto es mas codigo de validacion [extension y tipo])$ext_correcta && $tipo_correcto*/
+                        if ($tamano <= $limite) {
+                            if ($_FILES['archivo']['error'] > 0) {
+                                echo 'Error: ' . $_FILES['archivo']['error'] . '<br/>';
+                            } else {
+                                echo 'Nombre: ' . $nombre . '<br/>';
+                                echo 'Tipo: ' . $tipo . '<br/>';
+                                echo 'Tamaño: ' . ($tamano / 1024) . ' Kb<br/>';
+                                echo 'Guardado en: ' . $nombre_tmp;
+
+                                move_uploaded_file($nombre_tmp, "../img_equipo/" . $id . ".jpg");
+                                $url = "img_equipo/" . $id . ".jpg";
+                                echo "<br/>Guardado en: " . "../img_equipo/" . $id . ".jpg";
+
+                                $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $sql = "UPDATE equipos SET nombre = ?, apellido = ?, cargo = ?, frase = ?, twitter = ?, facebook = ?, foto=? WHERE id_equipo = ?";
+                                $stmt = $PDO->prepare($sql);
+                                $stmt->execute(array($nombres, $apellido, $cargo, $frase, $twitter, $facebook, $url, $id));
+                                $PDO = null;
+                                header("Location: equipos.php");
+                            }
+                        } else {
+                            echo "<script type=\"text/javascript\">alert('La imagen pesa mas de 2 MB');</script>";
+                        }
+                    } else {
+                        echo "<script type=\"text/javascript\">alert('La imagen debe ser exactamende de 214px de alto x 238px de ancho');</script>";
+                    }
+                }
+            }
     }
 }
 else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "SELECT nombre, apellido, cargo, frase, twitter, facebook FROM equipos WHERE id_equipo = ?";
+    $sql = "SELECT nombre, apellido, cargo, frase, twitter, facebook, foto  FROM equipos WHERE id_equipo = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_equipo));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
         header("Location: equipos.php");
     }
-    $nombre = $data['nombre'];
+    $nombres = $data['nombre'];
     $apellido= $data['apellido'];
     $cargo = $data['cargo'];
     $frase = $data['frase'];
     $twitter = $data['twitter'];
     $facebook = $data['facebook'];
+    $foto= $data['foto'];
 }
 ?>
 <!DOCTYPE html>
@@ -125,36 +202,34 @@ else {
                 <div class="clearfix">
                 </div>
 
-                <form method='POST'>
+                <form method="post" class="form" role="form" enctype="multipart/form-data">
                     <div class='form-group <?php print(!empty($nombreError)?"has-error":""); ?>'>
-                        <label for='nombre'>Nombre</label>
-                        <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' value='<?php print($nombre); ?>'>
+                        <input type='text' name='nombre' placeholder='Nombre' required='required' id='nombre' class='form-control' autocomplete="off" maxlength="45" value='<?php print($nombres); ?>'>
                         <?php print(!empty($nombreError)?"<span class='help-block'>$nombreError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($apellidoError)?"has-error":""); ?>'>
-                        <label for='apellido'>Descripción</label>
-                        <input type='text' name='descripcion' placeholder='Apellido' required='required' id='apellido' class='form-control' value='<?php print($apellido); ?>'>
+                        <input type='text' name='apellido' placeholder='Apellido' required='required' id='apellido' class='form-control' autocomplete="off" maxlength="60" value='<?php print($apellido); ?>'>
                         <?php print(!empty($apellidoError)?"<span class='help-block'>$apellidoError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($cargoError)?"has-error":""); ?>'>
-                        <label for='cargo'>Cargo</label>
-                        <input type='text' name='cargo' placeholder='Cargo' required='required' id='cargo' class='form-control' value='<?php print($cargo); ?>'>
+                        <input type='text' name='cargo' placeholder='Cargo' required='required' id='cargo' class='form-control' autocomplete="off" maxlength="40" value='<?php print($cargo); ?>'>
                         <?php print(!empty($cargoError)?"<span class='help-block'>$cargoError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
-                        <label for='frase'>Frase</label>
-                        <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' value='<?php print($frase); ?>'>
+                        <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' autocomplete="off" maxlength="175" value='<?php print($frase); ?>'>
                         <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($twitterError)?"has-error":""); ?>'>
-                        <label for='twitters'>Twitter</label>
-                        <input type='text' name='twitter' placeholder='Twitter' required='required' id='twitter' class='form-control' value='<?php print($twitter); ?>'>
+                        <input type='text' name='twitter' placeholder='Twitter'  id='twitter' class='form-control' autocomplete="off" maxlength="250" value='<?php print($twitter); ?>'>
                         <?php print(!empty($twitterError)?"<span class='help-block'>$twitterError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($facebookError)?"has-error":""); ?>'>
-                        <label for='facebook'>Facebook</label>
-                        <input type='text' name='facebook' placeholder='Facebook' required='required' id='facebook' class='form-control' value='<?php print($facebook); ?>'>
+                        <input type='text' name='facebook' placeholder='Facebook' id='facebook' class='form-control' autocomplete="off" maxlength="250" value='<?php print($facebook); ?>'>
                         <?php print(!empty($facebookError)?"<span class='help-block'>$facebookError</span>":""); ?>
+                    </div>
+                    <div class='form-group'>
+                        <img  name="foto" id="foto" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
+                        <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                     </div>
                     <div class='form-actions'>
                         <button type='submit' class='btn btn-primary'>Actualizar</button>
