@@ -16,6 +16,7 @@ if(!isset($_SESSION['alias']))
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/zebra_pagination.css" type="text/css">
     <?php include '../estilos2.php';?>
 </head>
 <body>

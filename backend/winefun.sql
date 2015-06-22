@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-06-2015 a las 05:29:39
+-- Tiempo de generación: 22-06-2015 a las 09:07:18
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -83,7 +83,14 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   `twitter` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `facebook` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `foto` varchar(250) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `equipos`
+--
+
+INSERT INTO `equipos` (`id_equipo`, `nombre`, `apellido`, `cargo`, `frase`, `twitter`, `facebook`, `foto`) VALUES
+(1, 'Eva', 'Longoria', 'Modelo', 'xD', 'https://twitter.com/evalongoria', 'https://www.facebook.com/EvaLongoria', 'img_equipo/1.jpg');
 
 -- --------------------------------------------------------
 
@@ -97,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `imagenes_servicios` (
   `titulo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `id_servicio` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `imagenes_servicios`
@@ -107,7 +114,9 @@ INSERT INTO `imagenes_servicios` (`id_imagen`, `url`, `titulo`, `descripcion`, `
 (5, 'img_empleados/5.jpg', 'Para los niÃ±os', 'Diversion al mÃ¡ximo', 3),
 (7, 'img_empleados/7.jpg', 'Noche', 'asasdsad', 3),
 (8, 'img_servicios/8.jpg', 'Celebraciones Inolvidables', 'Exitosas', 5),
-(17, 'img_servicios/9.jpg', 'Bodas', 'blablabla', 5);
+(17, 'img_servicios/9.jpg', 'Bodas', 'blablabla', 5),
+(18, 'img_servicios/18.jpg', 'Recepciones', 'Write Your Image Caption Here', 5),
+(19, 'img_servicios/19.jpg', 'Despedidas', 'sadasdasd', 5);
 
 -- --------------------------------------------------------
 
@@ -161,7 +170,15 @@ CREATE TABLE IF NOT EXISTS `politicas` (
 `id_politica` int(11) NOT NULL,
   `titulo` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` varchar(100) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `politicas`
+--
+
+INSERT INTO `politicas` (`id_politica`, `titulo`, `descripcion`) VALUES
+(3, 'Formas de Pago', 'CivilizaciÃ³pn'),
+(5, 'sadasdas', 'dasdsadsada');
 
 -- --------------------------------------------------------
 
@@ -173,7 +190,24 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
 `id_pregunta` int(11) NOT NULL,
   `pregunta` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `respuesta` varchar(300) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id_pregunta`, `pregunta`, `respuesta`) VALUES
+(3, 'Hola Que Tal', 'asddasdsa'),
+(4, 'gfjklÃ±kjhgfgfg', 'hjghjghj'),
+(5, 'asfdsa', 'fsdafsdaf'),
+(6, 'gfhfghfg', 'hffgfsdfsad'),
+(7, 'afdsfdsafa', 'fsafsdfsdfsa'),
+(8, 'afdsfsda', 'fdsfsdfsdaf'),
+(9, 'afdsaf', 'dsfsdfsda'),
+(10, 'afdsafdsf', 'safsadfsda'),
+(11, 'asfdsafsad', 'fsdafsadfsda'),
+(12, 'fdsafsda', 'fdsafsdafsa'),
+(14, 'gfdgdsfg', 'dfsgdsfgdsfg');
 
 -- --------------------------------------------------------
 
@@ -255,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `alias`, `contrasena`, `estado`, `id_empleado`, `id_tipo_usuario`) VALUES
-(3, 'Isaac', '382bb32f61f5ba9eb867360e84e4c6b580ccaf7b', 1, 6, 25),
+(3, 'Isaac', 'aa7db6f5458d6060fe77583fb25231fc4d3ae786', 1, 6, 25),
 (7, 'Chaco', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 8, 70),
 (13, 'Asdf', '7c4a8d09ca3762af61e59520943dc26494f8941b', 1, 13, 70),
 (14, 'Aaaa', '3da541559918a808c2402bba5012f6c60b27661c', 1, 14, 37),
@@ -349,12 +383,12 @@ MODIFY `id_empleado` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 -- AUTO_INCREMENT de la tabla `equipos`
 --
 ALTER TABLE `equipos`
-MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `imagenes_servicios`
 --
 ALTER TABLE `imagenes_servicios`
-MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+MODIFY `id_imagen` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT de la tabla `noticias`
 --
@@ -369,12 +403,12 @@ MODIFY `id_pagina` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT de la tabla `politicas`
 --
 ALTER TABLE `politicas`
-MODIFY `id_politica` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_politica` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT de la tabla `servicios`
 --

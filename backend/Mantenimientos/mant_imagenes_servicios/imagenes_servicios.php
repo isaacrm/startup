@@ -17,6 +17,7 @@ if(!isset($_SESSION['alias']))
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/zebra_pagination.css" type="text/css">
     <?php include '../estilos2.php';?>
 </head>
 <body>
@@ -69,14 +70,14 @@ if(!isset($_SESSION['alias']))
                                             $totaldatos = "$row0[total_datos]";
                                         }
                                         /*Numero de registros que se quiere por tabla*/
-                                        $filas = 10;
+                                        $filas = 5;
                                         /*Aqui instanciamos la clase*/
                                         $paginacion = new Zebra_Pagination();
                                         /*Definimos el numero de registros que se quieren mostrar en las tablas*/
                                         $paginacion->records($totaldatos);
                                         $paginacion->records_per_page($filas);
                                         $paginacion->padding(false);
-                                        $sql = "SELECT id_imagen, url, titulo, descripcion FROM imagenes_servicios ORDER BY id_imagen ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                        $sql = "SELECT id_imagen, url, titulo, descripcion FROM imagenes_servicios ORDER BY id_servicio ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
                                             $data .= "<tr>";
