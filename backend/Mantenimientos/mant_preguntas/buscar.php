@@ -34,7 +34,7 @@ if(!isset($_SESSION['alias']))
             <div id="title-breadcrumb-option-demo" class="page-title-breadcrumb">
                 <div class="page-header pull-left">
                     <div class="page-title">
-                        Politicas</div>
+                        Preguntas y Respuestas</div>
                 </div>
                 <div class="clearfix">
                 </div>
@@ -47,9 +47,9 @@ if(!isset($_SESSION['alias']))
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
 
                                 <form method='POST' action="buscar.php">
-                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por Titulo" type="text" id='buscar' autocomplete="off" maxlength="60"/>
+                                    <input  class="col-lg-6" name="buscar" placeholder="Buscar por Pregunta" type="text" id='buscar' autocomplete="off" maxlength="60"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
-                                    <input class="col-lg-3" type="submit" name="regresar" formaction="politicas.php" value="Regresar">
+                                    <input class="col-lg-3" type="submit" name="regresar" formaction="preguntas.php" value="Regresar">
                                 </form>
                                 <div class="clearfix">
                                 </div>
@@ -57,8 +57,8 @@ if(!isset($_SESSION['alias']))
                                     <table class='table table-striped table-bordered table-hover'>
                                         <tr class='warning '>
                                             <th>ID</th>
-                                            <th>TITULO</th>
-                                            <th>DESCRIPCION</th>
+                                            <th>PREGUNTA</th>
+                                            <th>RESPUESTA</th>
                                             <th>ACCION</th>
                                         </tr>
                                         <tbody>
@@ -72,7 +72,7 @@ if(!isset($_SESSION['alias']))
                                             if ($buscar!="")
                                             {
                                             /*Aqui obtenemos el total de registros*/
-                                            $sql0 = "SELECT COUNT(*) as total_datos FROM politicas WHERE titulo like '%".$buscar."'";
+                                            $sql0 = "SELECT COUNT(*) as total_datos FROM preguntas WHERE pregunta like '%".$buscar."'";
                                             foreach ($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
                                             }
@@ -88,17 +88,17 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $busqueda= "SELECT id_politica, titulo, descripcion FROM politicas WHERE titulo like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                            $busqueda= "SELECT id_pregunta, pregunta, respuesta FROM preguntas WHERE pregunta like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                             $data="";
                                             foreach($PDO->query($busqueda) as $row) {
                                                 $data .= "<tr>";
-                                                $data .= "<td>$row[id_politica]</td>";
-                                                $data .= "<td>$row[titulo]</td>";
-                                                $data .= "<td>$row[descripcion]</td>";
+                                                $data .= "<td>$row[id_pregunta]</td>";
+                                                $data .= "<td>$row[pregunta]</td>";
+                                                $data .= "<td>$row[respuesta]</td>";
                                                 $data .= "<td>";
-                                                $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_politica=$row[id_politica]'>Consultar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_politica=$row[id_politica]'>Actualizar</a>&nbsp;";
-                                                $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_politica=$row[id_politica]'>Eliminar</a>";
+                                                $data .= "<a class='btn btn-xs btn-info' href='../mant_preguntas/consultar.php?id_pregunta=$row[id_pregunta]'>Consultar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-primary' href='../mant_preguntas/actualizar.php?id_pregunta=$row[id_pregunta]'>Actualizar</a>&nbsp;";
+                                                $data .= "<a class='btn btn-xs btn-danger' href='../mant_preguntas/eliminar.php?id_pregunta=$row[id_pregunta]'>Eliminar</a>";
                                                 $data .= "</td>";
                                                 $data .= "</tr>";
                                             }

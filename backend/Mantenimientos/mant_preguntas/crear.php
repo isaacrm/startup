@@ -12,6 +12,8 @@ if(!isset($_SESSION['alias']))
 
 <?php
 if(!empty($_POST)) {
+    require("../../bd.php");
+    error_reporting(E_ALL ^ E_NOTICE);
     // validation errors
     $preguntaError = null;
     $respuestaError = null;
@@ -21,25 +23,38 @@ if(!empty($_POST)) {
 
     // validate input
     $valid = true;
-    if(empty($titulo)) {
+    if(empty($pregunta)) {
         $preguntaError = "Por favor ingrese una pregunta.";
         $valid = false;
     }
 
-    if(empty($subtitulo)) {
+    if(empty($respuesta)) {
         $respuestaError = "Por favor ingrese .";
         $valid = false;
     }
 
     // insert data
     if($valid) {
-        require("../../bd.php");
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "INSERT INTO preguntas(pregunta, respuesta) values(?, ?)";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($pregunta, $respuesta ));
-        $PDO = null;
-        header("Location: preguntas.php");
+
+        if (ctype_space($pregunta) || ctype_space($respuesta) ) {
+            echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+        }
+        else if (strlen(trim($pregunta, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('El titulo debe de tener al menos 6 caracteres');</script>";
+        }
+        else if (strlen(trim($respuesta, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('La descripción debe de tener al menos 6 caracteres');</script>";
+        }
+        else {
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO preguntas(pregunta, respuesta) values(?, ?)";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($pregunta, $respuesta));
+            $PDO = null;
+            header("Location: preguntas.php");
+        }
     }
 }
 ?>
@@ -75,11 +90,11 @@ if(!empty($_POST)) {
                 <div class='row'>
                     <form method='POST'>
                         <div class='form-group <?php print(!empty($preguntaError)?"has-error":""); ?>'>
-                            <input type='text' name='pregunta' placeholder='Pregunta' required='required' id='pregunta' class='form-control' value='<?php print(!empty($pregunta)?$pregunta:""); ?>'>
+                            <input type='text' name='pregunta' placeholder='Pregunta' required='required' id='pregunta' class='form-control' autocomplete="off" maxlength="200" value='<?php print(!empty($pregunta)?$pregunta:""); ?>'>
                             <?php print(!empty($preguntaError)?"<span class='help-block'>$preguntaError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($respuestaError)?"has-error":""); ?>'>
-                            <input type='text' name='respuesta' placeholder='Respuesta' required='required' id='respuesta' class='form-control' value='<?php print(!empty($respuesta)?$respuesta:""); ?>'>
+                            <input type='text' name='respuesta' placeholder='Respuesta' required='required' id='respuesta' class='form-control' autocomplete="off" maxlength="300" value='<?php print(!empty($respuesta)?$respuesta:""); ?>'>
                             <?php print(!empty($respuestaError)?"<span class='help-block'>$respuestaError</span>":""); ?>
                         </div>
                         <div class='form-actions'>

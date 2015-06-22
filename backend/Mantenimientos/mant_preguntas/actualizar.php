@@ -19,6 +19,7 @@ if($id == null) {
     header("Location: preguntas.php");
 }
 require("../../bd.php");
+error_reporting(E_ALL ^ E_NOTICE);
 if(!empty($_POST)){
     // validation errors
     $preguntaError = null;
@@ -26,26 +27,39 @@ if(!empty($_POST)){
     // post values
     $pregunta = $_POST['pregunta'];
     $respuesta = $_POST['respuesta'];
-
+    $valid=true;
     // validate input
-    if(empty($titulo)) {
+    if(empty($pregunta)) {
         $preguntaError = "Por favor ingrese una pregunta.";
         $valid = false;
     }
 
-    if(empty($subtitulo)) {
+    if(empty($respuesta)) {
         $respuestaError = "Por favor ingrese .";
         $valid = false;
     }
 
     // update data
     if($valid) {
-        $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $sql = "UPDATE preguntas SET pregunta = ?, respuesta = ? WHERE id_pregunta = ?";
-        $stmt = $PDO->prepare($sql);
-        $stmt->execute(array($pregunta, $respuesta));
-        $PDO = null;
-        header("Location: preguntas.php");
+        if (ctype_space($pregunta) || ctype_space($respuesta) ) {
+            echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
+        }
+        else if (strlen(trim($pregunta, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('El titulo debe de tener al menos 6 caracteres');</script>";
+        }
+        else if (strlen(trim($respuesta, ' ')) <= 5)
+        {
+            echo"<script type=\"text/javascript\">alert('La descripción debe de tener al menos 6 caracteres');</script>";
+        }
+        else {
+            $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $sql = "UPDATE preguntas SET pregunta = ?, respuesta = ? WHERE id_pregunta = ?";
+            $stmt = $PDO->prepare($sql);
+            $stmt->execute(array($pregunta, $respuesta, $id));
+            $PDO = null;
+            header("Location: preguntas.php");
+        }
     }
 }
 else {
@@ -53,7 +67,7 @@ else {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT pregunta, respuesta FROM preguntas WHERE id_pregunta = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_pregunta));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
@@ -91,16 +105,16 @@ else {
                 </div>
                 <div class="clearfix">
                 </div>
-s
+
                 <form method='POST'>
                     <div class='form-group <?php print(!empty($preguntaError)?"has-error":""); ?>'>
                         <label for='pregunta'>Pregunta</label>
-                        <input type='text' name='pregunta' placeholder='Pregunta' required='required' id='pregunta' class='form-control' value='<?php print($pregunta); ?>'>
+                        <input type='text' name='pregunta' placeholder='Pregunta' required='required' id='pregunta' class='form-control' autocomplete="off" maxlength="200" value='<?php print($pregunta); ?>'>
                         <?php print(!empty($preguntaError)?"<span class='help-block'>$preguntaError</span>":""); ?>
                     </div>
                     <div class='form-group <?php print(!empty($respuestaError)?"has-error":""); ?>'>
                         <label for='respuesta'>Respuesta</label>
-                        <input type='text' name='respuesta' placeholder='Respuesta' required='required' id='respuesta' class='form-control' value='<?php print($respuesta); ?>'>
+                        <input type='text' name='respuesta' placeholder='Respuesta' required='required' id='respuesta' class='form-control' autocomplete="off" maxlength="300" value='<?php print($respuesta); ?>'>
                         <?php print(!empty($respuestaError)?"<span class='help-block'>$respuestaError</span>":""); ?>
                     </div>
                     <div class='form-actions'>

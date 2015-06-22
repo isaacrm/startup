@@ -24,7 +24,7 @@ else {
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "SELECT pregunta, respuesta FROM preguntas where id_pregunta = ?";
     $stmt = $PDO->prepare($sql);
-    $stmt->execute(array($id_pregunta));
+    $stmt->execute(array($id));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $PDO = null;
     if(empty($data)) {
