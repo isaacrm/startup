@@ -199,7 +199,7 @@ if(!empty($_POST)) {
                             <?php print(!empty($cargoError)?"<span class='help-block'>$cargoError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($fraseError)?"has-error":""); ?>'>
-                            <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' autocomplete="off" maxlength="175" value='<?php print(!empty($facebook)?$frase:""); ?>'>
+                            <input type='text' name='frase' placeholder='Frase' required='required' id='frase' class='form-control' autocomplete="off" maxlength="175" value='<?php print(!empty($frase)?$frase:""); ?>'>
                             <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($twitterError)?"has-error":""); ?>'>
