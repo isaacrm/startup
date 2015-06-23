@@ -30,7 +30,7 @@ if(!empty($_POST)){
     $titulo = $_POST['titulo'];
     $subtitulo = $_POST['subtitulo'];
     $leyenda = $_POST['leyenda'];
-
+    $url= $_POST['foto'];
 
     // validate input
     $valid = true;
@@ -138,7 +138,7 @@ else {
     $titulo = $data['titulo'];
     $subtitulo= $data['subtitulo'];
     $leyenda = $data['leyenda'];
-    $imagen = $data['foto'];
+    $url = $data['foto'];
 }
 ?>
 <!DOCTYPE html>
@@ -187,7 +187,8 @@ else {
                         <?php print(!empty($leyendaError)?"<span class='help-block'>$leyendaError</span>":""); ?>
                     </div>
                     <div class='form-group'>
-                        <img  name="foto" id="foto" src='../<?php print(!empty($imagen)?$imagen:""); ?>' border='0' width='300' height='200'>
+                        <input type="hidden" name="foto" value='<?php print($url); ?>'/>
+                        <img  name="foto" id="foto" src='../<?php print($url); ?>' border='0' width='300' height='200'>
                         <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                     </div>
                     <div class='form-actions'>
