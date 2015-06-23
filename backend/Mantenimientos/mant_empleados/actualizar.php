@@ -43,7 +43,7 @@ if(!empty($_POST)) {
     $sexo = $_POST['sexo'];
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
     $tipo_usuario = $_POST['tipo'];
-    $foto= $_POST['foto'];
+    $url= $_POST['foto'];
 // validate input
     $valid = true;
 
@@ -216,7 +216,7 @@ if(!empty($_POST)) {
         $sexo = $data['sexo'];
         $alias = $data['alias'];
         $tipo_usuario = $data['tipo'];
-        $foto = $data['foto'];
+        $url = $data['foto'];
     }
 
 ?>
@@ -307,7 +307,8 @@ if(!empty($_POST)) {
                             <?php print(!empty($generoError)?"<span class='help-block'>$generoError</span>":""); ?>
                         </div>
                         <div class='form-group'>
-                            <img  name="foto" id="foto" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
+                            <input type="hidden" name="foto" value='<?php print($url); ?>'/>
+                            <img id="foto" src='../<?php print($url); ?>' border='0' width='150' height='200'>
                             <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                         </div>
                         <div class='form-group <?php print(!empty($aliasError)?"has-error":""); ?>'>
