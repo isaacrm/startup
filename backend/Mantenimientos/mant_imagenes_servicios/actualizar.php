@@ -26,7 +26,7 @@ if(!empty($_POST)) {
     $tituloError = null;
     $descripcionError = null;
     // post values
-    $foto = $_POST['url'];
+    $url = $_POST['foto'];
     $titulo = $_POST['titulo'];
     $descripcion = $_POST['descripcion'];
     $tipo_servicio = $_POST['tipo'];
@@ -131,7 +131,7 @@ if(!empty($_POST)) {
         if(empty($data)) {
             header("Location: imagenes_servicios.php");
         }
-        $foto = $data['url'];
+        $url= $data['url'];
         $titulo = $data['titulo'];
         $descripcion= $data['descripcion'];
         $tipo_servicio=$data['tipo'];
@@ -178,7 +178,8 @@ if(!empty($_POST)) {
                         <?php print(!empty($descripcionError)?"<span class='help-block'>$descripcionError</span>":""); ?>
                     </div>
                     <div class='form-group'>
-                        <img  name="url" id="url" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='300' height='200'>
+                        <input type="hidden" name="foto" value='<?php print($url); ?>'/>
+                        <img  name="foto" id="foto" src='../<?php print(($url)); ?>' border='0' width='300' height='200'>
                         <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                     </div>
                     <div class='form-group'>
