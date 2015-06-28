@@ -35,7 +35,7 @@ if(!empty($_POST)) {
     $frase = $_POST['frase'];
     $twitter = $_POST['twitter'];
     $facebook = $_POST['facebook'];
-    $foto=$_POST['foto'];
+    $url=$_POST['foto'];
     // validate input
     $valid = true;
     if(empty($nombres)) {
@@ -59,7 +59,7 @@ if(!empty($_POST)) {
     }
 
     // update data
-    if (ctype_space($nombres) || ctype_space($apellido) || ctype_space($cargo) || ctype_space($frase) || ctype_space($twitter) || ctype_space($facebook)) {
+    if (ctype_space($nombres) || ctype_space($apellido) || ctype_space($cargo) || ctype_space($frase) ) {
         echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }/*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres, apellidos, alias y contraseña*/
     else if (strlen(trim($nombres, ' ')) <= 1)
@@ -81,10 +81,12 @@ if(!empty($_POST)) {
     else if(!preg_match('/^(https?:\/\/)?((w{3}\.)?)twitter\.com\/(#!\/)?[a-z0-9_]+$/',$twitter)){
         if ($twitter!=""){
             echo"<script type=\"text/javascript\">alert('URL de Twitter no válido. Ej.https://twitter.com/usuario  ');</script>";}
+
     }
     else if(!preg_match('/^(http\:\/\/|https\:\/\/)?((w{3}\.)?)facebook\.com\/(?:#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)+$/',$facebook)){
         if ($facebook!=""){
             echo"<script type=\"text/javascript\">alert('URL de Facebook no válido. Ej.https://www.facebook.com/username/');</script>";}
+
     }
     else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
         echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
@@ -170,7 +172,7 @@ else {
     $frase = $data['frase'];
     $twitter = $data['twitter'];
     $facebook = $data['facebook'];
-    $foto= $data['foto'];
+    $url= $data['foto'];
 }
 ?>
 <!DOCTYPE html>
@@ -228,7 +230,8 @@ else {
                         <?php print(!empty($facebookError)?"<span class='help-block'>$facebookError</span>":""); ?>
                     </div>
                     <div class='form-group'>
-                        <img  name="foto" id="foto" src='../<?php print(!empty($foto)?$foto:""); ?>' border='0' width='150' height='200'>
+                        <input type="hidden" name="foto" value='<?php print($url); ?>'/>
+                        <img  name="foto" id="foto" src='../<?php print($url); ?>' border='0' width='150' height='200'>
                         <input type="file" name="archivo" id="archivo" accept="image/png, image/jpeg, image/gif"/>
                     </div>
                     <div class='form-actions'>

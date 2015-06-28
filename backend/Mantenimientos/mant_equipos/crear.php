@@ -52,7 +52,7 @@ if(!empty($_POST)) {
     }
 
     // insert data
-    if (ctype_space($nombres) || ctype_space($apellido) || ctype_space($cargo) || ctype_space($frase) || ctype_space($twitter) || ctype_space($facebook)) {
+    if (ctype_space($nombres) || ctype_space($apellido) || ctype_space($cargo) || ctype_space($frase) ) {
         echo "<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
     }/*Comprueba si hay espacios que se puedan tomar como caracter al inicio o al final en nombres, apellidos, alias y contraseña*/
     else if (strlen(trim($nombres, ' ')) <= 1)
