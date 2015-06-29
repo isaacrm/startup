@@ -184,7 +184,6 @@ if(!empty($_POST)) {
                             <button type='submit' class='btn btn-success'>Crear</button>
                             <a class='btn btn btn-default' href='imagenes_servicios.php'>Regresar</a>
                         </div>
-
                     </form>
                 </div> <!-- /row -->
             </div>
