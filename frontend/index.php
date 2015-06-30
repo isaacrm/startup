@@ -78,7 +78,7 @@
                         <li><a href="#politicas">Políticas</a></li>
                         <li><a href="#contact">Contacto</a></li>
                         <li><a href="#preguntas">Preguntas Frecuentes</a></li>
-                        <li><img src="img_empleados/Flecha-derecha.png" alt=""></li>
+
                     </ul>
                 </nav>
 				<!-- /MENÚ DE NAVEGACIÓN-->
@@ -92,10 +92,28 @@
 			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 			
 				<!-- Ruedas indicadoras -->
-				<ol class="carousel-indicators">
-					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-				</ol>
+                <?php
+                /*Esta pequeña  linea quita errores molestos que muestra php*/
+                error_reporting(E_ALL ^ E_NOTICE);
+                require("bd.php");
+                /*Se llama la libreria de paginacion*/
+                $sql = "SELECT * FROM noticias LIMIT 0,1";
+                $data = "";
+                foreach($PDO->query($sql) as $row) {
+                    $data .= "<ol class='carousel-indicators'>";
+                    $data .= "<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
+                    $data .= "</ol>";
+                }
+                print($data);
+                $sql = "SELECT COUNT(*) as total FROM noticias LIMIT 1, 566";
+                $data = "";
+                foreach($PDO->query($sql) as $row) {
+                    $data .= "<ol class='carousel-indicators'>";
+                    $data .= "<li data-target='#carousel-example-generic' data-slide-to='$row[total]'></li>";
+                    $data .= "</ol>";
+                }
+                print($data);
+                ?>
 				<!-- Fin de ruedas indicadoras -->				
 				
 				<!-- Wrapper for slides -->
@@ -104,13 +122,11 @@
                             <?php
                             /*Esta pequeña  linea quita errores molestos que muestra php*/
                             error_reporting(E_ALL ^ E_NOTICE);
-                            require("bd.php");
                             /*Se llama la libreria de paginacion*/
-
                             $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia LIMIT 0,1";
                             $data = "";
                             foreach($PDO->query($sql) as $row) {
-                                $data .= "<div class='item active' style='background-image:  url(../backend/Mantenimientos/img_noticias/@ $row[foto])'>";
+                                $data .= "<div class='item active' style='background-image:  url(../backend/Mantenimientos/$row[foto])'>";
                                 $data .= "<div class='carousel-caption'>";
                                 $data .= "<h2 data-wow-duration='700ms' data-wow-delay='500ms' class='wow bounceInDown animated'><span>$row[titulo] </span></h2>";
                                 $data .= "<h3 data-wow-duration='1000ms' class='wow slideInLeft animated'><span class='color'>$row[subtitulo]</span></h3>";
@@ -123,7 +139,7 @@
                             $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia LIMIT 1, 566";
                             $data = "";
                             foreach($PDO->query($sql) as $row) {
-                                $data .= "<div class='item' style='background-image: url(../backend/Mantenimientos/img_noticias'>";
+                                $data .= "<div class='item' style='background-image: url(../backend/Mantenimientos/$row[foto])'>";
                                 $data .= "<div class='carousel-caption'>";
                                 $data .= "<h2 data-wow-duration='700ms' data-wow-delay='500ms' class='wow bounceInDown animated'><span>$row[titulo] </span></h2>";
                                 $data .= "<h3 data-wow-duration='1000ms' class='wow slideInLeft animated'><span class='color'>$row[subtitulo]</span></h3>";
