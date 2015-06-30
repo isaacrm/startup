@@ -72,12 +72,12 @@ if(!empty($_POST)) {
         echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos dos caracteres');</script>";
     }
     else if(!preg_match('/^(https?:\/\/)?((w{3}\.)?)twitter\.com\/(#!\/)?[a-z0-9_]+$/',$twitter)){
-        if ($twitter!=""){
-        echo"<script type=\"text/javascript\">alert('URL de Twitter no válido. Ej.https://twitter.com/usuario  ');</script>";}
+        /*if ($twitter!=""){*/
+        echo"<script type=\"text/javascript\">alert('URL de Twitter no válido. Ej.https://twitter.com/usuario  ');</script>";/*}*/
     }
     else if(!preg_match('/^(http\:\/\/|https\:\/\/)?((w{3}\.)?)facebook\.com\/(?:#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)+$/',$facebook)){
-        if ($facebook!=""){
-        echo"<script type=\"text/javascript\">alert('URL de Facebook no válido. Ej.https://www.facebook.com/username/');</script>";}
+        /*if ($facebook!=""){*/
+        echo"<script type=\"text/javascript\">alert('URL de Facebook no válido. Ej.https://www.facebook.com/username/');</script>";/*}*/
     }else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
         echo"<script type=\"text/javascript\">alert('Los nombres no tienen números');</script>";
     }
@@ -203,11 +203,11 @@ if(!empty($_POST)) {
                             <?php print(!empty($fraseError)?"<span class='help-block'>$fraseError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($twitterError)?"has-error":""); ?>'>
-                            <input type='text' name='twitter' placeholder='Twitter'  id='twitter' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($twitter)?$twitter:""); ?>'>
+                            <input type='text' name='twitter' placeholder='Twitter'  required='required' id='twitter' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($twitter)?$twitter:""); ?>'>
                             <?php print(!empty($twitterError)?"<span class='help-block'>$twitterError</span>":""); ?>
                         </div>
                         <div class='form-group <?php print(!empty($facebookError)?"has-error":""); ?>'>
-                            <input type='text' name='facebook' placeholder='Facebook' id='facebook' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($facebook)?$facebook:""); ?>'>
+                            <input type='text' name='facebook' placeholder='Facebook' required='required' id='facebook' class='form-control' autocomplete="off" maxlength="250" value='<?php print(!empty($facebook)?$facebook:""); ?>'>
                             <?php print(!empty($facebookError)?"<span class='help-block'>$facebookError</span>":""); ?>
                         </div>
                         <div class='form-group'>
