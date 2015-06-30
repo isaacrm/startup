@@ -68,7 +68,10 @@ try {
         echo"<script type=\"text/javascript\">alert('El nombre no debe tener números');</script>";
     }
     else if(!preg_match('/^\d+(\.(\d{2}))?$/',$precio)){
-        echo"<script type=\"text/javascript\">alert('Formato de precio incorrecto. Debe tener dos decimales. Ej.00.00');</script>";
+        echo"<script type=\"text/javascript\">alert('Formato de precio incorrecto. Debe tener dos decimales. Ej.XX.XX');</script>";
+    }
+    else if($precio==0.0){
+        echo"<script type=\"text/javascript\">alert('Por favor, no trolear. No se pueden regalar servicios. ');</script>";
     }
     else {
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

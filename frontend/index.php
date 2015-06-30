@@ -100,42 +100,48 @@
 				
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner" role="listbox">
-					
-					<!-- single slide -->
-					<div class="item active" style="background-image: url(img/banner3.jpg);">
-						<div class="carousel-caption">
-							<h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">Conoce<span> WineFun</span>!</h2>
-							<h3 data-wow-duration="1000ms" class="wow slideInLeft animated"><span class="color">Creando</span> tu mundo. <span class="color">Creando</span> tus ideas</h3>
-							<p data-wow-duration="1000ms" class="wow slideInRight animated">Profesionales a tu servicio</p>
-							
-							<ul class="social-links text-center">
-								<li><a href="https://twitter.com/winefunoficial" target="_blank"><i class="fa fa-twitter fa-lg"></i></a></li>
-								<li><a href="https://www.facebook.com/winefunofficial" target="_blank" ><i class="fa fa-facebook fa-lg"></i></a></li>
-								<li><a href="https://instagram.com/winefun_official/" target="_blank"><i class="fa fa-instagram fa-lg"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- end single slide -->
-					
-					<!-- single slide -->
-					<div class="item" style="background-image: url(img/banner4.jpg);">
-                         <div class="carousel-caption">
-							<h2 data-wow-duration="700ms" data-wow-delay="500ms" class="wow bounceInDown animated">Conoce<span> WineFun</span>!</h2>
-							<h3 data-wow-duration="1000ms" class="wow slideInLeft animated"><span class="color">Creando</span> tu mundo. <span class="color">Creando</span> tus ideas</h3>
-							<p data-wow-duration="1000ms" class="wow slideInRight animated">Profesionales a tu servicio</p>		
-							<ul class="social-links text-center">
-								<li><a href="https://twitter.com/winefunoficial" target="_blank "><i class="fa fa-twitter fa-lg"></i></a></li>
-								<li><a href="https://www.facebook.com/winefunofficial" target="_blank "><i class="fa fa-facebook fa-lg"></i></a></li>
-								<li><a href="https://instagram.com/winefun_official/" target="_blank "><i class="fa fa-instagram fa-lg"></i></a></li>
-							</ul>
-						</div>
-					</div>
-					<!-- end single slide -->
-					
-				</div>
+                    <!-- PHP CARROUSEL-->
+                            <?php
+                            /*Esta pequeña  linea quita errores molestos que muestra php*/
+                            error_reporting(E_ALL ^ E_NOTICE);
+                            require("bd.php");
+                            /*Se llama la libreria de paginacion*/
+
+                            $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia LIMIT 0,1";
+                            $data = "";
+                            foreach($PDO->query($sql) as $row) {
+                                $data .= "<div class='item active' style='background-image:  url(../backend/Mantenimientos/img_noticias/@ $row[foto])'>";
+                                $data .= "<div class='carousel-caption'>";
+                                $data .= "<h2 data-wow-duration='700ms' data-wow-delay='500ms' class='wow bounceInDown animated'><span>$row[titulo] </span></h2>";
+                                $data .= "<h3 data-wow-duration='1000ms' class='wow slideInLeft animated'><span class='color'>$row[subtitulo]</span></h3>";
+                                $data .= "<p data-wow-duration='1000ms' class='wow slideInRight animated'>$row[leyenda]</p>";
+                                $data .= "</div>";
+                                $data .= "</div>";
+                            }
+                            print($data);
+
+                            $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia LIMIT 1, 566";
+                            $data = "";
+                            foreach($PDO->query($sql) as $row) {
+                                $data .= "<div class='item' style='background-image: url(../backend/Mantenimientos/img_noticias'>";
+                                $data .= "<div class='carousel-caption'>";
+                                $data .= "<h2 data-wow-duration='700ms' data-wow-delay='500ms' class='wow bounceInDown animated'><span>$row[titulo] </span></h2>";
+                                $data .= "<h3 data-wow-duration='1000ms' class='wow slideInLeft animated'><span class='color'>$row[subtitulo]</span></h3>";
+                                $data .= "<p data-wow-duration='1000ms' class='wow slideInRight animated'>$row[leyenda]</p>";
+                                $data .= "</div>";
+                                $data .= "</div>";
+                            }
+                            $PDO=null;
+                            print($data);
+                            ?>
+                            <ul class="social-links text-center">
+                                <li><a href="https://twitter.com/winefunoficial" target="_blank"><i class="fa fa-twitter fa-lg"></i></a></li>
+                                <li><a href="https://www.facebook.com/winefunofficial" target="_blank" ><i class="fa fa-facebook fa-lg"></i></a></li>
+                                <li><a href="https://instagram.com/winefun_official/" target="_blank"><i class="fa fa-instagram fa-lg"></i></a></li>
+                            </ul>
+                        </div>
+                    <!-- PHP CARROUSEL-->
 				<!-- End Wrapper for slides -->
-				
-			</div>
 		</section>
 		
         <!--
