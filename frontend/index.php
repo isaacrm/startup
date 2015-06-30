@@ -102,13 +102,11 @@
                 foreach($PDO->query($sql) as $row) {
                     $data .= "<ol class='carousel-indicators'>";
                     $data .= "<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
-                    $data .= "</ol>";
                 }
                 print($data);
-                $sql = "SELECT COUNT(*) as total FROM noticias LIMIT 1, 566";
+                $sql = "SELECT COUNT(*)-1 as total FROM noticias ";
                 $data = "";
                 foreach($PDO->query($sql) as $row) {
-                    $data .= "<ol class='carousel-indicators'>";
                     $data .= "<li data-target='#carousel-example-generic' data-slide-to='$row[total]'></li>";
                     $data .= "</ol>";
                 }
