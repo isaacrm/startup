@@ -72,7 +72,7 @@ if(!isset($_SESSION['alias']))
                                             if ($buscar!="")
                                             {
                                             /*Aqui obtenemos el total de registros*/
-                                            $sql0 = "SELECT COUNT(*) as total_datos FROM tipos_usuarios WHERE nombre like '%".$buscar."'";
+                                            $sql0 = "SELECT COUNT(*) as total_datos FROM tipos_usuarios WHERE nombre like '%".$buscar."%'";
                                             foreach ($PDO->query($sql0) as $row0) {
                                                 $totaldatos = "$row0[total_datos]";
                                             }
@@ -88,7 +88,7 @@ if(!isset($_SESSION['alias']))
                                             $paginacion->records($totaldatos);
                                             $paginacion->records_per_page($filas);
                                             $paginacion->padding(false);
-                                            $busqueda= "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre like '%".$buscar."' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                                            $busqueda= "SELECT id_tipo_usuario, nombre, descripcion FROM tipos_usuarios WHERE nombre like '%".$buscar."%' LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                             $data="";
                                             foreach($PDO->query($busqueda) as $row) {
                                                 $data .= "<tr>";

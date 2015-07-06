@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="es" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="es" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="es" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
 <link href="../backend/img_page/WineFun.png" type="image/x-icon" rel="shortcut icon" />
     <head>
     	<!-- meta charec set -->
@@ -37,7 +37,7 @@
 
 		<!-- Modernizer Script for old Browsers -->
         <script src="js/modernizr-2.6.2.min.js"></script>
-
+        <link rel="stylesheet" href="../backend/css/zebra_pagination.css" type="text/css">
     </head>
 	
     <body id="body">
@@ -133,7 +133,6 @@
                                 $data .= "</div>";
                             }
                             print($data);
-
                             $sql = "SELECT titulo, subtitulo, leyenda, foto FROM noticias ORDER BY id_noticia LIMIT 1, 566";
                             $data = "";
                             foreach($PDO->query($sql) as $row) {
@@ -145,7 +144,6 @@
                                 $data .= "</div>";
                                 $data .= "</div>";
                             }
-                            $PDO=null;
                             print($data);
                             ?>
                             <ul class="social-links text-center">
@@ -174,59 +172,26 @@
 						<h2>Características</h2>
 						<div class="devider"><i class="fa fa-trophy fa-lg"></i></div>
 					</div>
-
-					<!-- service item -->
-					<div class="col-md-4 wow fadeInLeft" data-wow-duration="500ms">
-						<div class="service-item">
-							<div class="service-icon">
-								<i class="fa fa-github fa-2x"></i>
-							</div>
-							
-							<div class="service-desc">
-								<h3>Misión</h3>
-								<p>Garantizar a nuestros clientes una calidad de servicio, con características innovativas y creativas a través de la excelencia, eficiencia y desarrollo de nuestro equipo de trabajo. Brindando profesionalismo en la organización de sus eventos y de esta manera satisfacer sus necesidades por encima de sus expectativas.</p>
-							</div>
-						</div>
-					</div>
-					<!-- end service item -->
-					
-					<!-- service item -->
-					<div class="col-md-4 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="500ms">
-						<div class="service-item">
-							<div class="service-icon">
-								<i class="fa fa-pencil fa-2x"></i>
-							</div>
-							
-							<div class="service-desc">
-								<h3>Visión</h3>
-								<p>Ser una empresa líder en el ámbito de las organizaciones de eventos, dándonos a conocer por nuestras características innovadoras, soluciones, productos y servicios. Ser reconocida por la eficiencia y profesionalidad de nuestro equipo de trabajo, y la escala de valores que nos caracteriza.</p>
-							</div>
-						</div>
-					</div>
-					<!-- end service item -->
-					
-					<!-- service item -->
-					<div class="col-md-4 wow fadeInRight" data-wow-duration="500ms"  data-wow-delay="900ms">
-						<div class="service-item">
-							<div class="service-icon">
-								<i class="fa fa-bullhorn fa-2x"></i>
-							</div>
-							
-							<div class="service-desc">
-								<h3>#SiempreMeGustoAleAyala</h3>
-                                <p>Creatividad</p>
-                                <p>Responsabilidad</p>
-                                <p>Profesionalismo</p>
-                                <p>Amabilidad</p>
-                                <p>Honradez</p>
-                                <p>Eficiencia</p>
-                                <p>Orientación al servicio al cliente</p>
-                                
-							</div>
-						</div>
-					</div>
-					<!-- end service item -->
-						
+                    <?php
+                    $sql = "SELECT titulo, descripcion FROM caracteristicas ORDER BY id_caracteristica";
+                    $data = "";
+                    foreach($PDO->query($sql) as $row) {
+                        $data .= "<div class='col-md-4 wow fadeInLeft' data-wow-duration='500ms'>";
+                        $data .= " <div class='service-item'>";
+                        $data .= "<div class=service-icon'>";
+                        $data .= "<i class='fa fa-glass fa-2x'></i>";
+                        $data .= "</div>";
+                        $data .= "<div class='service-desc'>";
+                        $data .= "<h3>$row[titulo]</h3>";
+                        $data .= "<p>$row[descripcion]</p>";
+                        $data .= "</div>";
+                        $data .= "</div>";
+                        $data .= "</div>";
+                    }
+                    print($data);
+                    ?>
+					<!-- services item -->
+					<!-- end services item -->
 				</div>
 			</div>
 		</section>
@@ -405,46 +370,50 @@
 						<p>En esta sección se dan a conocer los desarrolladores de está página web, quienes a su vez ejercen el cargo de CEO de WineFun. </p>
 					</div>
 
-
-					
+                    <?php
+                    $sql = "SELECT nombre, apellido, cargo, frase, twitter, facebook, foto FROM equipos ORDER BY id_equipo LIMIT 0,1";
+                    $data = "";
+                    foreach($PDO->query($sql) as $row) {
+                        $data .= "<figure class='team-member  col-md-offset-3 col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated' data-wow-duration='500ms' data-wow-delay='300ms'>";
+                        $data .= " <div class='member-thumb'>";
+                        $data .= "<img src='../backend/Mantenimientos/$row[foto]' alt='Team Member' class='img-responsive'>";
+                        $data .= "<figcaption class='overlay'>";
+                        $data .= "<h5>$row[nombre]  $row[apellido]</h5>";
+                        $data .= "<p>$row[frase]</p>";
+                        $data .= "<ul class='social-links text-center'>";
+                        $data .= "<li><a href='$row[twitter]' target='_blank'><i class='fa fa-twitter fa-lg'></i></a></li>";
+                        $data .= "<li><a href='$row[facebook]' target='_blank'><i class='fa fa-facebook fa-lg'></i></a></li>";
+                        $data .= "</ul>";
+                        $data .= "</figcaption>";
+                        $data .= "</div>";
+                        $data .= "<h4>$row[nombre]  $row[apellido]</h4>";
+                        $data .= "<span>$row[cargo]</span>";
+                        $data .= "</figure>";
+                    }
+                    print($data);
+                    $sql = "SELECT nombre, apellido, cargo, frase, twitter, facebook, foto FROM equipos ORDER BY id_equipo LIMIT 1,566";
+                    $data = "";
+                    foreach($PDO->query($sql) as $row) {
+                        $data .= "<figure class='team-member  col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated' data-wow-duration='500ms' data-wow-delay='300ms'>";
+                        $data .= " <div class='member-thumb'>";
+                        $data .= "<img src='../backend/Mantenimientos/$row[foto]' alt='Team Member' class='img-responsive'>";
+                        $data .= "<figcaption class='overlay'>";
+                        $data .= "<h5>$row[nombre]  $row[apellido]</h5>";
+                        $data .= "<p>$row[frase]</p>";
+                        $data .= "<ul class='social-links text-center'>";
+                        $data .= "<li><a href='$row[twitter]' target='_blank'><i class='fa fa-twitter fa-lg'></i></a></li>";
+                        $data .= "<li><a href='$row[facebook]' target='_blank'><i class='fa fa-facebook fa-lg'></i></a></li>";
+                        $data .= "</ul>";
+                        $data .= "</figcaption>";
+                        $data .= "</div>";
+                        $data .= "<h4>$row[nombre]  $row[apellido]</h4>";
+                        $data .= "<span>$row[cargo]</span>";
+                        $data .= "</figure>";
+                    }
+                    print($data);
+                    ?>
 					<!-- Primer Miembro -->
-					<figure class="team-member  col-md-offset-3 col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="300ms">
-						<div class="member-thumb">
-							<img src="img/team/isaac.png" alt="Team Member" class="img-responsive">
-							<figcaption class="overlay">
-								<h5>Isaac Rodríguez </h5>
-								<p>"WineFun, tu mejor opción en la organización de tus eventos"</p>
-								<ul class="social-links text-center">
-									<li><a href="https://twitter.com/aces_spartan"target="_blank"><i class="fa fa-twitter fa-lg"></i></a></li>
-									<li><a href="https://www.facebook.com/isaac.mendez"target="_blank"><i class="fa fa-facebook fa-lg"></i></a></li>
-								</ul>
-							</figcaption>
-						</div>
-						<h4>Isaac Rodríguez</h4>
-						<span>Desarrollador Web</span>
-					</figure>
-					<!-- Fin de primer miembro -->
-					
-					<!-- Segundo miembro -->
-					<figure class="team-member col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="600ms">
-						<div class="member-thumb">
-							<img src="img/team/karen.png" alt="Team Member" class="img-responsive">
-							<figcaption class="overlay">
-								<h5>Karen Melara</h5>
-								<p>"Te invitamos a solicitar nuestros servicios"</p>
-								<ul class="social-links text-center">
-									<li><a href="https://www.facebook.com/karen.melara.5"target="_blank"><i class="fa fa-facebook fa-lg"></i></a></li>
-								</ul>
-							</figcaption>
-						</div>
-						<h4>Karen Melara</h4>
-						<span>Desarrolladora Web</span>
-					</figure>
-					<!-- Fin de segundo miembro -->
-
-					
-
-					
+					<!--figure class="team-member  col-md-offset-3 col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="300ms"-->
 				</div>
 			</div>
 		</section>
@@ -466,37 +435,20 @@
 							<h2>Políticas de Empresa</h2>
 							<div class="devider"><i class="fa fa-trophy fa-lg"></i></div>
 						</div>
-						
-						<!-- first count item -->
-						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms">
-							<div class="counters-item">
-								<i class="fa fa-paypal fa-3x"></i>
-								<!-- Set Your Number here. i,e. data-to="56" -->
-								<p>Los métodos de pago son: PayPal, Depósito Bancario y modalidad presencial</p>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="300ms">
-							<div class="counters-item">
-								<i class="fa fa-users fa-3x"></i>
-								<!-- Set Your Number here. i,e. data-to="56" -->
-								<p>No exigimos un límite en la cantidad de invitados, tú lo decides</p>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="600ms">
-							<div class="counters-item">
-								<i class="fa fa-home fa-3x"></i>
-								<!-- Set Your Number here. i,e. data-to="56" -->
-								<p>El local lo pones tú, nosotros nos encargamos de la decoración </p>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated" data-wow-duration="500ms" data-wow-delay="900ms">
-							<div class="counters-item">
-								<i class="fa fa-flag fa-3x"></i>
-								<p>Nuestros servicios actualmente solo cubren el territorio salvadoreño.</p>
-							</div>
-						</div>
-						<!-- end first count item -->
-				
+                         <?php
+                        $sql = "SELECT titulo, descripcion FROM politicas ORDER BY id_politica ";
+                        $data = "";
+                        foreach($PDO->query($sql) as $row) {
+                            $data .= "<div class='col-md-3 col-sm-6 col-xs-12 text-center wow fadeInUp animated' data-wow-duration='500ms'>";
+                            $data .= " <div class='counters-item'>";
+                            $data .= "<i class='fa fa-paypal fa-3x'></i>";
+                            $data .= "<p>$row[titulo]</p>";
+                            $data .= "<h5>$row[descripcion]</h5>";
+                            $data .= "</div>";
+                            $data .= "</div>";
+                        }
+                        print($data);
+                        ?>
 					</div>
 				</div>
 			</div>
@@ -576,7 +528,7 @@
 
 				 
 				<div class="google-maps">
-							<iframe src=				"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.4267499442747!2d-89.2654591521177!3d13.666670718021175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f632e38d8691fab%3A0x317bd8e9aa3ae54b!2sSanta+Elena!5e0!3m2!1ses-419!2ssv!4v1424628917466" width="1262" height="200" frameborder="0" style="border:0"></iframe>
+							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.4267499442747!2d-89.2654591521177!3d13.666670718021175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f632e38d8691fab%3A0x317bd8e9aa3ae54b!2sSanta+Elena!5e0!3m2!1ses-419!2ssv!4v1424628917466" width="1262" height="200" frameborder="0" style="border:0"></iframe>
 				</div>
 			<!-- End Google map -->
 			
@@ -590,15 +542,39 @@
 						<h2>Preguntas Frecuentes</h2>
 						<div class="devider"><i class="fa fa-trophy fa-lg"></i></div>
 					</div>
-					<!--Preguntas-->
-					<div class="sec-sub-title text-center wow rubberBand animated" data-wow-duration="1000ms">
-						<p>Si tienes alguna duda, tómate unos minutos para leer las preguntas más comunes sobre WineFun</p>
-					</div>
-                    <div class="frecuentes" data-wow-duration="1000ms">
-                       <h3 class="preg"><p>¿Cuáles son las formas de pago?</p></h3>
-                        <h4 class="res"><p>Las formas de pago se pueden realizar de varias maneras. La primera es mediante PayPal, lo que hace tu transacción completamente segura al pagar con tu Tarjeta de Crédito o Débito. La segunda es por Depósito Bancario, y la tercera es por modalidad presencial con el profesional que se le asigno.</p></h4>
+                    <div class="sec-sub-title text-center wow rubberBand animated" data-wow-duration="1000ms">
+                        <p>Si tienes alguna duda, tómate unos minutos para leer las preguntas más comunes sobre WineFun</p>
                     </div>
+					<!--Preguntas-->
+                    <?php
+                    require_once("../backend/libs/Zebra_Pagination.php");
+                    $sql0 = "SELECT COUNT(*) as total_datos FROM preguntas";
+                    foreach ($PDO->query($sql0) as $row0) {
+                        $totaldatos = "$row0[total_datos]";
+                    }
+                    /*Numero de registros que se quiere por tabla*/
+                    $filas = 5;
+                    /*Aqui instanciamos la clase*/
+                    $paginacion = new Zebra_Pagination();
+                    /*Definimos el numero de registros que se quieren mostrar en las tablas*/
+                    $paginacion->records($totaldatos);
+                    $paginacion->records_per_page($filas);
+                    $paginacion->padding(false);
+                    $sql = "SELECT pregunta, respuesta FROM preguntas ORDER BY id_pregunta ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                    $data = "";
+                    foreach($PDO->query($sql) as $row) {
+                        $data .= "<div class='frecuentes' data-wow-duration='1000ms'>";
+                        $data .= "<h3 class='preg'><p>$row[pregunta]</p></h3>";
+                        $data .= "<h4 class='res'><p>$row[respuesta]</p></h4>";
+                        $data .= "</div>";
+                    }
+                    print($data);
+                    ?>
 				</div>
+                <!-- Aqui se imprime la paginacion-->
+                <div>
+                    <?php $paginacion->render();?>
+                </div>
             </div>
         </section>
         <!--FIN PREGUNTAS FRECUENTES------------------------>
