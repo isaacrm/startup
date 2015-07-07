@@ -226,7 +226,7 @@
                     <li><a href='#' data-filter='*' class='current'>Todos</a></li>
             <?php
             $sql = "SELECT tipo, descripcion FROM servicios ORDER BY id_servicio";
-            $data = "";
+            $data = "";m
             foreach($PDO->query($sql) as $row) {
                 $data .= "<li><a href='#' data-filter='' class='.$row[tipo]'>$row[tipo]</a></li>";
             }
