@@ -218,9 +218,7 @@
 					<div class="sec-sub-title text-center">
 						<p>Te ofrecemos diferentes opciones de planificacion de fiestas como:</p>
 					</div>
-					
 
-					
 				</div>
 			</div>
             <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
@@ -237,121 +235,21 @@
                 </ul>
             </div>
 			<div class="project-wrapper">
-				<figure class="work-item house">
-					<img src="img/works/casa.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/casa.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Noche</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item house">
-					<img src="img/works/exterior.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/exterior.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>En tu patio</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item house">
-					<img src="img/works/novedad2.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/novedad2.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>para los niños</h4>
-					</figcaption>
-				</figure>
-				
-				<figure class="work-item special">
-					<img src="img/works/matrimonio2.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Celebraciones especiales" href="img/works/matrimonio2.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Bodas</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item special">
-					<img src="img/works/novedad5.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="celebraciones especiales" href="img/works/novedad5.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Celebraciones Inolvidables</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item special">
-					<img src="img/works/privadas.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="celebraciones especiales" href="img/works/privadas.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Fiestas Privadas</h4>
-					</figcaption>
-				</figure>
-				
-				<figure class="work-item work">
-					<img src="img/works/business%20dinners.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/business%20dinners.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Trabajo</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item work">
-					<img src="img/works/banquete1.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Holo" href="img/works/banquete1.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Banquetes</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item work">
-					<img src="img/works/cena%20ejecutiva.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/cena%20ejecutiva.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Cenas</h4>
-					</figcaption>
-				</figure>
-				
-			
-				<figure class="work-item house">
-					<img src="img/works/backyard%20party.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/backyard%20party.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Exterior</h4>
-					</figcaption>
-                   </figure>
-				<figure class="work-item house">
-				    <img src="img/works/familiar.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/familiar.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Familia</h4>
-					</figcaption>
-				</figure>
-				
-				<figure class="work-item special">
-					<img src="img/works/matrimonio.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/matrimonio.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Fiestas para niños</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item special">
-					<img src="img/works/novedad.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/novedad.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Recepciones</h4>
-					</figcaption>
-				</figure>
-				
-				<figure class="work-item work">
-				<img src="img/works/formal.jpg" alt="">
-				<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/formal.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Ejecutivas</h4>
-					</figcaption>
-				</figure>
-				<figure class="work-item work">
-					<img src="img/works/recepcion-externa.jpg" alt="">
-					<figcaption class="overlay">
-						<a class="fancybox" rel="works" title="Write Your Image Caption Here" href="img/works/recepcion-externa.jpg"><i class="fa fa-eye fa-lg"></i></a>
-						<h4>Recepciones Externas</h4>
-					</figcaption>
-				</figure>
-				
+                <?php
+                $sql = "SELECT imagenes_servicios.id_servicio, url, titulo, imagenes_servicios.descripcion as des, tipo FROM imagenes_servicios, servicios  WHERE imagenes_servicios.id_servicio= servicios.id_servicio ORDER BY id_imagen";
+                $data = "";
+                foreach($PDO->query($sql) as $row) {
+                    $data .= "<figure class='work-item $row[tipo]'>";
+                    $data .= "<img src='../backend/Mantenimientos/$row[url]' alt=''>";
+                    $data .= "<figcaption class='overlay'>";
+                    $data .= "<a class='fancybox' rel='../backend/Mantenimientos/img_servicios' title='$row[des]' href='../backend/Mantenimientos/$row[url]'><i class='fa fa-eye fa-lg'></i></a>";
+                    $data .= "<h4>$row[titulo]</h4>";
+                    $data .= "</figcaption>";
+                    $data .= "</figure>";
+                }
+                print($data);
+                ?>
 			</div>
-		
-
 		</section>
 		
 		
