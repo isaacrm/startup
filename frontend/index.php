@@ -104,10 +104,11 @@
                     $data .= "<li data-target='#carousel-example-generic' data-slide-to='0' class='active'></li>";
                 }
                 print($data);
-                $sql = "SELECT COUNT(*)-1 as total FROM noticias ";
+                $sql = "SELECT * FROM noticias LIMIT 1,566";
+                $sql = "SELECT COUNT(*)-1 as indicador FROM noticias ";
                 $data = "";
                 foreach($PDO->query($sql) as $row) {
-                    $data .= "<li data-target='#carousel-example-generic' data-slide-to='$row[total]'></li>";
+                    $data .= "<li data-target='#carousel-example-generic' data-slide-to='$row[indicador]'></li>";
                     $data .= "</ol>";
                 }
                 print($data);
@@ -218,18 +219,23 @@
 						<p>Te ofrecemos diferentes opciones de planificacion de fiestas como:</p>
 					</div>
 					
-					<div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
-						<ul class="text-center">
-							<li><a href="#" data-filter="*" class="current">Todos</a></li>
-							<li><a href="#" data-filter=".house">Hogar</a></li>
-							<li><a href="#" data-filter=".special">Especiales</a></li>
-							<li><a href="#" data-filter=".work">Empresariales</a></li>
-						</ul>
-					</div>
+
 					
 				</div>
 			</div>
-			
+            <div class="work-filter wow fadeInRight animated" data-wow-duration="500ms">
+                <ul class="text-center">
+                    <li><a href='#' data-filter='*' class='current'>Todos</a></li>
+            <?php
+            $sql = "SELECT tipo, descripcion FROM servicios ORDER BY id_servicio";
+            $data = "";
+            foreach($PDO->query($sql) as $row) {
+                $data .= "<li><a href='#' data-filter='' class='.$row[tipo]'>$row[tipo]</a></li>";
+            }
+            print($data);
+            ?>
+                </ul>
+            </div>
 			<div class="project-wrapper">
 				<figure class="work-item house">
 					<img src="img/works/casa.jpg" alt="">
