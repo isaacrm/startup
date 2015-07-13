@@ -4,7 +4,7 @@
 <!--[if IE 8]>         <html lang="es" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
     <head>
-
+    <?php include "maestors/link_meta_script_iniciales.php" ?>
     </head>
 	
     <body id="body">
