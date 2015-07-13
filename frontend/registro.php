@@ -73,7 +73,7 @@ if(!empty($_POST)) {
     }
 }
 ?>
-
+<?php include "maestros/link_meta_script_iniciales.php" ?>
 <section id="registro" class="registro">
     <div class="container">
         <div class="row">
