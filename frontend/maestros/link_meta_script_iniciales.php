@@ -1,5 +1,4 @@
-
-    	<!-- meta charec set -->
+        <!-- meta charec set -->
         <meta charset="utf-8">
 		<!-- Always force latest IE rendering engine or request Chrome Frame -->
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -17,18 +16,18 @@
 		<!-- CSS
 		================================================== -->
 		<!-- Fontawesome Icon font -->
-        <link rel="stylesheet" href="../css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
 		<!-- Twitter Bootstrap css -->
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
 		<!-- jquery.fancybox  -->
-        <link rel="stylesheet" href="../css/jquery.fancybox.css">
+        <link rel="stylesheet" href="css/jquery.fancybox.css">
 		<!-- animate -->
-        <link rel="stylesheet" href="../css/animate.css">
+        <link rel="stylesheet" href="css/animate.css">
 		<!-- Main Stylesheet -->
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="css/main.css">
 		<!-- media-queries -->
-        <link rel="stylesheet" href="../css/media-queries.css">
+        <link rel="stylesheet" href="css/media-queries.css">
 
 		<!-- Modernizer Script for old Browsers -->
-        <script src="../js/modernizr-2.6.2.min.js"></script>
+        <script src="js/modernizr-2.6.2.min.js"></script>
         <link rel="stylesheet" href="../../backend/css/zebra_pagination.css" type="text/css">
