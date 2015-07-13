@@ -1,4 +1,4 @@
-        <link href="../../backend/img_page/WineFun.png" type="image/x-icon" rel="shortcut icon" />
+
     	<!-- meta charec set -->
         <meta charset="utf-8">
 		<!-- Always force latest IE rendering engine or request Chrome Frame -->
