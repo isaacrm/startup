@@ -196,7 +196,7 @@
             $sql = "SELECT tipo, descripcion FROM servicios ORDER BY id_servicio";
             $data = "";
             foreach($PDO->query($sql) as $row) {
-                $data .= "<li><a href='#' data-filter='' class='.$row[tipo]'>$row[tipo]</a></li>";
+                $data .= "<li><a href='#' data-filter='.$row[tipo]'>$row[tipo]</a></li>";
             }
             print($data);
             ?>
