@@ -73,3 +73,81 @@ if(!empty($_POST)) {
     }
 }
 ?>
+
+<section id="registro" class="registro">
+    <div class="container">
+        <div class="row">
+            <div class="sec-title text-center wow fadeInUp animated" data-wow-duration="700ms">
+                <h2>Registrarse</h2>
+                <div class="devider"><i class="fa fa-trophy fa-lg"></i></div>
+            </div>
+
+            <div class="sec-sub-title text-center wow fadeInRight animated" data-wow-duration="500ms">
+                <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                    <form role="form">
+                        <h2 class="register">Registrese <small>Es gratis y siempre lo será.</small></h2>
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="nombres" id="nombres" class="form-control input-lg" placeholder="Nombres" tabindex="1">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="apellidos" id="apellidos" class="form-control input-lg" placeholder="Apellidos" tabindex="2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Nombre de Usuario" tabindex="3">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email " tabindex="4">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="contraseña" name="contraseña" id="contraseña" class="form-control input-lg" placeholder="Contraseña" tabindex="5">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="contraseña" name="confirmar" id="confirmar" class="form-control input-lg" placeholder="Confirmar Contraseña" tabindex="6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                                Cuando des click en <strong class="label label-primary">Registrarse</strong>, estarás de acuerdo con nuestras <a href="#politicas" class="terminos">Políticas de empresa</a> establecido por este sitio, incluyendo el uso de cookies.
+                            </div>
+                        </div>
+
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div ><input type="submit" action="registro.php" value="Registrarse" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">Terminos y Condiciones</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Los métodos de pago deben de realizarse en PayPal, Depósito Bancario o Modalidad Presencial</p>
+                            <p>No exigimos un límite en la cantidad de invitados, tú lo decides</p>
+                            <p>El local lo pones tú, nosotros nos encargamos de la decoración.</p>
+                            <p>Nuestros servicios son exclusivamente para el territorio salvadoreño.</p>
+
+                        <div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Estoy de Acuerdo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+</section>

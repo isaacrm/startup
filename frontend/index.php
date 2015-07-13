@@ -3,41 +3,8 @@
 <!--[if IE 7]>         <html lang="es" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="es" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
-<link href="../backend/img_page/WineFun.png" type="image/x-icon" rel="shortcut icon" />
     <head>
-    	<!-- meta charec set -->
-        <meta charset="utf-8">
-		<!-- Always force latest IE rendering engine or request Chrome Frame -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<!-- Page Title -->
-        <title>WineFun</title>		
-		<!-- Meta Description -->
-        <meta name="description" content="">
-		<!-- Mobile Specific Meta -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<!-- Google Font -->
-		
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-		<!-- CSS
-		================================================== -->
-		<!-- Fontawesome Icon font -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-		<!-- Twitter Bootstrap css -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-		<!-- jquery.fancybox  -->
-        <link rel="stylesheet" href="css/jquery.fancybox.css">
-		<!-- animate -->
-        <link rel="stylesheet" href="css/animate.css">
-		<!-- Main Stylesheet -->
-        <link rel="stylesheet" href="css/main.css">
-		<!-- media-queries -->
-        <link rel="stylesheet" href="css/media-queries.css">
-
-		<!-- Modernizer Script for old Browsers -->
-        <script src="js/modernizr-2.6.2.min.js"></script>
-        <link rel="stylesheet" href="../backend/css/zebra_pagination.css" type="text/css">
     </head>
 	
     <body id="body">
@@ -77,6 +44,7 @@
                         <li><a href="#team">Equipo</a> </li>
                         <li><a href="#politicas">Políticas</a></li>
                         <li><a href="#contact">Contacto</a></li>
+                        <li><a href="#registro">Registrarse</a></li>
                         <li><a href="#preguntas">Preguntas Frecuentes</a></li>
 
                     </ul>
@@ -226,7 +194,7 @@
                     <li><a href='#' data-filter='*' class='current'>Todos</a></li>
             <?php
             $sql = "SELECT tipo, descripcion FROM servicios ORDER BY id_servicio";
-            $data = "";m
+            $data = "";
             foreach($PDO->query($sql) as $row) {
                 $data .= "<li><a href='#' data-filter='' class='.$row[tipo]'>$row[tipo]</a></li>";
             }
@@ -435,7 +403,6 @@
 							<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1938.4267499442747!2d-89.2654591521177!3d13.666670718021175!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f632e38d8691fab%3A0x317bd8e9aa3ae54b!2sSanta+Elena!5e0!3m2!1ses-419!2ssv!4v1424628917466" width="1262" height="200" frameborder="0" style="border:0"></iframe>
 				</div>
 			<!-- End Google map -->
-			
 		</section>
        <!--PREGUNTAS FRECUENTES --------------------------->
         <section id="preguntas" class="preguntas">
