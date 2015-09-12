@@ -84,7 +84,9 @@ try {
     } catch (Exception $e) {
         echo"<script type=\"text/javascript\">alert('Este tipo de usuario ya existe');</script>";
     }
+
     }
+    
     } else {
     // read data
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
