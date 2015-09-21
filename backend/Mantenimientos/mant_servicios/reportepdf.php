@@ -1,7 +1,7 @@
 
 <?php
  date_default_timezone_set("America/El_Salvador");
-require_once("../dompdf/dompdf_config.inc.php");
+require_once("../../dompdf/dompdf/dompdf_config.inc.php");
 $conn = mysql_connect("localhost", "root") or die("error");
 mysql_select_db("winefun", $conn) or die("error 2 ");
 
@@ -65,6 +65,6 @@ $dompdf->load_html($codigohtml);
 ini_set("memory_limit","128M");
 $dompdf->render();
 $dompdf->stream("Reporte_tabla_servicios.pdf");
-header("location:index.php")
+header("location:servicios.php")
 ?>
  
