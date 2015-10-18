@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_politica'])) {
-    $id = $_GET['id_politica'];
+    $id = base64_decode ($_GET['id_politica']);
 }
 if($id == null) {
     header("Location: politicas.php");
@@ -25,8 +25,8 @@ if(!empty($_POST)){
     $subtituloError = null;
 
     // post values
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
+    $titulo = strip_tags($_POST['titulo']);
+    $descripcion = strip_tags($_POST['descripcion']);
     // validate input
     $valid = true;
     if(empty($titulo)) {

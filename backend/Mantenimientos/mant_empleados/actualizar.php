@@ -14,7 +14,7 @@ if(!isset($_SESSION['alias']))
 error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
 if(!empty($_GET['id_empleado'])) {
-    $id = $_GET['id_empleado'];
+    $id = base64_decode ($_GET['id_empleado']);
 }
 if($id == null) {
     header("Location: empleados.php");
@@ -34,16 +34,16 @@ if(!empty($_POST)) {
     $contraseñaError = null;
     $confirmarError = null;
 // post values
-    $nombres = $_POST['nombres'];
-    $alias = $_POST['alias'];
-    $apellidos = $_POST['apellidos'];
-    $identificador = $_POST['identificador'];
-    $telefono = $_POST['telefono'];
-    $correo = $_POST['correo'];
-    $sexo = $_POST['sexo'];
-    $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $tipo_usuario = $_POST['tipo'];
-    $url= $_POST['foto'];
+    $nombres = strip_tags($_POST['nombres']);
+    $alias = strip_tags($_POST['alias']);
+    $apellidos = strip_tags($_POST['apellidos']);
+    $identificador = strip_tags($_POST['identificador']);
+    $telefono = strip_tags($_POST['telefono']);
+    $correo = strip_tags($_POST['correo']);
+    $sexo = strip_tags($_POST['sexo']);
+    $fecha_nacimiento =strip_tags( date('Y-m-d', strtotime($_POST['fecha_nacimiento'])));
+    $tipo_usuario = strip_tags($_POST['tipo']);
+    $url= strip_tags($_POST['foto']);
 // validate input
     $valid = true;
 

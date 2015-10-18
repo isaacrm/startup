@@ -14,7 +14,7 @@ if(!isset($_SESSION['alias']))
 error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
 if(!empty($_GET['id_imagen'])) {
-    $id = $_GET['id_imagen'];
+    $id = base64_decode ($_GET['id_imagen']);
 }
 if($id == null) {
     header("Location: imagenes_servicios.php");
@@ -26,10 +26,10 @@ if(!empty($_POST)) {
     $tituloError = null;
     $descripcionError = null;
     // post values
-    $url = $_POST['foto'];
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
-    $tipo_servicio = $_POST['tipo'];
+    $url = strip_tags($_POST['foto']);
+    $titulo = strip_tags($_POST['titulo']);
+    $descripcion = strip_tags($_POST['descripcion']);
+    $tipo_servicio =strip_tags( $_POST['tipo']);
     // validate input
     $valid = true;
 

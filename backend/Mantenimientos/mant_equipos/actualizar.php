@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_equipo'])) {
-    $id = $_GET['id_equipo'];
+    $id = base64_decode ($_GET['id_equipo']);
 }
 if($id == null) {
     header("Location: equipos.php");
@@ -29,13 +29,13 @@ if(!empty($_POST)) {
     $twitterError = null;
     $facebookError = null;
     // post values
-    $nombres = $_POST['nombre'];
-    $apellido = $_POST['apellido'];
-    $cargo = $_POST['cargo'];
-    $frase = $_POST['frase'];
-    $twitter = $_POST['twitter'];
-    $facebook = $_POST['facebook'];
-    $url=$_POST['foto'];
+    $nombres = strip_tags($_POST['nombre']);
+    $apellido = strip_tags($_POST['apellido']);
+    $cargo = strip_tags($_POST['cargo']);
+    $frase = strip_tags($_POST['frase']);
+    $twitter = strip_tags($_POST['twitter']);
+    $facebook =strip_tags( $_POST['facebook']);
+    $url=strip_tags($_POST['foto']);
     // validate input
     $valid = true;
     if(empty($nombres)) {

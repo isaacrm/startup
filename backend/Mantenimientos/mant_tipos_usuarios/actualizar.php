@@ -14,7 +14,7 @@ if(!isset($_SESSION['alias']))
 error_reporting(E_ALL ^ E_NOTICE);
 $id = null;
 if(!empty($_GET['id_tipo_usuario'])) {
-    $id = $_GET['id_tipo_usuario'];
+    $id = base64_decode ($_GET['id_tipo_usuario']);
 }
 if($id == null) {
     header("Location: tipo_usuario.php");
@@ -25,8 +25,8 @@ if(!empty($_POST)) {
     $nombresError = null;
     $descripcionError = null;
     // post values
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
+    $nombre = strip_tags($_POST['nombre']);
+    $descripcion = strip_tags($_POST['descripcion']);
     $agregar = $_POST['agregar'] == "agregar";
     $modificar = $_POST['modificar'] == "modificar";
     $eliminar = $_POST['eliminar'] == "eliminar";

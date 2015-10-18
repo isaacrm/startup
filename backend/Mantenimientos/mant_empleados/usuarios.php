@@ -76,6 +76,7 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_usuario, alias,nombres, apellidos FROM usuarios, empleados WHERE usuarios.id_empleado=empleados.id_empleado ORDER BY id_usuario ASC LIMIT ".(($paginacion->get_page()-1)*$filas).', '.$filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_usuario']);
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_usuario]</td>";
                                                 $data .= "<td>$row[alias]</td>";

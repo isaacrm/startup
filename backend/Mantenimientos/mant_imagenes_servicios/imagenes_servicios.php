@@ -80,15 +80,16 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_imagen, url, titulo, descripcion FROM imagenes_servicios ORDER BY id_servicio ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_imagen']);
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_imagen]</td>";
                                             $data .= "<td>$row[titulo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td><img src='../$row[url] 'border='0' width='150' height='100'></td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_imagen=$row[id_imagen]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_imagen=$row[id_imagen]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_imagen=$row[id_imagen]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_imagen=$id_c'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_imagen=$id_c'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_imagen=$id_c'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

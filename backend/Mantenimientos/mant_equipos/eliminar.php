@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_equipo'])) {
-    $id = $_GET['id_equipo'];
+    $id = base64_decode ($_GET['id_equipo']);
 }
 if($id == null) {
     header("Location: equipos.php");

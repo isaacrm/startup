@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_politica'])) {
-    $id = $_GET['id_politica'];
+    $id = base64_decode ($_GET['id_politica']);
 }
 if($id == null) {
     header("Location: politicas.php");

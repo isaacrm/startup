@@ -80,15 +80,16 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_pagina, encabezado, frase, estado FROM paginas ORDER BY id_pagina ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_pagina']);
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_pagina]</td>";
                                             $data .= "<td>$row[encabezado]</td>";
                                             $data .= "<td>$row[frase]</td>";
                                             $data .= "<td >$row[estado]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_paginas/consultar.php?id_pagina=$row[id_pagina]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_paginas/actualizar.php?id_pagina=$row[id_pagina]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_paginas/eliminar.php?id_pagina=$row[id_pagina]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_paginas/consultar.php?id_pagina=$id_c'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_paginas/actualizar.php?id_pagina=$id_c'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_paginas/eliminar.php?id_pagina=$id_c'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

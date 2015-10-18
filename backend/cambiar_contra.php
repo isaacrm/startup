@@ -46,8 +46,8 @@ if(!empty($_POST)) {
             $nueva=null;
             $confirmar=null;
         }
-        else if (!preg_match('/^.*(?=.{4,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $nueva)) {
-            echo "<script type=\"text/javascript\">alert('La contraseña nueva debe tener una minúscula, una mayúscula , un número y debe de ser de 4 a 15 caracteres');</script>";
+        else if (!preg_match('/^.*(?=.{6,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $nueva)) {
+            echo "<script type=\"text/javascript\">alert('La contraseña nueva debe tener una minúscula, una mayúscula , un número y debe de ser de 6 a 15 caracteres');</script>";
             $nueva=null;
             $confirmar=null;
         }

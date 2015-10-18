@@ -20,8 +20,8 @@ if(!empty($_POST)) {
     $leyendeError = null;
     $imagenError = null;
     // post values
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
+    $titulo = strip_tags($_POST['titulo']);
+    $descripcion = strip_tags($_POST['descripcion']);
     // validate input
     $valid = true;
     if(empty($titulo)) {

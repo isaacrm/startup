@@ -26,16 +26,16 @@ if(!empty($_POST)) {
     $contraseñaError = null;
     $confirmarError = null;
     // post values
-    $nombres = $_POST['nombres'];
-    $alias= $_POST['alias'];
-    $apellidos = $_POST['apellidos'];
-    $identificador = $_POST['identificador'];
-    $telefono = $_POST['telefono'];
-    $correo = $_POST['correo'];
-    $sexo = $_POST['sexo'];
+    $nombres =  strip_tags($_POST['nombres']);
+    $alias=  strip_tags($_POST['alias']);
+    $apellidos =  strip_tags($_POST['apellidos']);
+    $identificador =  strip_tags($_POST['identificador']);
+    $telefono = strip_tags( $_POST['telefono']);
+    $correo =  strip_tags($_POST['correo']);
+    $sexo =  strip_tags($_POST['sexo']);
     $fecha_nacimiento = date('Y-m-d', strtotime($_POST['fecha_nacimiento']));
-    $contra = sha1($_POST['contra']);
-    $tipo_usuario = $_POST['tipo'];
+    $contra =  strip_tags(sha1($_POST['contra']));
+    $tipo_usuario =  strip_tags($_POST['tipo']);
     // validate input
     $valid = true;
 
@@ -108,9 +108,11 @@ if(!empty($_POST)) {
     {
         echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos cuatro caracteres');</script>";
     }
-    else if (strlen(trim($contra, ' ')) <= 3)
-    {
-        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos cuatro caracteres');</script>";
+    else if (!preg_match('/^.*(?=.{6,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $contra)) {
+        echo "<script type=\"text/javascript\">alert('La contraseña debe tener una minúscula, una mayúscula , un número y debe de ser de 6 a 15 caracteres');</script>";
+    }
+    else if ($contra=sha1($alias)){
+        echo"<script type=\"text/javascript\">alert('No se puede poner como contraseña el mismo nombre de usuario');</script>";
     }
     /*VAlida solo letras en nombre y apellido*/
     else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){

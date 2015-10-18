@@ -80,15 +80,17 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_servicio, tipo, descripcion, precio FROM servicios ORDER BY id_servicio ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_servicio']);
+
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_servicio]</td>";
                                             $data .= "<td>$row[tipo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td>$row[precio]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_servicios/consultar.php?id_servicio=$row[id_servicio]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_servicios/actualizar.php?id_servicio=$row[id_servicio]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_servicios/eliminar.php?id_servicio=$row[id_servicio]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_servicios/consultar.php?id_servicio=$id_c'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_servicios/actualizar.php?id_servicio=$id_c'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_servicios/eliminar.php?id_servicio=$id_c'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

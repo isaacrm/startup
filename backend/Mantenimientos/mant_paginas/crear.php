@@ -17,8 +17,8 @@ if(!empty($_POST)) {
     $encabezadoError = null;
     $fraseError = null;
     // post values
-    $encabezado = $_POST['encabezado'];
-    $frase = $_POST['frase'];
+    $encabezado = strip_tags($_POST['encabezado']);
+    $frase = strip_tags($_POST['frase']);
 
     // validate input
     $valid = true;

@@ -78,14 +78,15 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_politica, titulo, descripcion FROM politicas ORDER BY id_politica ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_politica']);
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_politica]</td>";
                                             $data .= "<td>$row[titulo]</td>";
                                             $data .= "<td>$row[descripcion]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_politica=$row[id_politica]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_politica=$row[id_politica]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_politica=$row[id_politica]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='consultar.php?id_politica=$id_c'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='actualizar.php?id_politica=$id_c'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='eliminar.php?id_politica=$id_c'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

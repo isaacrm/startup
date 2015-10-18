@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_servicio'])) {
-    $id = $_GET['id_servicio'];
+    $id = base64_decode ($_GET['id_servicio']);
 }
 if($id == null) {
     header("Location: servicios.php");
@@ -25,9 +25,9 @@ if(!empty($_POST)) {
     $descripcionError = null;
     $precioError = null;
     // post values
-    $tipo = $_POST['tipo'];
-    $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
+    $tipo = strip_tags($_POST['tipo']);
+    $descripcion =strip_tags($_POST['descripcion']);
+    $precio =strip_tags( $_POST['precio']);
 
     // validate input
     $valid = true;

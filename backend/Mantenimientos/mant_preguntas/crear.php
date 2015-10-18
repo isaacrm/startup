@@ -18,8 +18,8 @@ if(!empty($_POST)) {
     $preguntaError = null;
     $respuestaError = null;
     // post values
-    $pregunta = $_POST['pregunta'];
-    $respuesta = $_POST['respuesta'];
+    $pregunta = strip_tags($_POST['pregunta']);
+    $respuesta = strip_tags($_POST['respuesta']);
 
     // validate input
     $valid = true;

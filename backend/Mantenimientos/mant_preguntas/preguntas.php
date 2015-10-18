@@ -79,14 +79,15 @@ if(!isset($_SESSION['alias']))
                                         $sql = "SELECT id_pregunta, pregunta, respuesta FROM preguntas ORDER BY id_pregunta ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
                                         $data = "";
                                         foreach($PDO->query($sql) as $row) {
+                                            $id_c = base64_encode($row['id_pregunta']);
                                             $data .= "<tr>";
                                             $data .= "<td>$row[id_pregunta]</td>";
                                             $data .= "<td>$row[pregunta]</td>";
                                             $data .= "<td>$row[respuesta]</td>";
                                             $data .= "<td>";
-                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_preguntas/consultar.php?id_pregunta=$row[id_pregunta]'>Consultar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_preguntas/actualizar.php?id_pregunta=$row[id_pregunta]'>Actualizar</a>&nbsp;";
-                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_preguntas/eliminar.php?id_pregunta=$row[id_pregunta]'>Eliminar</a>";
+                                            $data .= "<a class='btn btn-xs btn-info' href='../mant_preguntas/consultar.php?id_pregunta=$id_c'>Consultar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-primary' href='../mant_preguntas/actualizar.php?id_pregunta=$id_c'>Actualizar</a>&nbsp;";
+                                            $data .= "<a class='btn btn-xs btn-danger' href='../mant_preguntas/eliminar.php?id_pregunta=$id_c'>Eliminar</a>";
                                             $data .= "</td>";
                                             $data .= "</tr>";
                                         }

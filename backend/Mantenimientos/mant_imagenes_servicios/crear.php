@@ -19,9 +19,9 @@ if(!empty($_POST)) {
     $tituloError = null;
     $descripcionError = null;
     // post values
-    $titulo = $_POST['titulo'];
-    $descripcion = $_POST['descripcion'];
-    $tipo_servicio = $_POST['tipo'];
+    $titulo = strip_tags($_POST['titulo']);
+    $descripcion = strip_tags($_POST['descripcion']);
+    $tipo_servicio = strip_tags($_POST['tipo']);
     // validate input
     $valid = true;
 

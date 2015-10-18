@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_caracteristica'])) {
-    $id = $_GET['id_caracteristica'];
+    $id =  base64_decode($_GET['id_caracteristica']);
 }
 if($id == null) {
     header("Location: caracteristicas.php");
@@ -23,8 +23,8 @@ if(!empty($_POST)){
     // validation errors
     $tituloError = null;
     // post values
-    $titulo = $_POST['titulo'];
-    $descripcion= $_POST['descripcion'];
+    $titulo =  strip_tags($_POST['titulo']);
+    $descripcion=  strip_tags($_POST['descripcion']);
     // validate input
     $valid = true;
     if(empty($titulo)) {

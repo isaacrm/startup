@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_pagina'])) {
-    $id = $_GET['id_pagina'];
+    $id = base64_decode ($_GET['id_pagina']);
 }
 if($id == null) {
     header("Location: paginas.php");

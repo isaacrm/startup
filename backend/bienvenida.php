@@ -66,11 +66,14 @@ if(!empty($_POST)) {
         $contraseñaError = "Por favor ingrese la contraseña.";
         $valid = false;
     }
-
+    $captcha = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=6LeRCw4TAAAAAFouEDSJf1AkNXFx3Vc8Iurwf74S&response='.$_POST['g-recaptcha-response'].'&remoteip='.$_SERVER['REMOTE_ADDR']),TRUE);
     // insert data
     if ($_POST['contra'] != $_POST['confirmar']) {
         $_POST['contra']="";
         $_POST['confirmar']="";
+    }
+    else if($captcha['success']=== FALSE){
+        echo"<script type=\"text/javascript\">alert('No se admiten robots');</script>";
     }
     else if (ctype_space($nombres) || ctype_space($apellidos) || ctype_space($identificador) || ctype_space($telefono) || ctype_space($correo)) {
         echo"<script type=\"text/javascript\">alert('No se puede dejar datos en blanco');</script>";
@@ -90,9 +93,11 @@ if(!empty($_POST)) {
     {
         echo"<script type=\"text/javascript\">alert('El nombre debe de tener al menos cuatro caracteres');</script>";
     }
-    else if (strlen(trim($contra, ' ')) <= 3)
-    {
-        echo"<script type=\"text/javascript\">alert('El apellido debe de tener al menos cuatro caracteres');</script>";
+    else if (!preg_match('/^.*(?=.{6,15})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/', $contra)) {
+        echo "<script type=\"text/javascript\">alert('La contraseña debe tener una minúscula, una mayúscula , un número y debe de ser de 6 a 15 caracteres');</script>";
+    }
+    else if ($contra=sha1($alias)){
+        echo"<script type=\"text/javascript\">alert('No se puede poner como contraseña el mismo nombre de usuario');</script>";
     }
     /*VAlida solo letras en nombre y apellido*/
     else if(!preg_match('/^([a-z A-Z ñáéíóú ÑÁÉÍÓÚ Üü ]{2,60})$/i',$nombres)){
@@ -113,6 +118,7 @@ if(!empty($_POST)) {
     else if (!preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $correo)){
         echo"<script type=\"text/javascript\">alert('Formato de Correo Electrónico erróneo. Ej. hola.mundo@algo.algo');</script>";
     }
+
     else {
         if ($valid) {
             //SUBIR IMAGEN URL
@@ -211,6 +217,7 @@ if(!empty($_POST)) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" rel="stylesheet" href="css/estilos.css">
     <!--SCRIPT Y ESTILOS DE BOOTSTRAP -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
@@ -282,6 +289,9 @@ if(!empty($_POST)) {
                 <div class='form-group <?php print(!empty($confirmarError)?"has-error":""); ?>'>
                     <input class="form-control" name="confirmar" placeholder="Confirmar Contraseña" type="password" required='required' id='nombres' autofocus />
                     <?php print(!empty($confirmarError)?"<span class='help-block'>$confirmarError</span>":""); ?>
+                </div>
+                <div class="form-group ">
+                    <div class="g-recaptcha" data-sitekey="6LeRCw4TAAAAAOoQcioyh5jn-G2aP0A_WyVdgCfC"></div>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" value="Enviar"">
                 Registrarse</button>

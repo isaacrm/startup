@@ -17,9 +17,9 @@ if(!empty($_POST)) {
     $descripcionError = null;
     $precioError = null;
     // post values
-    $tipo = $_POST['tipo'];
-    $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
+    $tipo = strip_tags($_POST['tipo']);
+    $descripcion = strip_tags($_POST['descripcion']);
+    $precio = strip_tags($_POST['precio']);
 
     // validate input
     $valid = true;

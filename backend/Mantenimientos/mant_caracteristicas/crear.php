@@ -16,8 +16,8 @@ if(!empty($_POST)) {
     // validation errors
     $tituloError = null;
     // post values
-    $titulo = $_POST['titulo'];
-    $descripcion= $_POST['descripcion'];
+    $titulo =  strip_tags($_POST['titulo']);
+    $descripcion=  strip_tags($_POST['descripcion']);
     // validate input
     $valid = true;
     if(empty($titulo)) {

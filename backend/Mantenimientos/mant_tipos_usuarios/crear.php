@@ -20,8 +20,8 @@ if(!empty($_POST)) {
     $nombresError = null;
     $descripcionError = null;
     // post values
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
+    $nombre = strip_tags($_POST['nombre']);
+    $descripcion = strip_tags($_POST['descripcion']);
     $agregar = $_POST['agregar'] == "agregar";
     $modificar = $_POST['modificar']== "modificar";
     $eliminar = $_POST['eliminar']=="eliminar";

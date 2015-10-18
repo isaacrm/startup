@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_pagina'])) {
-    $id = $_GET['id_pagina'];
+    $id = base64_decode ($_GET['id_pagina']);
 }
 if($id == null) {
     header("Location: paginas.php");
@@ -25,8 +25,8 @@ if(!empty($_POST)) {
     $fraseError = null;
     $estadoError = null;
     // post values
-    $encabezado = $_POST['encabezado'];
-    $frase = $_POST['frase'];
+    $encabezado = strip_tags($_POST['encabezado']);
+    $frase = strip_tags($_POST['frase']);
 
     // validate input
     $valid = true;

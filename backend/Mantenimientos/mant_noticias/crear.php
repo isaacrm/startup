@@ -20,9 +20,9 @@ if(!empty($_POST)) {
     $leyendeError = null;
 
     // post values
-    $titulo = $_POST['titulo'];
-    $subtitulo = $_POST['subtitulo'];
-    $leyenda = $_POST['leyenda'];
+    $titulo = strip_tags($_POST['titulo']);
+    $subtitulo = strip_tags($_POST['subtitulo']);
+    $leyenda = strip_tags($_POST['leyenda']);
 
     // validate input
     $valid = true;

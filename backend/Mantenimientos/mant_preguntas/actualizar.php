@@ -13,7 +13,7 @@ if(!isset($_SESSION['alias']))
 <?php
 $id = null;
 if(!empty($_GET['id_pregunta'])) {
-    $id = $_GET['id_pregunta'];
+    $id = base64_decode ($_GET['id_pregunta']);
 }
 if($id == null) {
     header("Location: preguntas.php");
@@ -25,8 +25,8 @@ if(!empty($_POST)){
     $preguntaError = null;
     $respuestaError = null;
     // post values
-    $pregunta = $_POST['pregunta'];
-    $respuesta = $_POST['respuesta'];
+    $pregunta = strip_tags($_POST['pregunta']);
+    $respuesta = strip_tags($_POST['respuesta']);
     $valid=true;
     // validate input
     if(empty($pregunta)) {

@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="es" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="es" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="es" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="es" class="no-js"> <!--<![endif]-->
-<link href="../backend/img_page/WineFun.png" type="image/x-icon" rel="shortcut icon" />
-    <head>
 
         <?php include "maestros/link_meta_script_iniciales.php" ?>
-    </head>
     <body id="body">
 		<!-- preloader -->
 		<div id="preloader">
@@ -36,20 +28,7 @@
 					<!-- /logo -->
                 </div>
 
-				<!--MENÚ DE NAVEGACIÓN -->
-                <nav class="collapse navbar-collapse navbar-right" role="navigation">
-                    <ul id="nav" class="nav navbar-nav">
-                        <li><a href="#features">Características</a></li>
-                        <li><a href="#servicios">Servicios</a></li>
-                        <li><a href="#team">Equipo</a> </li>
-                        <li><a href="#politicas">Políticas</a></li>
-                        <li><a href="#contact">Contacto</a></li>
-                        <li><a href="registro.php">Registrarse</a></li>
-                        <li><a href="#preguntas">Preguntas Frecuentes</a></li>
-
-                    </ul>
-                </nav>
-				<!-- /MENÚ DE NAVEGACIÓN-->
+                <?php include "maestros/menu.php" ?>
             </div>
         </header>
         <!--End Fixed Navigation==================================== -->
@@ -293,7 +272,9 @@
         <!--
         End Meet Our Team
         ==================================== -->
-		
+
+
+
 		<!--
         Some fun facts
         ==================================== -->		
@@ -325,11 +306,128 @@
 				</div>
 			</div>
 		</section>
-		
+        <?php
+        //creamos la sesion
+        session_start();
+        error_reporting(E_ALL ^ E_NOTICE);
+
+        //validamos si se ha hecho o no el inicio de sesion correctamente
+        //si no se ha hecho la sesion nos regresará a login.php
+        if(!isset($_SESSION['alias_cliente']))
+        {
+            echo '
+        <section id="login_registro" >
+           <div class="container">
+           <div class="row">
+               <div class="col-md-6 col-md-offset-3">
+                  <div class="panel panel-login">
+                 <div class="panel-heading">
+                           <div class="row">
+                                 <div class="col-xs-4">
+                                <a href="#" class="active" id="login-form-link">Login</a>
+                             </div>
+                              <div class="col-xs-4">
+                                <a href="#" id="register-form-link">Registro</a>
+                                </div>
+                           <div class="col-xs-4">
+                               <a href="#" id="forgot-form-link">¿Olvidaste tu contraseña?</a>
+                               </div>
+                       <hr>
+                       </div>
+                       <div class="panel-body">
+                            <div class="row">
+                               <div class="col-lg-12">
+                                 <form id="login-form"  method="post" role="form" style="display: block;">
+                                        <div class="form-group">
+                                         <input type="text" name="username" id="ususario" tabindex="1" class="form-control" placeholder="Usuario" maxlength="15" value="">
+                                    </div>
+                                         <div class="form-group">
+                                       <input type="password" name="password" id="contrasena" tabindex="2" class="form-control" maxlength="15" placeholder="Contraseña">
+                                            </div>
+
+                                        <div class="form-group">
+                                           <div class="row">
+                                               <div class="col-sm-6 col-sm-offset-3">
+                                               <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Ingresar">
+                                                </div>
+                                          </div>
+                                       </div>
+
+                                     </form>
+                                    <form id="register-form" method="post" role="form" style="display: none;">
+                                       <div class="form-group">
+       <input class="form-control" name="nombres" placeholder="Nombres" required="required" id="nombres" type="text" autofocus autocomplete="off" maxlength="45">
+                                     </div>
+        <div class="form-group">
+                                          <input class="form-control" name="apellidos" placeholder="Apellidos" type="text" required="required" id="apellidos" autocomplete="off" maxlength="60"  />
+                                         </div>
+                                        <div class="form-group ">
+        <input class="form-control" name="identificador" placeholder="DUI" type="text" required="required" id="identificador" autocomplete="off" maxlength="10" />
+
+                                       </div>
+                                       <div class="form-group">
+                                        <input class="form-control" name="telefono" placeholder="Telefono" type="text" required="required" id="telefono" autocomplete="off" maxlength="9"/>
+                                        </div>
+                                        <div class="form-group">
+         <input class="form-control" name="correo" placeholder="Correo" type="email" required="required" id="correo" autocomplete="off" maxlength="75" />
+                                       </div>
+  <div class="form-group">
+                                 <div class="input-group input-append date" id="dateRangePicker">
+              <input type="date" class="form-control" name="fecha_nacimiento" id="fecha_nacimiento" min="1950-01-01" max="1997-10-31"/>
+
+                                            </div>
+       </div>
+                                   <div class="form-group">
+        <select name="sexo" required="required" id="sexo" class="form-control">
+                                            <option></option>
+         <option value="Masculino">Masculino</option>
+                                         <option value="Femenino">Femenino</option>
+          </select>
+
+                                        </div>
+        <div class="form-group ">
+                                     <input class="form-control" name="alias" placeholder="Alias" type="text" required="required" id="alias" autocomplete="off" maxlength="15" />
+
+         </div>
+             <div class="form-group ">
+         <div class="g-recaptcha" data-sitekey="6LeRCw4TAAAAAOoQcioyh5jn-G2aP0A_WyVdgCfC"></div>
+         </div>
+
+                                      <div class="form-group">
+        <div class="row">
+                                               <div class="col-sm-6 col-sm-offset-3">
+         <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                               </div>
+       </div>
+                                       </div>
+       </form>
+                                   <form id="forgot-form" method="post" role="form" style="display: none;">
+            <div class="form-group">
+                                        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Correo Electrónico" value="">
+            </div>
+                                   <div class="form-group">
+        <div class="row">
+                                                <div class="col-sm-6 col-sm-offset-3">
+   <input type="submit" name="register-submit" id="forgot-submit" tabindex="4" class="form-control btn btn-register" value="Recuperar contraseña">
+                                             </div>
+    </div>
+                                     </div>
+     </form>
+                            </div>
+        </div>
+                 </div>
+         </div>
+            </div>
+        </div>
+        </div>
+     </section>
+     ';
+        }
+        ?>
         <!--
-        End Some fun facts
-       
-		
+       registro y login !-->
+
+
 		<!-- 
         Contact Us
         ==================================== -->		
@@ -407,7 +505,8 @@
        <!--PREGUNTAS FRECUENTES --------------------------->
         <section id="preguntas" class="preguntas">
 			<div class="container">
-				<div class="row mb50">
+				<div class="row mb50" style="width:auto; height:350px; overflow: scroll;">
+
 				
 					<div class="sec-title text-center mb50 wow fadeInDown animated" data-wow-duration="500ms">
 						<h2>Preguntas Frecuentes</h2>
@@ -431,7 +530,7 @@
                     $paginacion->records($totaldatos);
                     $paginacion->records_per_page($filas);
                     $paginacion->padding(false);
-                    $sql = "SELECT pregunta, respuesta FROM preguntas ORDER BY id_pregunta ASC LIMIT " . (($paginacion->get_page() - 1) * $filas) . ', ' . $filas;
+                    $sql = "SELECT pregunta, respuesta FROM preguntas ORDER BY id_pregunta " ;
                     $data = "";
                     foreach($PDO->query($sql) as $row) {
                         $data .= "<div class='frecuentes' data-wow-duration='1000ms'>";
@@ -444,7 +543,7 @@
 				</div>
                 <!-- Aqui se imprime la paginacion-->
                 <div>
-                    <?php $paginacion->render();?>
+
                 </div>
             </div>
         </section>
