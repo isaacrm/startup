@@ -47,6 +47,8 @@ if(!isset($_SESSION['alias']))
                         <div class='container col-lg-12'>
                             <div class='row'>
                                 <p><a class='btn btn-xs btn-success' href='crear.php'>Crear</a></p>
+                                <p><a class='btn btn-xs btn-success' href='reportepdf.php'>Descargar reporte</a></p>
+
                                 <form method='POST' action="buscar.php">
                                     <input  class="col-lg-9" name="buscar" placeholder="Buscar por Tipo" type="text" id='buscar' autocomplete="off" maxlength="60"/>
                                     <input class="col-lg-3" type="submit" name="submit" value="Buscar">
